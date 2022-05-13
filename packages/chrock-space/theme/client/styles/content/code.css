@@ -1,0 +1,58 @@
+@import "./code-before.css";
+@import "./inline-code.css";
+
+.content {
+  & div[class*="language-"] {
+    @apply flex flex-row-reverse;
+    @apply bg-slate-600 bg-opacity-80;
+    @apply rounded-lg overflow-auto;
+
+    @apply text-white text-sm;
+    @apply relative;
+
+    & > .shiki {
+      @apply bg-slate-700 bg-opacity-80 !important;
+    }
+    &::after {
+      content: "";
+      @apply absolute inset-0 pointer-events-none;
+    }
+
+    --ext-opacity: 0;
+    &:hover {
+      --ext-opacity: 0.5;
+    }
+    &::before {
+      @apply absolute top-1 right-2;
+      @apply text-sm text-white text-opacity-[var(--ext-opacity)] uppercase;
+      @apply transition-all;
+    }
+
+    & > .line-numbers,
+    & > .shiki,
+    & > .highlight-lines {
+      @apply py-2;
+    }
+
+    & > .line-numbers {
+      @apply px-4 text-right;
+      @apply select-none;
+    }
+
+    & > .shiki {
+      @apply flex-1;
+      @apply px-2 overflow-auto;
+    }
+
+    & > .highlight-lines {
+      @apply absolute top-0 bottom-0 left-0 right-0;
+      @apply whitespace-pre;
+      @apply pointer-events-none;
+
+      & > .highlight-line {
+        @apply bg-slate-400 bg-opacity-20;
+        @apply backdrop-saturate-150;
+      }
+    }
+  }
+}

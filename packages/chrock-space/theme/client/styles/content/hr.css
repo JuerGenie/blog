@@ -1,0 +1,7 @@
+.content {
+  & hr {
+    @apply border-2 border-slate-500;
+    @apply rounded;
+    @apply my-4;
+  }
+}

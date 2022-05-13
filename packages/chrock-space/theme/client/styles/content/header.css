@@ -1,0 +1,42 @@
+.content {
+  & h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply relative;
+
+    & .header-anchor {
+      @apply absolute -left-12 -top-16;
+      @apply w-0;
+      @apply opacity-0 pointer-events-none;
+    }
+  }
+
+  & h1 {
+    @apply text-5xl my-4 pb-2;
+    @apply border-b-4 border-slate-500 border-opacity-50 border-double;
+  }
+
+  & h2 {
+    @apply text-3xl my-4;
+    @apply border-b-2 border-slate-500 border-opacity-50;
+  }
+
+  & h3 {
+    @apply text-2xl my-3;
+  }
+
+  & h4 {
+    @apply text-xl my-3;
+  }
+
+  & h5 {
+    @apply text-lg my-2;
+  }
+
+  & h6 {
+    @apply text-base my-2;
+  }
+}

@@ -1,0 +1,4 @@
+packages:
+  - "packages/chrock-components"
+  - "packages/chrock-space"
+  - "packages/vuepress-theme-chrock"

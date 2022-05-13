@@ -1,0 +1,14 @@
+.content {
+  & ul {
+    @apply list-disc;
+  }
+
+  & ol {
+    @apply list-decimal;
+  }
+
+  & li {
+    @apply relative;
+    @apply ml-4 pl-2;
+  }
+}

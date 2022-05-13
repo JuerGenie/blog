@@ -1,0 +1,86 @@
+.content {
+  & .ext-c::before {
+    content: "c";
+  }
+  & .ext-cpp::before {
+    content: "cpp";
+  }
+  & .ext-cs::before {
+    content: "cs";
+  }
+  & .ext-css::before {
+    content: "css";
+  }
+  & .ext-dart::before {
+    content: "dart";
+  }
+  & .ext-docker::before {
+    content: "docker";
+  }
+  & .ext-fs::before {
+    content: "fs";
+  }
+  & .ext-go::before {
+    content: "go";
+  }
+  & .ext-html::before {
+    content: "html";
+  }
+  & .ext-java::before {
+    content: "java";
+  }
+  & .ext-js::before {
+    content: "js";
+  }
+  & .ext-json::before {
+    content: "json";
+  }
+  & .ext-kt::before {
+    content: "kt";
+  }
+  & .ext-less::before {
+    content: "less";
+  }
+  & .ext-makefile::before {
+    content: "makefile";
+  }
+  & .ext-md::before {
+    content: "md";
+  }
+  & .ext-php::before {
+    content: "php";
+  }
+  & .ext-py::before {
+    content: "py";
+  }
+  & .ext-rb::before {
+    content: "rb";
+  }
+  & .ext-rs::before {
+    content: "rs";
+  }
+  & .ext-sass::before {
+    content: "sass";
+  }
+  & .ext-scss::before {
+    content: "scss";
+  }
+  & .ext-sh::before {
+    content: "sh";
+  }
+  & .ext-styl::before {
+    content: "styl";
+  }
+  & .ext-ts::before {
+    content: "ts";
+  }
+  & .ext-toml::before {
+    content: "toml";
+  }
+  & .ext-vue::before {
+    content: "vue";
+  }
+  & .ext-yml::before {
+    content: "yml";
+  }
+}
