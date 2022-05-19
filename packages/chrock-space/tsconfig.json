@@ -3,7 +3,8 @@
   "compilerOptions": {
     "allowJs": true,
     "jsx": "preserve",
-    "module": "esnext"
+    "module": "esnext",
+    "types": ["element-plus/global", "vite/client"]
   },
   "include": [
     "./docs/**/*.ts",

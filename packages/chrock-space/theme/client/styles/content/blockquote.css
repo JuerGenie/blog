@@ -2,7 +2,7 @@
   & blockquote {
     @apply bg-slate-500 bg-opacity-10;
     @apply pl-12 px-4 py-2 my-2;
-    @apply relative overflow-auto;
+    @apply relative;
     @apply rounded;
 
     &::before {

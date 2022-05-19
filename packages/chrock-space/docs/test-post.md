@@ -1,14 +1,20 @@
 ---
 title: 样式测试文章
+subtitle: Just try it!
+background: https://picsum.photos/seed/chrock-test-post/1920/1920
+group: TEST
+tags:
+  - test
+  - markdown
+  - 样式测试
+  - css
 ---
 
-## 主要内容
-> #### Markdown*是什么*？
-> #### *谁*创造了它？
-> #### *为什么*要使用它？
-> #### *怎么*使用？
-> #### *谁*在用？
-> #### 尝试一下
+这篇文章主要是用来测试markdown样式的。
+
+嗯，大概是这样。
+
+<!-- more -->
 
 ## 正文
 ### 1. Markdown*是什么*？

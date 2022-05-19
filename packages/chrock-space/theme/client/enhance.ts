@@ -1,9 +1,10 @@
-import { defineClientAppEnhance } from "@vuepress/client";
+import { defineClientAppEnhance, Vuepress } from "@vuepress/client";
 // import "vue-global-api";
+import ElementPlus from "element-plus";
 import "./styles/index.css";
 import "@mdi/font/css/materialdesignicons.css";
+import "element-plus/theme-chalk/index.css";
 
-import { components } from "./components";
 import { type defineComponent, type App } from "vue";
 
 function registerComponentObject(
@@ -16,5 +17,5 @@ function registerComponentObject(
 }
 
 export default defineClientAppEnhance(({ app }) => {
-  registerComponentObject(app, components);
+  app.use(ElementPlus);
 });
