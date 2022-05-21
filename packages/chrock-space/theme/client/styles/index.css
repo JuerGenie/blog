@@ -4,6 +4,8 @@
 
 @import "./content/index.css";
 
+@import "./element-plus.patch.css";
+
 html,
 body,
 #app {
@@ -24,4 +26,8 @@ body {
 
     @apply absolute -z-10 min-h-[32rem] h-full w-full;
   } */
+
+  & * {
+    @apply transition-all;
+  }
 }

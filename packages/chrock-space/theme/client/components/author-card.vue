@@ -17,6 +17,7 @@
         </div>
       </div>
       <el-image class="author-avatar" fit="cover" :src="authorData.avatar" />
+      <div class="cladding-material" />
     </div>
     <div class="author-links">
       <a
@@ -37,7 +38,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useAuthorData } from "../compositablies/author-data";
+import { useAuthorData } from "../composables/author-data";
 
 const authorData = useAuthorData();
 </script>
@@ -48,15 +49,15 @@ const authorData = useAuthorData();
 
   & .author-card-wrapper {
     @apply w-[30rem] h-[20rem];
-    @apply bg-slate-100 bg-opacity-0 hover:bg-opacity-60;
-    @apply flex flex-row;
-    @apply relative rounded hover:shadow-xl z-10;
-    @apply transition-all duration-1000 ease-out;
+    @apply bg-slate-100 bg-opacity-0 hover:bg-opacity-80;
+    @apply flex flex-row overflow-hidden;
+    @apply relative rounded-xl hover:shadow-xl z-10;
+    @apply duration-1000 ease-out;
     @apply hover:backdrop-blur;
 
     & .author-avatar {
       @apply absolute top-0 bottom-0 right-0;
-      @apply h-full aspect-square rounded-r;
+      @apply h-full aspect-square rounded-r-xl;
 
       mask-image: linear-gradient(to right, #0000, #0004);
     }
@@ -68,7 +69,7 @@ const authorData = useAuthorData();
 
       & .author-name {
         @apply flex flex-row items-end;
-        @apply text-5xl text-slate-600;
+        @apply text-5xl text-slate-700;
         @apply flex-1;
         @apply drop-shadow;
         @apply underline underline-offset-4;
@@ -76,8 +77,9 @@ const authorData = useAuthorData();
       & .author-email {
         @apply flex flex-row items-start;
         @apply flex-1;
+        @apply drop-shadow;
         @apply px-2;
-        @apply text-slate-500 uppercase;
+        @apply text-slate-600 uppercase;
       }
 
       & .author-description {
@@ -91,6 +93,25 @@ const authorData = useAuthorData();
         }
       }
     }
+
+    & .cladding-material {
+      @apply absolute z-20 -top-[30%] left-[140%] w-2/5 h-[calc(160%)];
+      @apply ease-in-out duration-1000;
+      @apply mix-blend-multiply isolate opacity-40;
+      @apply rotate-[30deg];
+
+      /* background-image: linear-gradient(
+        transparent,
+        transparent 30%,
+        theme("colors.amber.400") 0,
+        theme("colors.amber.400") 70%,
+        transparent 0
+      ); */
+      @apply bg-amber-100;
+    }
+    &:hover .cladding-material {
+      @apply -left-[75%];
+    }
   }
   .author-links {
     @apply max-w-[30rem];
@@ -100,7 +121,6 @@ const authorData = useAuthorData();
     & .author-link {
       @apply relative -top-12 opacity-0;
       @apply transition-all duration-500 delay-[var(--delay)];
-      /* transition-timing-function: cubic-bezier(0.25, 0.06, 0.33, 1.5); */
       transition-timing-function: cubic-bezier(0.24, 1.6, 0.4, 0.9);
     }
   }
@@ -109,6 +129,10 @@ const authorData = useAuthorData();
     & .author-link {
       @apply top-0 opacity-100;
     }
+  }
+
+  & :deep(.el-button) {
+    @apply !border-none;
   }
 }
 </style>

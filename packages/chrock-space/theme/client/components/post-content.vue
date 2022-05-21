@@ -1,31 +1,31 @@
 <template>
   <div class="post-content">
     <div class="information">
-      <el-image v-if="!!background" :src="background" fit="cover" />
+      <el-image v-if="!!background" :src="background" fit="cover">
+        <template #error>
+          <div class="failed-slot" />
+        </template>
+      </el-image>
 
-      <router-link
-        v-if="!!group"
-        class="group"
-        :to="{ path: '/', query: { group } }"
-      >
-        {{ group }}
-      </router-link>
-      <div class="title">{{ currentPage.title }}</div>
-      <div class="create-date">
-        <i class="mdi mdi-calendar-month text-lg" />
-        {{ createdDate }}
-      </div>
-      <div v-if="!!tags" class="tags">
-        <router-link v-for="tag in tags" :to="{ path: '/', query: { tag } }">
-          <el-button round color="#0004" size="small">
-            {{ tag }}
-          </el-button>
-        </router-link>
+      <div class="wrapper">
+        <group-link v-if="!!group" :group="group" />
+        <div class="title">{{ currentPage.title }}</div>
+        <div class="create-date">
+          <i class="mdi mdi-calendar-month text-lg" />
+          {{ createdDate }}
+        </div>
+        <div v-if="!!tags" class="tags">
+          <tag-link v-for="tag in tags" :tag="tag">
+            <el-button round color="#0004" size="small">
+              {{ tag }}
+            </el-button>
+          </tag-link>
+        </div>
       </div>
     </div>
 
     <main>
-      <div class="content">
+      <div class="content wrapper">
         <content></content>
       </div>
 
@@ -37,14 +37,17 @@
 </template>
 
 <script lang="ts" setup>
-import { useRoute, useRouter, RouterLink } from "vue-router";
 import { usePageData } from "@vuepress/client";
 import { GitPluginPageData } from "@vuepress/plugin-git";
 import dayjs from "dayjs";
-import { computed } from "vue";
+import { computed, watchEffect } from "vue";
 import { Toc } from "@vuepress/plugin-toc/lib/client";
+import GroupLink from "./linker/group-link.vue";
+import TagLink from "./linker/tag-link.vue";
 
 const currentPage = usePageData<ChrockPostData & GitPluginPageData>();
+watchEffect(() => console.log("current page", currentPage.value));
+
 const createdDate = computed(() =>
   dayjs(currentPage.value.git?.createdTime ?? "").format("YYYY/MM/DD")
 );
@@ -52,15 +55,6 @@ const createdDate = computed(() =>
 const background = computed(() => currentPage.value.frontmatter.background);
 const group = computed(() => currentPage.value.frontmatter.group);
 const tags = computed(() => currentPage.value.frontmatter.tags);
-
-const router = useRouter();
-function onBack() {
-  if (!router.options.history.state.position) {
-    router.push("/");
-  } else {
-    router.back();
-  }
-}
 </script>
 
 <style lang="postcss" scoped>
@@ -87,6 +81,17 @@ function onBack() {
         @apply absolute inset-0;
         @apply bg-gradient-to-t from-white to-[#fff4];
       }
+
+      & .failed-slot {
+        @apply w-full h-full;
+
+        background-image: linear-gradient(
+          60deg,
+          theme("colors.slate.100"),
+          theme("colors.slate.100") 50%,
+          theme("colors.slate.200") 0
+        );
+      }
     }
 
     & .group {
@@ -111,7 +116,9 @@ function onBack() {
   }
 
   & main {
-    @apply flex flex-row;
+    @apply w-full;
+    @apply relative;
+    @apply flex flex-col;
 
     & .content {
       @apply flex-1;
@@ -120,6 +127,15 @@ function onBack() {
       @apply px-4 pt-16;
       @apply w-72;
     }
+  }
+
+  & .information,
+  main {
+    @apply items-center;
+  }
+
+  & .wrapper {
+    @apply w-full max-w-xl lg:max-w-4xl;
   }
 }
 </style>

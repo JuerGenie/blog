@@ -1,5 +1,6 @@
 import { PageData, usePagesData } from "@vuepress/client";
 import { GitPluginPageData } from "@vuepress/plugin-git";
+import dayjs from "dayjs";
 
 export type Post = PageData<GitPluginPageData & ChrockPostData>;
 
@@ -33,6 +34,12 @@ const groupMap = Object.fromEntries(
   ])
 );
 
+const dateMap = {} as Record<string, Post[]>;
+posts.forEach((post) => {
+  const date = dayjs(post.git.createdTime ?? 0).format("YYYY/MM/DD");
+  (dateMap[date] ??= []).push(post);
+});
+
 export function usePosts() {
   return {
     posts,
@@ -43,6 +50,10 @@ export function usePosts() {
     groups,
     getByGroup(group: string) {
       return groupMap[group];
+    },
+    dateMap,
+    getByDate(date: number) {
+      return dateMap[dayjs(date).format("YYYY/MM/DD")] ?? [];
     },
     search(target: string) {
       return posts.filter(({ frontmatter: { group, tags } }) => {

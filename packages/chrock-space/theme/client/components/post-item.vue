@@ -1,34 +1,45 @@
 <template>
   <div class="post-item">
-    <div class="post-created-date">
-      <i class="mdi mdi-calendar-month text-lg" /> {{ createdTime || "----" }}
-    </div>
-    <router-link v-if="!!group" class="post-group" :to="`/?group=${group}`">
-      {{ group }}
-    </router-link>
-    <div>
-      <router-link class="post-title" :to="post.path">
-        {{ post.title }}
+    <div class="card-left">
+      <div class="post-created-date">
+        <i class="mdi mdi-calendar-blank text-lg" /> {{ createdTime || "----" }}
+      </div>
+      <group-link v-if="!!group" class="post-group" :group="group" />
+      <div v-if="tags && tags.length" class="post-tags">
+        <i class="mdi mdi-tag-multiple text-lg" />
+        <tag-link v-for="tag in tags" :key="tag" :tag="tag">
+          <el-button color="#0004" size="small" round class="tag">
+            {{ tag }}
+          </el-button>
+        </tag-link>
+      </div>
+      <div>
+        <post-link class="post-title" :post="post">
+          {{ post.title }}
 
-        <div v-if="subtitle" class="post-subtitle">{{ subtitle }}</div>
-      </router-link>
+          <div v-if="subtitle" class="post-subtitle">{{ subtitle }}</div>
+        </post-link>
+      </div>
+      <div v-if="post.excerpt" class="post-excerpt" v-html="post.excerpt" />
     </div>
-    <div v-if="post.excerpt" class="post-excerpt" v-html="post.excerpt" />
+    <div class="card-right"></div>
 
-    <el-image
-      v-if="!!background"
-      class="post-background"
-      :src="background"
-      fit="cover"
-    />
+    <el-image class="post-background" :src="background" fit="cover" lazy>
+      <template #error>
+        <div class="failed-slot" />
+      </template>
+    </el-image>
   </div>
 </template>
 
 <script lang="ts" setup>
 import dayjs from "dayjs";
 import { computed } from "vue";
-import { Post } from "../compositablies/posts";
-import { useRouter, RouterLink } from "vue-router";
+import { Post } from "../composables/posts";
+import { RouterLink } from "vue-router";
+import GroupLink from "./linker/group-link.vue";
+import TagLink from "./linker/tag-link.vue";
+import PostLink from "./linker/post-link.vue";
 
 const props = defineProps<{
   post: Post;
@@ -43,65 +54,98 @@ const createdTime = computed(
     props.post.git.createdTime &&
     dayjs(props.post.git.createdTime).format("YYYY/MM/DD")
 );
-
-const router = useRouter();
 </script>
 
 <style lang="postcss" scoped>
 .post-item {
-  @apply rounded-lg;
-  @apply border border-slate-200;
-  @apply p-12;
+  @apply rounded-2xl rounded-bl;
+  @apply border-2 border-slate-200;
   @apply relative;
-  @apply flex flex-col gap-4;
-  @apply w-[40rem] h-[20rem];
+  @apply w-[40rem] h-auto;
+  @apply flex flex-row;
+  @apply hover:shadow-xl;
 
   & > * {
     @apply relative z-10;
   }
 
-  & .post-group {
-    @apply absolute -top-4 left-8;
-    @apply h-8 flex justify-center items-center px-4;
-    @apply text-lg font-extralight;
-    @apply bg-white;
+  & .card-left {
+    @apply p-12;
+    @apply w-3/4;
+    @apply flex flex-col gap-2;
+
+    & .post-group {
+      @apply absolute -top-4 left-8;
+      @apply h-8 flex justify-center items-center px-4;
+      @apply text-lg font-extralight;
+      @apply bg-white;
+    }
+
+    & .post-created-date {
+      @apply flex flex-row items-center gap-2;
+      @apply text-sm text-slate-500;
+    }
+
+    & .post-title {
+      @apply text-3xl font-extralight;
+      @apply cursor-pointer hover:text-slate-500;
+      @apply transition-all;
+    }
+
+    & .post-subtitle {
+      @apply text-lg;
+    }
+
+    & .post-tags {
+      @apply flex flex-row flex-wrap gap-2 items-center;
+      @apply text-slate-500;
+
+      & .tag {
+        @apply border-none py-1 px-2 !important;
+      }
+    }
+
+    & .post-excerpt {
+      @apply text-sm text-slate-500;
+
+      & :deep(p) {
+        @apply my-2;
+      }
+
+      & :deep(.header-anchor) {
+        @apply hidden;
+      }
+    }
   }
 
-  & .post-created-date {
-    @apply flex flex-row items-center gap-2;
-    @apply text-sm text-slate-500;
+  & .card-right {
   }
 
   & .post-background {
-    @apply absolute top-0 right-0 bottom-0 z-0;
-    @apply aspect-[3/2];
-    @apply rounded-r-md;
+    @apply absolute -top-8 -right-16 z-0;
+    @apply h-full w-2/3;
+    @apply rounded-r-2xl border-2;
     @apply pointer-events-none;
 
-    mask-image: linear-gradient(to right, #0000, #0001, #0009);
-  }
+    mask-image: linear-gradient(
+      to right,
+      #0000,
+      #0001,
+      #0003,
+      #0008,
+      #000f,
+      #000f
+    );
 
-  & .post-title {
-    @apply text-3xl font-extralight;
-    @apply cursor-pointer hover:text-slate-500;
-    @apply transition-all;
-  }
+    & .failed-slot {
+      @apply w-full h-full;
 
-  & .post-subtitle {
-    @apply text-lg;
-  }
-
-  & .post-excerpt {
-    /* @apply line-clamp-6; */
-    @apply text-sm text-slate-500;
-    @apply w-2/3;
-
-    & :deep(p) {
-      @apply my-2;
-    }
-
-    & :deep(.header-anchor) {
-      @apply hidden;
+      background-image: linear-gradient(
+        60deg,
+        theme("colors.slate.100"),
+        theme("colors.slate.100") 50%,
+        theme("colors.slate.200") 0
+      );
     }
   }
 }

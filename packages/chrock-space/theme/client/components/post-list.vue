@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts" setup>
-import { usePosts } from "../compositablies/posts";
+import { usePosts } from "../composables/posts";
 import PostItem from "./post-item.vue";
 import { computed, ref } from "vue";
 

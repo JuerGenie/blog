@@ -1,82 +1,149 @@
 <template>
-  <el-container class="main-container">
-    <site-logo />
-
-    <main ref="layoutMainRef" class="layout-main">
+  <main-container ref="layoutMainRef">
+    <main class="layout-main">
       <div class="first-panel">
         <author-card />
-        <i class="mdi mdi-chevron-down down-btn" @click="scrollToPosts" />
+        <div class="down-bar">
+          <div class="picsum-summary">
+            <el-tooltip content="REFRESH IMAGE" placement="top">
+              <el-button
+                size="small"
+                text
+                type="info"
+                @click="refreshBackground"
+              >
+                <i class="mdi mdi-image text-slate-600 text-lg" />
+              </el-button>
+            </el-tooltip>
+            <span>
+              所有随机图片皆由
+              <a href="https://picsum.photos/" target="_blank">picsum.photos</a>
+              提供
+            </span>
+          </div>
+          <i class="mdi mdi-chevron-down down-btn" @click="scrollToPosts" />
+        </div>
       </div>
       <div ref="postsPanelRef" class="posts-panel">
-        <post-item v-for="post in posts" :key="post.key" :post="post" />
+        <div v-for="[date, sections] in groupPosts" class="post-group">
+          <div class="post-group-label">
+            <i class="mdi mdi-calendar-month text-4xl" />
+            {{ date }}
+          </div>
+
+          <post-item v-for="post in sections" :key="post.key" :post="post" />
+        </div>
       </div>
     </main>
-  </el-container>
-  <scale-wrapper class="chrock-background" :target="layoutMainRef">
-    <chrock-background />
+  </main-container>
+  <scale-wrapper class="chrock-background">
+    <!-- <chrock-background /> -->
+    <el-image
+      :src="`https://picsum.photos/seed/${seed}/1920/1080`"
+      fit="cover"
+    />
   </scale-wrapper>
 </template>
 
 <script lang="ts" setup>
-import { useSiteData } from "@vuepress/client";
 import AuthorCard from "../components/author-card.vue";
-import ChrockBackground from "../components/chrock-background.vue";
 import PostItem from "../components/post-item.vue";
-import { usePosts } from "../compositablies/posts";
-import { ref } from "vue";
-import SiteLogo from "../components/site-logo.vue";
+import { usePosts } from "../composables/posts";
+import { computed, ref } from "vue";
 import ScaleWrapper from "../components/scale-wrapper.vue";
+import dayjs from "dayjs";
+import MainContainer from "../components/main-container.vue";
+import { useLocalStorage } from "@vueuse/core";
+import { nanoid } from "nanoid";
 
-const siteData = useSiteData();
+const { dateMap } = usePosts();
 
-const { posts } = usePosts();
-
-const layoutMainRef = ref<HTMLElement>();
+const layoutMainRef = ref<InstanceType<typeof MainContainer>>();
 
 const postsPanelRef = ref<HTMLDivElement>();
 function scrollToPosts() {
-  layoutMainRef.value?.scrollTo({
+  window.scrollTo({
     behavior: "smooth",
     top: postsPanelRef.value?.offsetTop,
   });
 }
+
+const groupPosts = computed(() => {
+  return Object.entries(dateMap).sort(([a], [b]) =>
+    dayjs(a).isAfter(b) ? -1 : 1
+  );
+});
+
+const seed = useLocalStorage("picsum.photo.key", nanoid(12));
+function refreshBackground() {
+  seed.value = nanoid(12);
+}
 </script>
 
 <style lang="postcss" scoped>
-.main-container {
-  @apply h-full;
-  @apply relative z-10;
+.layout-main {
+  background-image: radial-gradient(#0000, #0000, #0004);
 
-  & .layout-main {
-    @apply overflow-auto;
-    background-image: radial-gradient(#0000, #0000, #0004);
+  & .first-panel {
+    @apply w-screen h-screen;
+    @apply flex flex-col justify-center items-center;
+    @apply relative;
 
-    & .first-panel {
-      @apply w-screen h-screen;
-      @apply flex flex-col justify-center items-center;
-      @apply relative;
+    & .down-bar {
+      @apply absolute bottom-0 inset-x-0;
+      @apply flex flex-row items-center justify-center;
+
+      & .picsum-summary {
+        @apply absolute left-0 inset-y-0;
+        @apply flex flex-row items-center gap-2;
+        @apply px-4;
+        @apply text-transparent bg-slate-900 bg-opacity-50;
+        background-clip: text;
+      }
 
       & .down-btn {
-        @apply absolute bottom-0;
         @apply text-4xl text-slate-800 text-opacity-50;
         @apply animate-bounce;
         @apply cursor-pointer;
       }
     }
+  }
 
-    & .posts-panel {
-      @apply bg-white;
-      box-shadow: 0 -0.5rem 8rem 0 #0004;
+  & .posts-panel {
+    @apply bg-white;
+    box-shadow: 0 -0.5rem 8rem 0 #0004;
 
-      @apply flex flex-col items-center py-24 gap-16;
+    @apply flex flex-col items-center py-48 gap-16;
+
+    & .post-group-label {
+      @apply text-2xl text-slate-500 font-extralight;
+      @apply flex flex-row items-center justify-center gap-2;
+      @apply select-none;
+
+      &::before,
+      &::after {
+        content: "";
+
+        @apply w-32;
+        @apply border rounded;
+      }
+    }
+
+    & .post-group {
+      @apply flex flex-col items-center py-8 gap-16;
     }
   }
 }
 
 .chrock-background {
-  @apply !absolute inset-0 z-0;
+  @apply !fixed inset-0 z-0;
   @apply opacity-50;
   @apply pointer-events-none;
   @apply overflow-hidden;
+
+  & .el-image {
+    @apply w-full h-full;
+    @apply brightness-125 contrast-50;
+  }
 }
 </style>

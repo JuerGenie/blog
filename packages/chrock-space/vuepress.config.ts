@@ -14,5 +14,5 @@ export default defineUserConfig({
     },
   },
 
-  clientAppEnhanceFiles: [path.resolve(__dirname, "./docs/enhance.ts")],
+  clientConfigFile: path.resolve(__dirname, "./docs/enhance.ts"),
 });

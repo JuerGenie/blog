@@ -1,23 +1,23 @@
 <template>
-  <router-link class="site-logo" to="/">
+  <router-link class="site-logo" :to="routeTarget.home">
     {{ siteData.title }}
   </router-link>
 </template>
 
 <script lang="ts" setup>
 import { useSiteData } from "@vuepress/client";
+import { routeTarget } from "../utils/router";
 
 const siteData = useSiteData();
 </script>
 
 <style lang="postcss" scoped>
 .site-logo {
-  @apply py-4 px-6;
+  @apply pt-2 pb-4 pl-4 pr-6;
   @apply text-2xl text-slate-100 text-center;
-  @apply rounded-br-2xl;
+  @apply rounded-br-3xl hover:rounded-br-lg;
   @apply cursor-pointer;
-  @apply fixed -top-2 -left-2 z-[9999] drop-shadow-xl;
-  @apply hover:top-0 hover:left-0 transition-all;
+  @apply fixed top-0 left-0 z-[9999] drop-shadow-xl;
 
   --bg-position: 0%;
   background-image: linear-gradient(

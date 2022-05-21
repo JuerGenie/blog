@@ -19,6 +19,10 @@ export const chrockTheme = (() => ({
   layouts: {
     Layout: path.resolve(__dirname, "../client/layouts/main-layout.vue"),
     HomeLayout: path.resolve(__dirname, "../client/layouts/home-layout.vue"),
+    SearchableLayout: path.resolve(
+      __dirname,
+      "../client/layouts/searchable-layout.vue"
+    ),
 
     404: path.resolve(__dirname, "../client/layouts/404.vue"),
   },
@@ -47,7 +51,7 @@ export const chrockTheme = (() => ({
     }),
   ],
 
-  clientAppEnhanceFiles: [path.resolve(__dirname, "../client/enhance.ts")],
+  clientConfigFile: path.resolve(__dirname, "../client/config.ts"),
   extendsBundlerOptions(options) {
     merge(options, {
       viteOptions: {
@@ -77,7 +81,9 @@ export const chrockTheme = (() => ({
         "/groups/",
         [
           "---",
-          "layout: GroupsLayout",
+          "layout: SearchableLayout",
+          "routeMeta:",
+          "  type: groups",
           "---",
           "## HELLO WORLD!",
           "",
@@ -88,7 +94,9 @@ export const chrockTheme = (() => ({
         "/tags/",
         [
           "---",
-          "layout: TagsLayout",
+          "layout: SearchableLayout",
+          "routeMeta:",
+          "  type: tags",
           "---",
           "## HELLO WORLD!",
           "",

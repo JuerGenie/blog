@@ -1,11 +1,11 @@
 <template>
-  <el-container class="main-container">
+  <div class="main-container">
     <site-logo />
 
     <main class="layout-main">
       <post-content />
     </main>
-  </el-container>
+  </div>
 </template>
 
 <script lang="ts" setup>

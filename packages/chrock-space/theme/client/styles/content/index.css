@@ -7,7 +7,7 @@
 @import "./table.css";
 
 .content {
-  @apply py-12 px-16;
+  @apply py-12;
   @apply flex flex-col gap-2;
   @apply text-slate-800 text-base;
 

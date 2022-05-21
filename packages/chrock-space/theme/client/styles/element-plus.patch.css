@@ -1,0 +1,9 @@
+#app {
+  & .el-button {
+    @apply border-none;
+
+    & + .el-button {
+      @apply m-0;
+    }
+  }
+}
