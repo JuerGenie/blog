@@ -4,8 +4,8 @@
 
     & thead {
       & th {
-        @apply bg-white;
         @apply border-b-2 border-slate-500 border-opacity-10;
+        @apply text-left;
 
         &:first-of-type {
           @apply rounded-tl;
@@ -27,7 +27,7 @@
           counter-increment: table-col-count;
 
           @apply border-t-2 border-slate-500 border-opacity-10;
-          @apply bg-white bg-opacity-60;
+          @apply bg-opacity-60;
 
           &:first-of-type {
             @apply border-l-0;
@@ -56,7 +56,8 @@
 
     & th,
     td {
-      @apply p-2;
+      @apply px-4 py-2;
+      @apply bg-slate-100 hover:bg-slate-200;
     }
   }
 }

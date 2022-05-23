@@ -27,7 +27,9 @@ body {
     @apply absolute -z-10 min-h-[32rem] h-full w-full;
   } */
 
-  & * {
+  & *,
+  *::before,
+  *::after {
     @apply transition-all;
   }
 }

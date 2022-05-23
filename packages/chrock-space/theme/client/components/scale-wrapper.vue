@@ -29,7 +29,7 @@ watch(y, (nv) => {
 
 const bgScale = computed(() => (1.5 - scrollPercent.value * 0.4).toFixed(2));
 const bgBrightness = computed(() =>
-  (1.2 - scrollPercent.value * 1.2).toFixed(2)
+  (1.2 - scrollPercent.value * 0.8).toFixed(2)
 );
 const bgBlur = computed(() => `${(scrollPercent.value * 8).toFixed(2)}px`);
 </script>

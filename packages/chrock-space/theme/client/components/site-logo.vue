@@ -14,7 +14,8 @@ const siteData = useSiteData();
 <style lang="postcss" scoped>
 .site-logo {
   @apply pt-2 pb-4 pl-4 pr-6;
-  @apply text-2xl text-slate-100 text-center;
+  @apply hover:px-5 hover:py-3;
+  @apply text-2xl text-slate-100 text-center font-extralight;
   @apply rounded-br-3xl hover:rounded-br-lg;
   @apply cursor-pointer;
   @apply fixed top-0 left-0 z-[9999] drop-shadow-xl;

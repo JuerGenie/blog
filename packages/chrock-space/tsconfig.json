@@ -4,7 +4,7 @@
     "allowJs": true,
     "jsx": "preserve",
     "module": "esnext",
-    "types": ["element-plus/global", "vite/client"]
+    "types": ["element-plus/global", "vite/client", "@vuepress/client/types"]
   },
   "include": [
     "./docs/**/*.ts",

@@ -6,11 +6,17 @@
   h5,
   h6 {
     @apply relative;
+    @apply text-slate-800;
 
     & .header-anchor {
-      @apply absolute -left-12 -top-16;
-      @apply w-0;
-      @apply opacity-0 pointer-events-none;
+      @apply absolute -left-16;
+      @apply w-16 pr-2 text-right;
+      @apply opacity-0;
+      @apply text-cyan-600;
+    }
+    &:hover .header-anchor,
+    .header-anchor:hover {
+      @apply opacity-100;
     }
   }
 

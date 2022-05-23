@@ -1,34 +1,18 @@
 <template>
-  <div class="main-container">
-    <site-logo />
-
+  <main-container>
     <main class="layout-main">
       <post-content />
     </main>
-  </div>
+  </main-container>
 </template>
 
 <script lang="ts" setup>
-import { useSiteData } from "@vuepress/client";
 import PostContent from "../components/post-content.vue";
-import SiteLogo from "../components/site-logo.vue";
-
-const siteData = useSiteData();
+import MainContainer from "../components/main-container.vue";
 </script>
 
 <style lang="postcss" scoped>
-.main-container {
-  @apply h-full;
-  @apply relative z-10;
-
-  & .layout-main {
-    @apply scroll-py-16;
-  }
-}
-
-.chrock-background {
-  @apply !absolute inset-0 z-0;
-  @apply opacity-50;
-  @apply pointer-events-none;
+.layout-main {
+  @apply scroll-py-16;
 }
 </style>

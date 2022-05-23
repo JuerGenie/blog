@@ -36,13 +36,15 @@
       </div>
     </main>
   </main-container>
-  <scale-wrapper class="chrock-background">
-    <!-- <chrock-background /> -->
-    <el-image
-      :src="`https://picsum.photos/seed/${seed}/1920/1080`"
-      fit="cover"
-    />
-  </scale-wrapper>
+  <client-only>
+    <scale-wrapper class="chrock-background">
+      <!-- <chrock-background /> -->
+      <el-image
+        :src="`https://picsum.photos/seed/${seed}/1920/1080`"
+        fit="cover"
+      />
+    </scale-wrapper>
+  </client-only>
 </template>
 
 <script lang="ts" setup>
@@ -55,6 +57,7 @@ import dayjs from "dayjs";
 import MainContainer from "../components/main-container.vue";
 import { useLocalStorage } from "@vueuse/core";
 import { nanoid } from "nanoid";
+import { ClientOnly } from "@vuepress/client";
 
 const { dateMap } = usePosts();
 
@@ -74,7 +77,7 @@ const groupPosts = computed(() => {
   );
 });
 
-const seed = useLocalStorage("picsum.photo.key", nanoid(12));
+const seed = useLocalStorage("picsum.photo.key", "yuwYfO39zMVP");
 function refreshBackground() {
   seed.value = nanoid(12);
 }
@@ -116,7 +119,7 @@ function refreshBackground() {
     @apply flex flex-col items-center py-48 gap-16;
 
     & .post-group-label {
-      @apply text-2xl text-slate-500 font-extralight;
+      @apply text-2xl text-slate-500 font-light tracking-widest;
       @apply flex flex-row items-center justify-center gap-2;
       @apply select-none;
 
@@ -137,13 +140,21 @@ function refreshBackground() {
 
 .chrock-background {
   @apply !fixed inset-0 z-0;
-  @apply opacity-50;
   @apply pointer-events-none;
   @apply overflow-hidden;
 
   & .el-image {
     @apply w-full h-full;
-    @apply brightness-125 contrast-50;
+    @apply relative;
+
+    /* &::after {
+      content: "";
+
+      @apply absolute inset-0;
+      mask-image: radial-gradient(#ffff, #fff4, #fff0);
+      @apply bg-white bg-opacity-50;
+      @apply backdrop-blur-lg;
+    } */
   }
 }
 </style>

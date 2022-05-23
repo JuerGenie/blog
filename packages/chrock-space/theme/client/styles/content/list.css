@@ -7,6 +7,16 @@
     @apply list-decimal;
   }
 
+  & ul,
+  ol {
+    @apply my-2;
+
+    & ul,
+    ol {
+      @apply my-0;
+    }
+  }
+
   & li {
     @apply relative;
     @apply ml-4 pl-2;

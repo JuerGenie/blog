@@ -1,17 +1,20 @@
-import { shikiPlugin } from "@vuepress/plugin-shiki";
-import { gitPlugin } from "@vuepress/plugin-git";
-import { tocPlugin } from "@vuepress/plugin-toc";
-import { searchPlugin } from "@vuepress/plugin-search";
+import { shikiPlugin } from "@vuepress/plugin-shiki"
+import { gitPlugin } from "@vuepress/plugin-git"
+import { tocPlugin } from "@vuepress/plugin-toc"
+import { searchPlugin } from "@vuepress/plugin-search"
+import { activeHeaderLinksPlugin } from "@vuepress/plugin-active-header-links"
 // import { defaultTheme } from "@vuepress/theme-default";
-import { merge } from "lodash";
-import path from "path";
-import { createPage, type Theme } from "vuepress";
-import { UserConfigExport } from "vite";
+import { merge } from "lodash"
+import path from "path"
+import { createPage, PageFrontmatter, type Theme } from "vuepress"
+import { UserConfigExport } from "vite"
 
 // import WindiCSS from "vite-plugin-windicss";
-import tailwindcss from "tailwindcss";
-import tailwindcssNesting from "tailwindcss/nesting";
-import autoprefixer from "autoprefixer";
+import tailwindcss from "tailwindcss"
+import tailwindcssNesting from "tailwindcss/nesting"
+import autoprefixer from "autoprefixer"
+
+import { keypages, keypagesMap } from "./keypage"
 
 export const chrockTheme = (() => ({
   name: "vuepress-theme-chrock",
@@ -36,6 +39,10 @@ export const chrockTheme = (() => ({
       updatedTime: true,
     }),
     tocPlugin(),
+    activeHeaderLinksPlugin({
+      headerLinkSelector: "a.vuepress-toc-link",
+      delay: 200,
+    }),
     searchPlugin({
       maxSuggestions: 10,
       getExtraFields: (page) => [
@@ -52,6 +59,7 @@ export const chrockTheme = (() => ({
   ],
 
   clientConfigFile: path.resolve(__dirname, "../client/config.ts"),
+
   extendsBundlerOptions(options) {
     merge(options, {
       viteOptions: {
@@ -61,61 +69,41 @@ export const chrockTheme = (() => ({
           },
         },
       } as UserConfigExport,
-    });
+    })
+  },
+
+  extendsMarkdown(instance) {
+    instance
+      .use(require("markdown-it-sub"))
+      .use(require("markdown-it-sup"))
+      .use(require("markdown-it-footnote"))
+  },
+
+  extendsPageOptions(page) {
+    if (keypagesMap[page.path!]) {
+      page.frontmatter = merge(
+        {},
+        page.frontmatter ?? {},
+        keypagesMap[page.path!]
+      )
+    }
   },
 
   async onInitialized(app) {
-    for (const page of [
-      [
-        "/",
-        [
-          "---",
-          "layout: HomeLayout",
-          "---",
-          "## HELLO WORLD!",
-          "",
-          "Auto created by theme `vuepress-theme-chrock`.",
-        ].join("\n"),
-      ],
-      [
-        "/groups/",
-        [
-          "---",
-          "layout: SearchableLayout",
-          "routeMeta:",
-          "  type: groups",
-          "---",
-          "## HELLO WORLD!",
-          "",
-          "Auto created by theme `vuepress-theme-chrock`.",
-        ].join("\n"),
-      ],
-      [
-        "/tags/",
-        [
-          "---",
-          "layout: SearchableLayout",
-          "routeMeta:",
-          "  type: tags",
-          "---",
-          "## HELLO WORLD!",
-          "",
-          "Auto created by theme `vuepress-theme-chrock`.",
-        ].join("\n"),
-      ],
-    ] as [string, string][]) {
-      await createPageIfNotExists(...page);
+    for (const [path] of keypages) {
+      await getOrCreatePage(path)
     }
 
-    async function createPageIfNotExists(path: string, content: string) {
-      if (!app.pages.find((page) => page.path === path)) {
-        app.pages.push(
-          await createPage(app, {
-            path,
-            content,
-          })
-        );
+    async function getOrCreatePage(path: string) {
+      let result = app.pages.find((page) => page.path === path)
+      if (!result) {
+        result = await createPage(app, {
+          path,
+          content: "Auto created by theme `vuepress-theme-chrock`.",
+        })
+        app.pages.push(result)
       }
+      return result
     }
   },
-})) as Theme;
+})) as Theme

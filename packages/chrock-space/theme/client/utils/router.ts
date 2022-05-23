@@ -1,18 +1,18 @@
-import { ref } from "vue";
-import { RouteLocationRaw, Router } from "vue-router";
+import { ref } from "vue"
+import { RouteLocationRaw, Router } from "vue-router"
 
-export type RouteTarget = "groups" | "tags" | "home" | "links";
+export type RouteTarget = "groups" | "tags" | "home" | "links"
 
 export const routeTarget = {
   groups: "/groups/",
   tags: "/tags/",
   links: "/links/",
   home: "/",
-};
+}
 
-const instance = ref<Router>();
+const instance = ref<Router>()
 export function initialize(router: Router) {
-  instance.value = router;
+  instance.value = router
 }
 
 export function goto(
@@ -22,13 +22,13 @@ export function goto(
   instance.value?.push({
     path: routeTarget[target],
     ...params,
-  });
+  })
 }
 
 export function onBack() {
   if (!instance.value?.options.history.state.position) {
-    goto("home");
+    goto("home")
   } else {
-    instance.value?.back();
+    instance.value?.back()
   }
 }

@@ -1,17 +1,20 @@
 <template>
   <div class="post-item">
     <div class="card-left">
-      <div class="post-created-date">
-        <i class="mdi mdi-calendar-blank text-lg" /> {{ createdTime || "----" }}
-      </div>
       <group-link v-if="!!group" class="post-group" :group="group" />
-      <div v-if="tags && tags.length" class="post-tags">
-        <i class="mdi mdi-tag-multiple text-lg" />
-        <tag-link v-for="tag in tags" :key="tag" :tag="tag">
-          <el-button color="#0004" size="small" round class="tag">
-            {{ tag }}
-          </el-button>
-        </tag-link>
+      <div class="flex flex-row gap-8">
+        <!-- <div class="post-created-date">
+          <i class="mdi mdi-calendar-blank text-lg" />
+          {{ createdTime || "----" }}
+        </div> -->
+        <div v-if="tags && tags.length" class="post-tags">
+          <i class="mdi mdi-tag-multiple text-lg" />
+          <tag-link v-for="tag in tags" :key="tag" :tag="tag">
+            <el-button color="#0004" size="small" round class="tag">
+              {{ tag }}
+            </el-button>
+          </tag-link>
+        </div>
       </div>
       <div>
         <post-link class="post-title" :post="post">

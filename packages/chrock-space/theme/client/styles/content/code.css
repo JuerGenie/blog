@@ -37,6 +37,13 @@
     & > .line-numbers {
       @apply px-4 text-right;
       @apply select-none;
+
+      counter-reset: line-number;
+
+      & .line-number::before {
+        counter-increment: line-number;
+        content: counter(line-number);
+      }
     }
 
     & > .shiki {

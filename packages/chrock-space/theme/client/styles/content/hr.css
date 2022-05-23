@@ -1,6 +1,6 @@
 .content {
   & hr {
-    @apply border-2 border-slate-500;
+    @apply border-4 border-slate-500 border-opacity-50 border-dashed;
     @apply rounded;
     @apply my-4;
   }

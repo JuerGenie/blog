@@ -49,11 +49,11 @@ const authorData = useAuthorData();
 
   & .author-card-wrapper {
     @apply w-[30rem] h-[20rem];
-    @apply bg-slate-100 bg-opacity-0 hover:bg-opacity-80;
+    @apply bg-slate-100 bg-opacity-20 hover:bg-opacity-80;
     @apply flex flex-row overflow-hidden;
     @apply relative rounded-xl hover:shadow-xl z-10;
     @apply duration-1000 ease-out;
-    @apply hover:backdrop-blur;
+    @apply backdrop-blur-sm hover:backdrop-blur-lg;
 
     & .author-avatar {
       @apply absolute top-0 bottom-0 right-0;

@@ -5,11 +5,12 @@
 @import "./list.css";
 @import "./p.css";
 @import "./table.css";
+@import "./footnote.css";
 
 .content {
   @apply py-12;
   @apply flex flex-col gap-2;
-  @apply text-slate-800 text-base;
+  @apply text-slate-600 text-base font-light;
 
   & em,
   strong {
