@@ -7,6 +7,7 @@ importers:
 
   packages/chrock-space:
     specifiers:
+      '@giscus/vue': ^2.0.5
       '@mdi/font': ^6.6.96
       '@tailwindcss/line-clamp': ^0.4.0
       '@types/lodash': ^4.14.182
@@ -15,6 +16,7 @@ importers:
       '@unocss/preset-wind': ^0.33.4
       '@vuepress/client': 2.0.0-beta.45
       '@vuepress/plugin-active-header-links': 2.0.0-beta.45
+      '@vuepress/plugin-container': 2.0.0-beta.45
       '@vuepress/plugin-git': 2.0.0-beta.45
       '@vuepress/plugin-search': 2.0.0-beta.45
       '@vuepress/plugin-shiki': ^2.0.0-beta.45
@@ -27,7 +29,12 @@ importers:
       element-plus: ^2.2.0
       eslint: ^8.16.0
       eslint-config-vuepress-typescript: ^2.7.1
+      eslint-plugin-import: ^2.26.0
+      eslint-plugin-n: ^15.2.0
+      eslint-plugin-promise: ^6.0.0
       lodash: ^4.17.21
+      markdown-it: ^13.0.1
+      markdown-it-attrs: ^4.1.4
       markdown-it-footnote: ^3.0.3
       markdown-it-multimd-table: ^4.1.3
       markdown-it-sub: ^1.0.0
@@ -48,6 +55,7 @@ importers:
       vuepress: 2.0.0-beta.45
       windicss: ^3.5.3
     dependencies:
+      '@giscus/vue': 2.0.5_vue@3.2.33
       '@mdi/font': 6.6.96
       '@vuepress/client': 2.0.0-beta.45
       '@vuepress/plugin-git': 2.0.0-beta.45
@@ -69,10 +77,16 @@ importers:
       '@types/tailwindcss': 3.0.10
       '@unocss/preset-wind': 0.33.4
       '@vuepress/plugin-active-header-links': 2.0.0-beta.45
+      '@vuepress/plugin-container': 2.0.0-beta.45
       autoprefixer: 10.4.7_postcss@8.4.13
       csstype: 3.1.0
       eslint: 8.16.0
-      eslint-config-vuepress-typescript: 2.7.1_b52xwnmtda7tiq2xfqlpdvcl74
+      eslint-config-vuepress-typescript: 2.7.1_5zhlw6vrwlz2youvhe4p6p2zo4
+      eslint-plugin-import: 2.26.0_eslint@8.16.0
+      eslint-plugin-n: 15.2.0_eslint@8.16.0
+      eslint-plugin-promise: 6.0.0_eslint@8.16.0
+      markdown-it: 13.0.1
+      markdown-it-attrs: 4.1.4_markdown-it@13.0.1
       markdown-it-footnote: 3.0.3
       markdown-it-multimd-table: 4.1.3
       markdown-it-sub: 1.0.0
@@ -172,6 +186,15 @@ packages:
       '@floating-ui/core': 0.6.2
     dev: false
 
+  /@giscus/vue/2.0.5_vue@3.2.33:
+    resolution: {integrity: sha512-RxSlwZtONLrNY1tmO/APmtlzeOvVk2g0/JVBhtdzS7AupssIxLX0hdHx9keyH4ZCK6fZcun4EpS23bthEl4K7Q==}
+    peerDependencies:
+      vue: '>=3.2.0'
+    dependencies:
+      giscus: 1.0.5
+      vue: 3.2.33
+    dev: false
+
   /@humanwhocodes/config-array/0.9.5:
     resolution: {integrity: sha512-ObyMyWxZiCu/yTisA7uzx81s40xR2fD5Cg/2Kq7G02ajkNubJf6BopgDTmDyc3U7sXpNKM8cYOw7s7Tyr+DnCw==}
     engines: {node: '>=10.10.0'}
@@ -203,6 +226,10 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /@lit/reactive-element/1.3.2:
+    resolution: {integrity: sha512-A2e18XzPMrIh35nhIdE4uoqRzoIpEU5vZYuQN4S3Ee1zkGdYC27DP12pewbw/RLgPHzaE4kx/YqxMzebOpm0dA==}
+    dev: false
 
   /@mdi/font/6.6.96:
     resolution: {integrity: sha512-FbcvG9z17hwZ7IwX5XeOR1UYGoLq+gTKq6XNPvJFuCpn599GdiPCJbAmmDBJb+jMYXjKYr0lCxfouWGxDA82sA==}
@@ -302,6 +329,10 @@ packages:
   /@types/tailwindcss/3.0.10:
     resolution: {integrity: sha512-1UnZIHO0NOPyPlPFV0HuMjki2SHkvG9uBA1ZehWj/OQMSROk503nuNyyfmJSIT289yewxTbKoPG+KLxYRvfIIg==}
     dev: true
+
+  /@types/trusted-types/2.0.2:
+    resolution: {integrity: sha512-F5DIZ36YVLE+PN+Zwws4kJogq47hNgX3Nx6WyDJ3kcplxyke3XIzB8uK5n/Lpm1HBsbGzd6nmGehL8cPekP+Tg==}
+    dev: false
 
   /@typescript-eslint/eslint-plugin/5.25.0_jorowkvdqu6pwramweg5le7ncu:
     resolution: {integrity: sha512-icYrFnUzvm+LhW0QeJNKkezBu6tJs9p/53dpPLFH8zoM9w1tfaKzVurkPotEpAqQ8Vf8uaFyL5jHd0Vs6Z0ZQg==}
@@ -1696,28 +1727,17 @@ packages:
       eslint-plugin-promise: ^6.0.0
     dependencies:
       eslint: 8.16.0
-      eslint-plugin-import: 2.26.0_fpv4l7j2iomztwskn7bai2v6a4
+      eslint-plugin-import: 2.26.0_eslint@8.16.0
       eslint-plugin-n: 15.2.0_eslint@8.16.0
       eslint-plugin-promise: 6.0.0_eslint@8.16.0
     dev: true
 
-  /eslint-config-standard/17.0.0_eslint@8.16.0:
-    resolution: {integrity: sha512-/2ks1GKyqSOkH7JFvXJicu0iMpoojkwB+f5Du/1SC0PtBL+s8v30k9njRZ21pm2drKYm2342jFnGWzttxPmZVg==}
-    peerDependencies:
-      eslint: ^8.0.1
-      eslint-plugin-import: ^2.25.2
-      eslint-plugin-n: ^15.0.0
-      eslint-plugin-promise: ^6.0.0
-    dependencies:
-      eslint: 8.16.0
-    dev: true
-
-  /eslint-config-vuepress-typescript/2.7.1_b52xwnmtda7tiq2xfqlpdvcl74:
+  /eslint-config-vuepress-typescript/2.7.1_5zhlw6vrwlz2youvhe4p6p2zo4:
     resolution: {integrity: sha512-hoQPALl0HMwJObpxpB3/SgSz8wnL18p1rCuC/jsk/8iEQJ11Xo95OMb4QapygGmJx6phC9Pm21aDvhdatJ7Gdw==}
     dependencies:
       '@typescript-eslint/eslint-plugin': 5.25.0_jorowkvdqu6pwramweg5le7ncu
       '@typescript-eslint/parser': 5.25.0_utdtartgf6fqqgkivzeynh76la
-      eslint-config-standard: 17.0.0_eslint@8.16.0
+      eslint-config-standard: 17.0.0_a34zldniqa7pmczppzwphgpvau
       eslint-config-vuepress: 3.7.1_qhtyg6kmq6iki7blnwgepeop44
     transitivePeerDependencies:
       - '@babel/core'
@@ -1803,6 +1823,31 @@ packages:
       - supports-color
     dev: true
 
+  /eslint-module-utils/2.7.3_ulu2225r2ychl26a37c6o2rfje:
+    resolution: {integrity: sha512-088JEC7O3lDZM9xGe0RerkOMd0EjFl+Yvd1jPWIkMT5u3H9+HC34mWWPnqPrN13gieT9pBOO+Qt07Nb/6TresQ==}
+    engines: {node: '>=4'}
+    peerDependencies:
+      '@typescript-eslint/parser': '*'
+      eslint-import-resolver-node: '*'
+      eslint-import-resolver-typescript: '*'
+      eslint-import-resolver-webpack: '*'
+    peerDependenciesMeta:
+      '@typescript-eslint/parser':
+        optional: true
+      eslint-import-resolver-node:
+        optional: true
+      eslint-import-resolver-typescript:
+        optional: true
+      eslint-import-resolver-webpack:
+        optional: true
+    dependencies:
+      debug: 3.2.7
+      eslint-import-resolver-node: 0.3.6
+      find-up: 2.1.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
   /eslint-plugin-es/4.1.0_eslint@8.16.0:
     resolution: {integrity: sha512-GILhQTnjYE2WorX5Jyi5i4dz5ALWxBIdQECVQavL6s7cI76IZTDWleTHkxz/QT3kvcs2QlGHvKLYsSlPOlPXnQ==}
     engines: {node: '>=8.10.0'}
@@ -1812,6 +1857,36 @@ packages:
       eslint: 8.16.0
       eslint-utils: 2.1.0
       regexpp: 3.2.0
+    dev: true
+
+  /eslint-plugin-import/2.26.0_eslint@8.16.0:
+    resolution: {integrity: sha512-hYfi3FXaM8WPLf4S1cikh/r4IxnO6zrhZbEGz2b660EJRbuxgpDS5gkCuYgGWg2xxh2rBuIr4Pvhve/7c31koA==}
+    engines: {node: '>=4'}
+    peerDependencies:
+      '@typescript-eslint/parser': '*'
+      eslint: ^2 || ^3 || ^4 || ^5 || ^6 || ^7.2.0 || ^8
+    peerDependenciesMeta:
+      '@typescript-eslint/parser':
+        optional: true
+    dependencies:
+      array-includes: 3.1.5
+      array.prototype.flat: 1.3.0
+      debug: 2.6.9
+      doctrine: 2.1.0
+      eslint: 8.16.0
+      eslint-import-resolver-node: 0.3.6
+      eslint-module-utils: 2.7.3_ulu2225r2ychl26a37c6o2rfje
+      has: 1.0.3
+      is-core-module: 2.9.0
+      is-glob: 4.0.3
+      minimatch: 3.1.2
+      object.values: 1.1.5
+      resolve: 1.22.0
+      tsconfig-paths: 3.14.1
+    transitivePeerDependencies:
+      - eslint-import-resolver-typescript
+      - eslint-import-resolver-webpack
+      - supports-color
     dev: true
 
   /eslint-plugin-import/2.26.0_fpv4l7j2iomztwskn7bai2v6a4:
@@ -2199,6 +2274,12 @@ packages:
       get-intrinsic: 1.1.1
     dev: true
 
+  /giscus/1.0.5:
+    resolution: {integrity: sha512-jg+4qUtyn2r9gCZJthbgPn/hLaoZAcZVhWx6d7+TYrrojMjAltrlSzYdsL++4iutVmGEYktp+nUJn2rQgZzvTg==}
+    dependencies:
+      lit: 2.2.4
+    dev: false
+
   /glob-parent/5.1.2:
     resolution: {integrity: sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==}
     engines: {node: '>= 6'}
@@ -2531,6 +2612,27 @@ packages:
     dependencies:
       uc.micro: 1.0.6
 
+  /lit-element/3.2.0:
+    resolution: {integrity: sha512-HbE7yt2SnUtg5DCrWt028oaU4D5F4k/1cntAFHTkzY8ZIa8N0Wmu92PxSxucsQSOXlODFrICkQ5x/tEshKi13g==}
+    dependencies:
+      '@lit/reactive-element': 1.3.2
+      lit-html: 2.2.4
+    dev: false
+
+  /lit-html/2.2.4:
+    resolution: {integrity: sha512-IPY0V0z/QWcTduxb6DlP46Un8n6tG+mHSAijGcPozfXTjVkvFLN4/irPzthtq/eC8RU+7CUqh6h4KB7tnRPJfg==}
+    dependencies:
+      '@types/trusted-types': 2.0.2
+    dev: false
+
+  /lit/2.2.4:
+    resolution: {integrity: sha512-O7t+uizo1/Br0y+5RaWRzPkd4MsoL4XY2eq7n2wrESyCCjeagq4ERZKsyKX40jbmsz4bAAs7/0qNRX11TuXzoA==}
+    dependencies:
+      '@lit/reactive-element': 1.3.2
+      lit-element: 3.2.0
+      lit-html: 2.2.4
+    dev: false
+
   /local-pkg/0.4.1:
     resolution: {integrity: sha512-lL87ytIGP2FU5PWwNDo0w3WhIo2gopIAxPg9RxDYF7m4rr5ahuZxP22xnJHIvaLTe4Z9P6uKKY2UHiwyB4pcrw==}
     engines: {node: '>=14'}
@@ -2608,6 +2710,15 @@ packages:
     dependencies:
       '@types/markdown-it': 12.2.3
       markdown-it: 13.0.1
+
+  /markdown-it-attrs/4.1.4_markdown-it@13.0.1:
+    resolution: {integrity: sha512-53Zfv8PTb6rlVFDlD106xcZHKBSsRZKJ2IW/rTxEJBEVbVaoxaNsmRkG0HXfbHl2SK8kaxZ2QKqdthWy/QBwmA==}
+    engines: {node: '>=6'}
+    peerDependencies:
+      markdown-it: '>= 9.0.0'
+    dependencies:
+      markdown-it: 13.0.1
+    dev: true
 
   /markdown-it-container/3.0.0:
     resolution: {integrity: sha512-y6oKTq4BB9OQuY/KLfk/O3ysFhB3IMYoIWhGJEidXt1NQFocFK2sA2t0NYZAMyMShAGL6x5OPIbrmXPIqaN9rw==}

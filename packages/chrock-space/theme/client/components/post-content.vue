@@ -46,6 +46,36 @@
           <toc :headers="currentPage.headers" />
         </div>
       </div>
+
+      <div
+        v-if="!currentPage.frontmatter.hideLicenses"
+        class="wrapper licenses-summary"
+      >
+        <p>
+          本文为 {{ authorData.name }} 原创，依据「{{
+            licenses
+          }}」许可进行授权，商业转载请联系
+          {{ authorData.name }} 获得授权，非商业转载请注明出处。
+          转载请附上出处链接及本声明。
+        </p>
+      </div>
+
+      <div class="wrapper pb-16">
+        <el-divider />
+        <giscus
+          repo="juergenie/juergenie.github.io"
+          repo-id="R_kgDOG0CKgw"
+          category="Announcements"
+          category-id="DIC_kwDOG0CKg84CPQtU"
+          mapping="pathname"
+          reactions-enabled="1"
+          emit-metadata="0"
+          input-position="top"
+          theme="light"
+          lang="zh-CN"
+          loading="lazy"
+        />
+      </div>
     </main>
   </div>
 </template>
@@ -53,13 +83,17 @@
 <script lang="ts" setup>
 import { usePageData } from "@vuepress/client";
 import { GitPluginPageData } from "@vuepress/plugin-git";
+import { useEventListener } from "@vueuse/core";
 import dayjs from "dayjs";
-import { computed, watchEffect } from "vue";
+import { computed, onMounted, watchEffect } from "vue";
 import { Toc } from "@vuepress/plugin-toc/lib/client";
 import GroupLink from "./linker/group-link.vue";
 import TagLink from "./linker/tag-link.vue";
+import { useAuthorData } from "../composables/author-data";
+import Giscus from "@giscus/vue";
 
 const currentPage = usePageData<ChrockPostData & GitPluginPageData>();
+onMounted(() => console.log("current page", currentPage.value));
 
 const createdDate = computed(() =>
   dayjs(currentPage.value.git?.createdTime ?? "").format("YYYY/MM/DD")
@@ -69,6 +103,28 @@ const subtitle = computed(() => currentPage.value.frontmatter.subtitle);
 const background = computed(() => currentPage.value.frontmatter.background);
 const group = computed(() => currentPage.value.frontmatter.group);
 const tags = computed(() => currentPage.value.frontmatter.tags);
+const licenses = computed(
+  () => currentPage.value.frontmatter.license ?? "CC BY-NC-SA 4.0"
+);
+
+const authorData = useAuthorData();
+useEventListener(document, "copy", (evt) => {
+  if (evt.clipboardData && window.getSelection()) {
+    const data = window.getSelection()?.toString();
+    if (data) {
+      evt.preventDefault();
+      const targetText = [
+        data,
+        "",
+        "================",
+        `本文为 ${authorData.value.name} 原创，依据「${licenses.value}」许可进行授权，商业转载请联系 ${authorData.value.name} 获得授权，非商业转载请注明出处。`,
+        `转载请附上出处链接(${window.location.href})及本声明。`,
+      ].join("\n");
+
+      evt.clipboardData?.setData("text/plain", targetText);
+    }
+  }
+});
 </script>
 
 <style lang="postcss" scoped>
@@ -175,10 +231,10 @@ const tags = computed(() => currentPage.value.frontmatter.tags);
 
               & .router-link-active {
                 &.active {
-                  @apply text-cyan-600;
+                  @apply text-sky-600;
 
                   &::before {
-                    @apply bg-cyan-300;
+                    @apply bg-sky-300;
                   }
                 }
 
@@ -192,6 +248,12 @@ const tags = computed(() => currentPage.value.frontmatter.tags);
           }
         }
       }
+    }
+
+    & .licenses-summary {
+      @apply py-2 px-4 rounded-lg;
+      @apply text-sm text-slate-800 text-opacity-80;
+      @apply bg-slate-100;
     }
   }
 

@@ -1,14 +1,21 @@
 <template>
-  <label class="chrock-search">
-    <input
-      ref="inputRef"
-      type="search"
-      placeholder="..."
-      @keypress.up="onArrowUp"
-      @keypress.down="onArrowDown"
-      v-model="query"
+  <el-select
+    class="chrock-search"
+    filterable
+    :filter-method="onFilter"
+    @update:model-value="onUpdateTarget"
+    suffix-icon=""
+    placeholder="Search"
+    no-data-text="试着输入点什么？"
+    no-match-text="没有匹配的结果哦！"
+  >
+    <el-option
+      v-for="suggestion in suggestions"
+      :key="suggestion.link"
+      :label="suggestion.title"
+      :value="suggestion.link"
     />
-  </label>
+  </el-select>
 </template>
 
 <script lang="ts" setup>
@@ -16,18 +23,19 @@ import {
   useSearchSuggestions,
   useHotKeys,
   useSearchIndex,
-  useSuggestionsFocus,
+  SearchSuggestion,
 } from "@vuepress/plugin-search/lib/client";
 import { useRouter } from "vue-router";
 import { useRouteLocale } from "@vuepress/client";
-import { computed, ref, toRefs } from "vue";
+import { ref, toRefs } from "vue";
 
 const props = withDefaults(
   defineProps<{
-    hotKeys: string[];
+    hotKeys?: string[];
     maxSuggestions?: number;
   }>(),
   {
+    hotKeys: () => [],
     maxSuggestions: 5,
   }
 );
@@ -39,8 +47,11 @@ const routeLocale = useRouteLocale();
 const searchIndex = useSearchIndex();
 
 const inputRef = ref<HTMLInputElement | null>(null);
-const isActive = ref(false);
 const query = ref("");
+
+function onFilter(str: string) {
+  query.value = str;
+}
 
 const suggestions = useSearchSuggestions({
   searchIndex,
@@ -48,24 +59,20 @@ const suggestions = useSearchSuggestions({
   query,
   maxSuggestions,
 });
-const { focusIndex, focusNext, focusPrev } = useSuggestionsFocus(suggestions);
 useHotKeys({ input: inputRef, hotKeys });
 
-const showSuggestions = computed(
-  () => isActive.value && !!suggestions.value.length
-);
-const onArrowUp = (): void => {
-  if (!showSuggestions.value) {
-    return;
-  }
-  focusPrev();
-};
-const onArrowDown = (): void => {
-  if (!showSuggestions.value) {
-    return;
-  }
-  focusNext();
-};
+function onUpdateTarget(target: SearchSuggestion) {
+  router.push(target.link);
+  query.value = "";
+}
 </script>
 
-<style lang="postcss" scoped></style>
+<style lang="postcss" scoped>
+.chrock-search {
+  @apply bg-transparent;
+
+  & :deep(.el-input__wrapper) {
+    @apply bg-transparent;
+  }
+}
+</style>

@@ -25,7 +25,7 @@ import { computed, ref } from "vue";
 
 const { posts } = usePosts();
 const pagination = ref({
-  total: posts.length,
+  total: posts.value.length,
   current: 1,
   size: 20,
 });
@@ -33,7 +33,10 @@ const pagingStart = computed(
   () => (pagination.value.current - 1) * pagination.value.size
 );
 const filteredPosts = computed(() =>
-  posts.slice(pagingStart.value, pagingStart.value + pagination.value.size)
+  posts.value.slice(
+    pagingStart.value,
+    pagingStart.value + pagination.value.size
+  )
 );
 </script>
 

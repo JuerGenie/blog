@@ -6,6 +6,9 @@
 @import "./p.css";
 @import "./table.css";
 @import "./footnote.css";
+@import "./strikethrough.css";
+
+@import "./extensions.css";
 
 .content {
   @apply py-12;

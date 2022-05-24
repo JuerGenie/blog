@@ -1,20 +1,21 @@
-import { shikiPlugin } from "@vuepress/plugin-shiki"
-import { gitPlugin } from "@vuepress/plugin-git"
-import { tocPlugin } from "@vuepress/plugin-toc"
-import { searchPlugin } from "@vuepress/plugin-search"
-import { activeHeaderLinksPlugin } from "@vuepress/plugin-active-header-links"
+import { shikiPlugin } from "@vuepress/plugin-shiki";
+import { gitPlugin } from "@vuepress/plugin-git";
+import { tocPlugin } from "@vuepress/plugin-toc";
+import { searchPlugin } from "@vuepress/plugin-search";
+import { activeHeaderLinksPlugin } from "@vuepress/plugin-active-header-links";
+import { containerPlugin } from "@vuepress/plugin-container";
 // import { defaultTheme } from "@vuepress/theme-default";
-import { merge } from "lodash"
-import path from "path"
-import { createPage, PageFrontmatter, type Theme } from "vuepress"
-import { UserConfigExport } from "vite"
+import { merge } from "lodash";
+import path from "path";
+import { createPage, PageFrontmatter, type Theme } from "vuepress";
+import { UserConfigExport } from "vite";
 
 // import WindiCSS from "vite-plugin-windicss";
-import tailwindcss from "tailwindcss"
-import tailwindcssNesting from "tailwindcss/nesting"
-import autoprefixer from "autoprefixer"
+import tailwindcss from "tailwindcss";
+import tailwindcssNesting from "tailwindcss/nesting";
+import autoprefixer from "autoprefixer";
 
-import { keypages, keypagesMap } from "./keypage"
+import { keypages, keypagesMap } from "./keypage";
 
 export const chrockTheme = (() => ({
   name: "vuepress-theme-chrock",
@@ -56,6 +57,11 @@ export const chrockTheme = (() => ({
       ],
       isSearchable: (page) => !["/", "/groups/", "/tags/"].includes(page.path),
     }),
+    containerPlugin({
+      type: "test",
+      before: (info) => `<div class="${info}">`,
+      after: (info) => `</div>`,
+    }),
   ],
 
   clientConfigFile: path.resolve(__dirname, "../client/config.ts"),
@@ -69,7 +75,7 @@ export const chrockTheme = (() => ({
           },
         },
       } as UserConfigExport,
-    })
+    });
   },
 
   extendsMarkdown(instance) {
@@ -77,6 +83,7 @@ export const chrockTheme = (() => ({
       .use(require("markdown-it-sub"))
       .use(require("markdown-it-sup"))
       .use(require("markdown-it-footnote"))
+      .use(require("markdown-it-attrs"));
   },
 
   extendsPageOptions(page) {
@@ -85,25 +92,25 @@ export const chrockTheme = (() => ({
         {},
         page.frontmatter ?? {},
         keypagesMap[page.path!]
-      )
+      );
     }
   },
 
   async onInitialized(app) {
     for (const [path] of keypages) {
-      await getOrCreatePage(path)
+      await getOrCreatePage(path);
     }
 
     async function getOrCreatePage(path: string) {
-      let result = app.pages.find((page) => page.path === path)
+      let result = app.pages.find((page) => page.path === path);
       if (!result) {
         result = await createPage(app, {
           path,
           content: "Auto created by theme `vuepress-theme-chrock`.",
-        })
-        app.pages.push(result)
+        });
+        app.pages.push(result);
       }
-      return result
+      return result;
     }
   },
-})) as Theme
+})) as Theme;

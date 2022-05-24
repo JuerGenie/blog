@@ -4,7 +4,7 @@
     <el-tooltip :show-arrow="false" placement="top">
       <div @click="openLicensesPage">{{ licenses }}</div>
       <template #content>
-        <pre v-text="licensesSummary" />
+        <pre v-html="licensesSummary" />
       </template>
     </el-tooltip>
   </div>
@@ -19,10 +19,8 @@ const licenses = "CC BY-NC-SA";
 
 const licensesSummary = computed(() =>
   [
-    "若无另外说明，此博客所有作品著作权归作者所有。",
-    `本文为 ${authorData.value.name} 原创，依据「CC BY-NC-SA 4.0」许可进行授权，`,
-    `商业转载请联系 ${authorData.value.name} 获得授权，非商业转载请注明出处。`,
-    `转载请附上出处链接及本声明。`,
+    `若无另外说明，此博客所有作品著作权归作者所有，并依据「CC BY-NC-SA 4.0」许可进行授权，您可点击查看详细的许可说明。`,
+    `商业转载请联系 ${authorData.value.name} 获得授权，非商业转载请注明出处，转载请附上出处链接及本声明。`,
   ].join("\n")
 );
 

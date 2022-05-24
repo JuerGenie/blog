@@ -19,6 +19,8 @@ export const posts: Ref<Post[]> = ref([]);
   ).sort((a, b) =>
     (a.git.createdTime ?? 0) > (b.git.createdTime ?? 0) ? -1 : 1
   );
+
+  console.log("initialized", posts.value);
 })();
 
 export const tags = computed(() =>
@@ -83,7 +85,7 @@ export function search(target: string): Post[] {
 }
 
 export function usePosts() {
-  return reactive({
+  return {
     posts,
     tags,
     tagMap,
@@ -95,5 +97,5 @@ export function usePosts() {
     getByGroup,
     getByTag,
     search,
-  });
+  };
 }

@@ -3,17 +3,11 @@
     <div class="card-left">
       <group-link v-if="!!group" class="post-group" :group="group" />
       <div class="flex flex-row gap-8">
-        <!-- <div class="post-created-date">
-          <i class="mdi mdi-calendar-blank text-lg" />
-          {{ createdTime || "----" }}
-        </div> -->
-        <div v-if="tags && tags.length" class="post-tags">
-          <i class="mdi mdi-tag-multiple text-lg" />
-          <tag-link v-for="tag in tags" :key="tag" :tag="tag">
-            <el-button color="#0004" size="small" round class="tag">
-              {{ tag }}
-            </el-button>
-          </tag-link>
+        <div>
+          <post-update-time :post="post" />
+        </div>
+        <div v-if="tags?.length">
+          <post-tags :post="post" :size="4" />
         </div>
       </div>
       <div>
@@ -43,6 +37,8 @@ import { RouterLink } from "vue-router";
 import GroupLink from "./linker/group-link.vue";
 import TagLink from "./linker/tag-link.vue";
 import PostLink from "./linker/post-link.vue";
+import PostUpdateTime from "./post/post-update-time.vue";
+import PostTags from "./post/post-tags.vue";
 
 const props = defineProps<{
   post: Post;
@@ -52,21 +48,29 @@ const subtitle = computed(() => props.post.frontmatter.subtitle);
 const group = computed(() => props.post.frontmatter.group);
 const tags = computed(() => props.post.frontmatter.tags);
 const background = computed(() => props.post.frontmatter.background);
-const createdTime = computed(
-  () =>
-    props.post.git.createdTime &&
-    dayjs(props.post.git.createdTime).format("YYYY/MM/DD")
-);
+const createdTime = computed(() => {
+  const time = props.post.git.updatedTime ?? props.post.git.createdTime;
+  if (time) {
+    return dayjs(props.post.git.createdTime).format("YYYY/MM/DD");
+  } else {
+    return "----";
+  }
+});
 </script>
 
 <style lang="postcss" scoped>
 .post-item {
   @apply rounded-2xl rounded-bl;
-  @apply border-2 border-slate-200;
+  @apply border-2 border-slate-200 bg-white;
   @apply relative;
   @apply w-[40rem] h-auto;
   @apply flex flex-row;
-  @apply hover:shadow-xl;
+
+  @apply duration-500;
+  &:hover {
+    filter: drop-shadow(0 1.5rem 0.5rem rgb(0 0 0 / 0.04))
+      drop-shadow(0 0.75rem 0.25rem rgb(0 0 0 / 0.04));
+  }
 
   & > * {
     @apply relative z-10;
@@ -74,7 +78,7 @@ const createdTime = computed(
 
   & .card-left {
     @apply p-12;
-    @apply w-3/4;
+    @apply w-4/5;
     @apply flex flex-col gap-2;
 
     & .post-group {
@@ -82,11 +86,6 @@ const createdTime = computed(
       @apply h-8 flex justify-center items-center px-4;
       @apply text-lg font-extralight;
       @apply bg-white;
-    }
-
-    & .post-created-date {
-      @apply flex flex-row items-center gap-2;
-      @apply text-sm text-slate-500;
     }
 
     & .post-title {
@@ -97,15 +96,6 @@ const createdTime = computed(
 
     & .post-subtitle {
       @apply text-lg;
-    }
-
-    & .post-tags {
-      @apply flex flex-row flex-wrap gap-2 items-center;
-      @apply text-slate-500;
-
-      & .tag {
-        @apply border-none py-1 px-2 !important;
-      }
     }
 
     & .post-excerpt {
@@ -119,9 +109,6 @@ const createdTime = computed(
         @apply hidden;
       }
     }
-  }
-
-  & .card-right {
   }
 
   & .post-background {
