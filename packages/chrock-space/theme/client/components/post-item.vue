@@ -3,12 +3,11 @@
     <div class="card-left">
       <group-link v-if="!!group" class="post-group" :group="group" />
       <div class="flex flex-row gap-8">
-        <div>
-          <post-update-time :post="post" />
-        </div>
-        <div v-if="tags?.length">
-          <post-tags :post="post" :size="4" />
-        </div>
+        <post-author :post="post" />
+        <post-update-time :post="post" />
+      </div>
+      <div v-if="tags?.length">
+        <post-tags :post="post" :size="5" />
       </div>
       <div>
         <post-link class="post-title" :post="post">
@@ -21,7 +20,7 @@
     </div>
     <div class="card-right"></div>
 
-    <el-image class="post-background" :src="background" fit="cover" lazy>
+    <el-image class="post-background" :src="cover" fit="cover" lazy>
       <template #error>
         <div class="failed-slot" />
       </template>
@@ -39,6 +38,7 @@ import TagLink from "./linker/tag-link.vue";
 import PostLink from "./linker/post-link.vue";
 import PostUpdateTime from "./post/post-update-time.vue";
 import PostTags from "./post/post-tags.vue";
+import PostAuthor from "./post/post-author.vue";
 
 const props = defineProps<{
   post: Post;
@@ -47,7 +47,7 @@ const props = defineProps<{
 const subtitle = computed(() => props.post.frontmatter.subtitle);
 const group = computed(() => props.post.frontmatter.group);
 const tags = computed(() => props.post.frontmatter.tags);
-const background = computed(() => props.post.frontmatter.background);
+const cover = computed(() => props.post.frontmatter.cover);
 const createdTime = computed(() => {
   const time = props.post.git.updatedTime ?? props.post.git.createdTime;
   if (time) {
@@ -61,7 +61,7 @@ const createdTime = computed(() => {
 <style lang="postcss" scoped>
 .post-item {
   @apply rounded-2xl rounded-bl;
-  @apply border-2 border-slate-200 bg-white;
+  @apply border-2 border-slate-200 bg-white text-slate-500;
   @apply relative;
   @apply w-[40rem] h-auto;
   @apply flex flex-row;

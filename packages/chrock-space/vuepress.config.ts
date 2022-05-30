@@ -5,14 +5,9 @@ import path from "path";
 export default defineUserConfig({
   title: "克罗克",
   theme: chrockTheme,
+  description: "@JUERGENIE的个人博客。",
 
-  locales: {
-    "/": {
-      lang: "zh-CN",
-      title: "克罗克",
-      description: "@JUERGENIE的个人博客。",
-    },
-  },
+  lang: "zh-CN",
 
   clientConfigFile: path.resolve(__dirname, "./docs/enhance.ts"),
 });

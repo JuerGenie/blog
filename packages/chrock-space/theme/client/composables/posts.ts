@@ -35,7 +35,9 @@ export const tagMap = computed<Record<string, Post[]>>(() =>
   )
 );
 export const groups = computed(() =>
-  posts.value.map((page) => page.frontmatter.group).filter((group) => !!group)
+  posts.value
+    .map((page) => page.frontmatter.group as string)
+    .filter((group) => !!group)
 );
 export const groupMap = computed<Record<string, Post[]>>(() =>
   Object.fromEntries(

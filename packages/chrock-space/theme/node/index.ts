@@ -11,11 +11,16 @@ import { createPage, PageFrontmatter, type Theme } from "vuepress";
 import { UserConfigExport } from "vite";
 
 // import WindiCSS from "vite-plugin-windicss";
+// @ts-ignore
+import customSelectors from "postcss-custom-selectors";
 import tailwindcss from "tailwindcss";
 import tailwindcssNesting from "tailwindcss/nesting";
 import autoprefixer from "autoprefixer";
 
 import { keypages, keypagesMap } from "./keypage";
+import Token from "markdown-it/lib/token";
+import { tipsContainerPlugin } from "./containers/tips";
+import { imageContainerPlugin } from "./containers/image";
 
 export const chrockTheme = (() => ({
   name: "vuepress-theme-chrock",
@@ -33,7 +38,8 @@ export const chrockTheme = (() => ({
 
   plugins: [
     shikiPlugin({
-      theme: "material-ocean",
+      // theme: "material-ocean",
+      theme: "css-variables",
     }),
     gitPlugin({
       createdTime: true,
@@ -42,7 +48,7 @@ export const chrockTheme = (() => ({
     tocPlugin(),
     activeHeaderLinksPlugin({
       headerLinkSelector: "a.vuepress-toc-link",
-      delay: 200,
+      delay: 0,
     }),
     searchPlugin({
       maxSuggestions: 10,
@@ -57,11 +63,8 @@ export const chrockTheme = (() => ({
       ],
       isSearchable: (page) => !["/", "/groups/", "/tags/"].includes(page.path),
     }),
-    containerPlugin({
-      type: "test",
-      before: (info) => `<div class="${info}">`,
-      after: (info) => `</div>`,
-    }),
+    tipsContainerPlugin(),
+    imageContainerPlugin(),
   ],
 
   clientConfigFile: path.resolve(__dirname, "../client/config.ts"),
@@ -71,7 +74,12 @@ export const chrockTheme = (() => ({
       viteOptions: {
         css: {
           postcss: {
-            plugins: [tailwindcssNesting(), tailwindcss(), autoprefixer()],
+            plugins: [
+              tailwindcssNesting(),
+              tailwindcss(),
+              customSelectors(),
+              autoprefixer(),
+            ],
           },
         },
       } as UserConfigExport,
@@ -83,7 +91,28 @@ export const chrockTheme = (() => ({
       .use(require("markdown-it-sub"))
       .use(require("markdown-it-sup"))
       .use(require("markdown-it-footnote"))
-      .use(require("markdown-it-attrs"));
+      .use(require("markdown-it-ruby"))
+      .use(require("markdown-it-attrs"), {
+        leftDelimiter: "{{",
+        rightDelimiter: "}}",
+      });
+
+    // const { image } = instance.renderer.rules;
+    // instance.renderer.rules.image = (token, idx, options, env, self) => {
+    //   const target = token[idx];
+    //   // if (target.tag === "img") {
+    //   //   target.tag = "el-image";
+    //   // }
+    //   const source = `new URL(import.meta.url, ${target.attrGet("src")}).href`;
+    //   const result = image!(token, idx, options, env, self);
+    //   return (
+    //     result
+    //       .substring(0, result.length - 1)
+    //       .replace(/src="([^"]+)"/, `:src="${source}"`) + " />"
+    //   );
+    //   // console.log("result", result);
+    //   // return result;
+    // };
   },
 
   extendsPageOptions(page) {
@@ -113,4 +142,6 @@ export const chrockTheme = (() => ({
       return result;
     }
   },
+
+  define: () => ({}),
 })) as Theme;

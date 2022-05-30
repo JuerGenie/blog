@@ -1,7 +1,7 @@
 @import "./code-before.css";
 @import "./inline-code.css";
 
-.content {
+:--content {
   & div[class*="language-"] {
     @apply flex flex-row-reverse;
     @apply bg-slate-800 bg-opacity-80;
@@ -10,8 +10,22 @@
     @apply text-white text-sm;
     @apply relative;
 
+    /* ========[ 自定义颜色 ]======== */
+    --shiki-color-text: theme("colors.slate.200");
+    --shiki-color-background: theme("colors.slate.800");
+    --shiki-token-constant: theme("colors.blue.300");
+    --shiki-token-string: theme("colors.teal.500");
+    --shiki-token-comment: theme("colors.slate.500");
+    --shiki-token-keyword: theme("colors.blue.400");
+    --shiki-token-parameter: #aa0000;
+    --shiki-token-function: theme("colors.amber.200");
+    --shiki-token-string-expression: var(--shiki-token-string);
+    --shiki-token-punctuation: theme("colors.slate.200");
+    --shiki-token-link: theme("colors.sky.500");
+    /* ============================== */
+
     & > .shiki {
-      @apply bg-slate-700 bg-opacity-80 !important;
+      /* @apply bg-slate-700 bg-opacity-80 !important; */
     }
     &::after {
       content: "";

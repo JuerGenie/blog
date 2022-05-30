@@ -16,7 +16,7 @@
         :show-arrow="false"
         trigger="click"
         effect="extra-tags"
-        placement="right"
+        placement="right-start"
       >
         <el-button color="#0004" size="small" round class="tag">
           <i class="mdi mdi-dots-horizontal" />
@@ -24,11 +24,7 @@
 
         <template #content>
           <div class="post-tags">
-            <tag-link v-for="tag in hiddenTags" :key="tag" :tag="tag">
-              <el-button color="#0004" size="small" round class="tag">
-                {{ tag }}
-              </el-button>
-            </tag-link>
+            <post-tag-btn v-for="tag in hiddenTags" :key="tag" :tag="tag" />
           </div>
         </template>
       </el-tooltip>
@@ -40,6 +36,7 @@
 import { computed } from "vue";
 import { Post } from "../../composables/posts";
 import TagLink from "../linker/tag-link.vue";
+import PostTagBtn from "./post-tag-btn.vue";
 
 const props = defineProps<{
   post: Post;
@@ -57,7 +54,6 @@ const hiddenTags = computed(() =>
 <style lang="postcss" scoped>
 .post-tags {
   @apply flex flex-row gap-2 items-center;
-  @apply text-slate-500;
 
   & .tag {
     @apply border-none py-1 px-2 !important;

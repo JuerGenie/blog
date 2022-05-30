@@ -13,6 +13,8 @@ export const keypages: [string, PageFrontmatter][] = [
       layout: "SearchableLayout",
       routeMeta: {
         type: "groups",
+        title: "GROUPS",
+        subtitle: "# ON THE WAY.",
       },
     },
   ],
@@ -22,6 +24,8 @@ export const keypages: [string, PageFrontmatter][] = [
       layout: "SearchableLayout",
       routeMeta: {
         type: "tags",
+        title: "TAGS",
+        subtitle: "# MOE~MOE~CHU~❤️",
       },
     },
   ],

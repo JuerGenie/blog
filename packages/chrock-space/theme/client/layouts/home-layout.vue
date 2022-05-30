@@ -27,7 +27,11 @@
       <div ref="postsPanelRef" class="posts-panel">
         <div v-for="[date, sections] in groupPosts" class="post-group">
           <div class="post-group-label">
-            <a class="header-anchor vuepress-toc-link" :href="`#${date}`">
+            <a
+              :id="date"
+              class="header-anchor vuepress-toc-link"
+              :href="`#${date}`"
+            >
               <i class="mdi mdi-calendar-month text-4xl" />
             </a>
             {{ date }}

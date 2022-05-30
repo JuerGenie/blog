@@ -1,6 +1,6 @@
 <template>
   <div class="author-card">
-    <div class="author-card-wrapper">
+    <div class="author-card-wrapper group">
       <div class="author-information">
         <div class="author-name">{{ authorData.name }}</div>
         <div class="author-email">{{ authorData.email }}</div>
@@ -17,7 +17,7 @@
         </div>
       </div>
       <el-image class="author-avatar" fit="cover" :src="authorData.avatar" />
-      <div class="cladding-material" />
+      <!-- <div class="cladding-material" /> -->
     </div>
     <div class="author-links">
       <a
@@ -53,13 +53,22 @@ const authorData = useAuthorData();
     @apply flex flex-row overflow-hidden;
     @apply relative rounded-xl hover:shadow-xl z-10;
     @apply duration-1000 ease-out;
-    @apply backdrop-blur-sm hover:backdrop-blur-lg;
+    @apply backdrop-blur-sm hover:backdrop-blur-lg overflow-auto;
 
     & .author-avatar {
       @apply absolute top-0 bottom-0 right-0;
-      @apply h-full aspect-square rounded-r-xl;
+      @apply h-full aspect-square;
 
-      mask-image: linear-gradient(to right, #0000, #0004);
+      & > :deep(img) {
+        @apply duration-1000;
+      }
+
+      mask-image: linear-gradient(to right, #0000, #0003, #0004);
+    }
+    &.group:hover .author-avatar {
+      & :deep(img) {
+        @apply scale-110;
+      }
     }
 
     & .author-information {

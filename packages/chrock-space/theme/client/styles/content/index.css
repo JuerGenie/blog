@@ -1,7 +1,11 @@
+@import "./utils/index.css";
+
+@import "./anchor.css";
 @import "./blockquote.css";
 @import "./code.css";
 @import "./header.css";
 @import "./hr.css";
+@import "./img.css";
 @import "./list.css";
 @import "./p.css";
 @import "./table.css";
@@ -13,7 +17,7 @@
 .content {
   @apply py-12;
   @apply flex flex-col gap-2;
-  @apply text-slate-600 text-base font-light;
+  @apply text-slate-600 text-base font-normal;
 
   & em,
   strong {

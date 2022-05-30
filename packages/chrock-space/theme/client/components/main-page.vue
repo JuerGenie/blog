@@ -26,25 +26,52 @@ defineProps<{
   @apply flex flex-col gap-8;
 
   & > header {
-    @apply w-full h-96 px-32 py-8;
+    @apply w-full px-32 py-8;
     @apply relative;
-    @apply flex flex-col justify-end;
+    @apply flex flex-col justify-end items-center;
     @apply text-slate-200;
 
     &.no-cover {
       @apply text-slate-800;
+
+      &::after {
+        content: "";
+        @apply mt-16 w-full;
+        @apply border rounded border-slate-100;
+      }
+    }
+
+    & .el-image {
+      @apply absolute inset-0 z-0;
+
+      &::after {
+        content: "";
+        @apply absolute inset-0;
+        @apply bg-gradient-to-t from-[#0009] to-[#0000];
+      }
+
+      & .failed-slot {
+        @apply w-full h-full;
+
+        background-image: linear-gradient(
+          60deg,
+          theme("colors.slate.100"),
+          theme("colors.slate.100") 50%,
+          theme("colors.slate.200") 0
+        );
+      }
     }
   }
 
   & > main {
     @apply w-full;
     @apply relative;
-    @apply flex flex-col gap-4;
+    @apply flex flex-col gap-4 items-center;
   }
 
   & > header,
   > main {
-    & > * {
+    & > :deep(*:not(.el-image)) {
       @apply max-w-xl lg:max-w-3xl;
     }
   }

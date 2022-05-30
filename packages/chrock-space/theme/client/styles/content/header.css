@@ -1,4 +1,4 @@
-.content {
+:--content {
   & h1,
   h2,
   h3,
@@ -6,7 +6,7 @@
   h5,
   h6 {
     @apply relative;
-    @apply text-slate-800;
+    @apply text-slate-800 font-medium;
 
     & .header-anchor {
       @apply absolute -left-16;

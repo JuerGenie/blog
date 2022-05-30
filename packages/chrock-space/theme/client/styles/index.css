@@ -1,9 +1,7 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
-
 @import "./content/index.css";
 
+@import "./toc.css";
+@import "./tips.css";
 @import "./element-plus.patch.css";
 
 html,
@@ -13,20 +11,6 @@ body,
 }
 
 body {
-  /* @apply relative; */
-
-  /* &::before {
-    content: "";
-    background-image: linear-gradient(
-      -30deg,
-      theme("colors.slate[500]"),
-      theme("colors.cyan[600]"),
-      theme("colors.teal[500]")
-    );
-
-    @apply absolute -z-10 min-h-[32rem] h-full w-full;
-  } */
-
   & *,
   *::before,
   *::after {

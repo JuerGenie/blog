@@ -1,9 +1,7 @@
-#app {
-  & .el-button {
-    @apply border-none;
+.el-button {
+  @apply border-none !important;
 
-    & + .el-button {
-      @apply m-0;
-    }
+  & + .el-button {
+    @apply m-0;
   }
 }

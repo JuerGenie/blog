@@ -1,0 +1,31 @@
+.vuepress-toc {
+  @apply sticky top-24;
+  @apply border-l-4;
+  @apply py-4;
+  @apply text-sm;
+
+  & .vuepress-toc-list {
+    @apply pl-4;
+    @apply list-none;
+
+    & .vuepress-toc-item {
+      @apply relative m-0 py-1;
+
+      & .router-link-active {
+        &.active {
+          @apply text-sky-600;
+
+          &::before {
+            @apply border-sky-300;
+          }
+        }
+
+        &::before {
+          content: "";
+          @apply absolute -left-4 text-right;
+          @apply h-full w-6 border-l-4 border-slate-100;
+        }
+      }
+    }
+  }
+}

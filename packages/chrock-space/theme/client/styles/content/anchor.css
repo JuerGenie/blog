@@ -1,0 +1,17 @@
+:--content {
+  & a:not([class]):not([id]) {
+    @apply text-blue-500;
+
+    &::visited {
+      @apply text-violet-500;
+    }
+
+    &::after {
+      font: normal normal normal 24px/1 "Material Design Icons";
+      content: "\F03CC";
+
+      @apply text-xs;
+      @apply relative -top-1;
+    }
+  }
+}

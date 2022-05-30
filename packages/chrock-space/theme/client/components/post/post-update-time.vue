@@ -1,5 +1,5 @@
 <template>
-  <div class="update-time">
+  <div class="post-update-time">
     <i class="mdi mdi-calendar-blank text-lg" />
     {{ createdTime }}
   </div>
@@ -25,8 +25,8 @@ const createdTime = computed(() => {
 </script>
 
 <style lang="postcss" scoped>
-.update-time {
+.post-update-time {
   @apply flex flex-row items-center gap-2;
-  @apply text-sm text-slate-500;
+  @apply text-sm;
 }
 </style>

@@ -1,0 +1,13 @@
+.content {
+  & .img-wrapper {
+    @apply flex flex-col items-center gap-2;
+
+    & img {
+      /* @apply rounded-lg shadow-lg; */
+    }
+
+    & .img-alt {
+      @apply text-sm text-slate-500;
+    }
+  }
+}
