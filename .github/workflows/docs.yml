@@ -41,4 +41,4 @@ jobs:
           target_branch: gh-pages
           build_dir: packages/chrock-space/docs/.vuepress/dist
         env:
-          GH_PAT: ${{ secrets.GH_PAGES_TOKEN }}
+          GH_PAT: ${{ secrets.GH_PAT }}
