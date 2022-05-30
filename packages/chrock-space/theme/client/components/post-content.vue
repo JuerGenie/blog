@@ -110,23 +110,25 @@ const licenses = computed(
 );
 
 const authorData = useAuthorData();
-useEventListener(document, "copy", (evt) => {
-  if (evt.clipboardData && window.getSelection()) {
-    const data = window.getSelection()?.toString();
-    if (data) {
-      evt.preventDefault();
-      const targetText = [
-        data,
-        "",
-        "================",
-        `本文为 ${authorData.value.name} 原创，依据「${licenses.value}」许可进行授权，商业转载请联系 ${authorData.value.name} 获得授权，非商业转载请注明出处。`,
-        `转载请附上出处链接(${window.location.href})及本声明。`,
-      ].join("\n");
+if (!__VUEPRESS_SSR__) {
+  useEventListener(document, "copy", (evt) => {
+    if (evt.clipboardData && window.getSelection()) {
+      const data = window.getSelection()?.toString();
+      if (data) {
+        evt.preventDefault();
+        const targetText = [
+          data,
+          "",
+          "================",
+          `本文为 ${authorData.value.name} 原创，依据「${licenses.value}」许可进行授权，商业转载请联系 ${authorData.value.name} 获得授权，非商业转载请注明出处。`,
+          `转载请附上出处链接(${window.location.href})及本声明。`,
+        ].join("\n");
 
-      evt.clipboardData?.setData("text/plain", targetText);
+        evt.clipboardData?.setData("text/plain", targetText);
+      }
     }
-  }
-});
+  });
+}
 </script>
 
 <style lang="postcss" scoped>

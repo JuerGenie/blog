@@ -60,9 +60,9 @@ export default defineClientConfig({
     router.afterEach((to, from) => {
       if (from.name !== to.name && to.hash) {
         setTimeout(() => {
-          if (!__VUEPRESS_SSR__) {
-            wrapImg();
-          }
+          // if (!__VUEPRESS_SSR__) {
+          //   wrapImg();
+          // }
 
           if (!__VUEPRESS_SSR__) {
             scrollToAnchor(to);

@@ -21,11 +21,13 @@ const props = withDefaults(
 );
 
 const scrollPercent = ref(0);
-const { y } = useScroll(window);
-watch(y, (nv) => {
-  scrollPercent.value =
-    document.body.clientHeight > nv ? nv / document.body.clientHeight : 1;
-});
+if (!__VUEPRESS_SSR__) {
+  const { y } = useScroll(window);
+  watch(y, (nv) => {
+    scrollPercent.value =
+      document.body.clientHeight > nv ? nv / document.body.clientHeight : 1;
+  });
+}
 
 const bgScale = computed(() => (1.5 - scrollPercent.value * 0.4).toFixed(2));
 const bgBrightness = computed(() =>
