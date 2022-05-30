@@ -48,6 +48,7 @@ defineProps<{
         content: "";
         @apply absolute inset-0;
         @apply bg-gradient-to-t from-[#0009] to-[#0000];
+        @apply backdrop-blur-[1px];
       }
 
       & .failed-slot {

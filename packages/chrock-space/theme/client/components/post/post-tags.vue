@@ -1,12 +1,10 @@
 <template>
   <div class="post-tags">
-    <i class="mdi mdi-tag-multiple text-lg" />
-    <tag-link v-for="tag in renderedTags" :key="tag" :tag="tag">
-      <el-button color="#0004" size="small" round class="tag">
-        {{ tag }}
-      </el-button>
-    </tag-link>
-    <el-badge
+    <i class="mdi mdi-tag-multiple post-tags-icon" />
+    <div class="post-tags-content">
+      <post-tag-btn v-for="tag in tags" :key="tag" class="tag" :tag="tag" />
+    </div>
+    <!-- <el-badge
       v-if="hiddenTags.length"
       :value="hiddenTags.length"
       :max="9"
@@ -28,7 +26,7 @@
           </div>
         </template>
       </el-tooltip>
-    </el-badge>
+    </el-badge> -->
   </div>
 </template>
 
@@ -53,10 +51,15 @@ const hiddenTags = computed(() =>
 
 <style lang="postcss" scoped>
 .post-tags {
-  @apply flex flex-row gap-2 items-center;
+  @apply flex flex-row gap-2;
 
-  & .tag {
-    @apply border-none py-1 px-2 !important;
+  & .post-tags-icon {
+    @apply text-lg;
+  }
+
+  & .post-tags-content {
+    @apply flex flex-row flex-wrap gap-1 items-center;
+    @apply py-1;
   }
 }
 </style>

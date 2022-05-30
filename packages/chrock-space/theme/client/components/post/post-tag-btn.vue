@@ -1,5 +1,5 @@
 <template>
-  <tag-link :tag="tag">
+  <tag-link class="post-tag-btn" :tag="tag">
     <el-button color="#0004" size="small" round class="tag">
       {{ tag }}
     </el-button>
@@ -15,7 +15,12 @@ defineProps<{
 </script>
 
 <style lang="postcss" scoped>
-.el-button {
-  @apply backdrop-blur;
+.post-tag-btn {
+  @apply flex justify-center items-center;
+
+  & .el-button.tag {
+    @apply backdrop-blur;
+    @apply py-0.5 px-2 text-xs h-auto;
+  }
 }
 </style>

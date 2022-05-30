@@ -5,16 +5,17 @@
         <author-card />
         <div class="down-bar">
           <div class="picsum-summary">
-            <el-tooltip content="REFRESH IMAGE" placement="top">
-              <el-button
-                size="small"
-                text
-                type="info"
-                @click="refreshBackground"
-              >
-                <i class="mdi mdi-image text-slate-600 text-lg" />
-              </el-button>
-            </el-tooltip>
+            <!-- <el-tooltip content="REFRESH IMAGE" placement="top"> -->
+            <el-button
+              size="small"
+              text
+              type="info"
+              @click="refreshBackground"
+              title="REFRESH IMAGE"
+            >
+              <i class="mdi mdi-image text-slate-600 text-lg" />
+            </el-button>
+            <!-- </el-tooltip> -->
             <span>
               所有随机图片皆由
               <a href="https://picsum.photos/" target="_blank">picsum.photos</a>

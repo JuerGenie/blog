@@ -27,11 +27,11 @@
         :href="link.href"
         target="_blank"
       >
-        <el-tooltip :content="link.name">
-          <el-button color="#0004" circle size="large">
-            <i :class="[link.icon, 'text-2xl']" />
-          </el-button>
-        </el-tooltip>
+        <!-- <el-tooltip :content="link.name"> -->
+        <el-button color="#0004" circle size="large">
+          <i :class="[link.icon, 'text-2xl']" />
+        </el-button>
+        <!-- </el-tooltip> -->
       </a>
     </div>
   </div>

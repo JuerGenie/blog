@@ -1,12 +1,12 @@
 <template>
   <div class="site-copyright">
     <div>POWERED BY {{ authorData.name }}</div>
-    <el-tooltip :show-arrow="false" placement="top">
-      <div @click="openLicensesPage">{{ licenses }}</div>
-      <template #content>
-        <pre v-html="licensesSummary" />
-      </template>
-    </el-tooltip>
+    <!-- <el-tooltip :show-arrow="false" placement="top"> -->
+    <div @click="openLicensesPage" :title="licensesSummary">{{ licenses }}</div>
+    <!-- <template #content> -->
+    <!-- <pre v-html="licensesSummary" /> -->
+    <!-- </template> -->
+    <!-- </el-tooltip> -->
   </div>
 </template>
 
