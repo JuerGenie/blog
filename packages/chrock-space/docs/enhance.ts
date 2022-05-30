@@ -3,7 +3,7 @@ import { useAuthorData } from "../theme/client/composables/author-data";
 import avatar from "./assets/juergenie.jpeg";
 
 export default defineClientConfig({
-  enhance: ({}) => {
+  enhance: ({ router }) => {
     const authorData = useAuthorData();
     authorData.value = {
       name: "JuerGenie",

@@ -1,6 +1,7 @@
 ---
 title: Markdown 样式测试
 subtitle: 已经绞尽脑汁啦！
+cover: https://picsum.photos/seed/2022-05-27_17:09:23/1920/1080
 group: TEST
 tags:
   - test
@@ -44,7 +45,7 @@ tags:
 
 ## 2.基本语法测试
 
-> 丸山彩（日语：<ruby>丸山<rt>まるやま</rt>彩<rt>あや</rt></ruby>）是由日本娱乐公司`Bushiroad`策划的 **次世代少女乐队企划《BanG Dream!》** 及其 **衍生作品** 的登场角色。代表色为`#FF88BB`{style="color: white; background: #FF88BB"}。
+> 丸山 彩（日语：{丸山 彩|まるやま あや}）是由日本娱乐公司`Bushiroad`策划的 **次世代少女乐队企划《BanG Dream!》** 及其 **衍生作品** 的登场角色。代表色为`#FF88BB`{style="color: white; background: #FF88BB"}。
 >
 > `Pastel*Palettes` 乐队的主唱，就读于花咲川女子学园。喜欢 **浏览交友网站** 和 **研究自拍**。喜欢吃蛋包饭和汉堡肉之类的西餐，讨厌吃章鱼。
 >
@@ -66,9 +67,9 @@ tags:
 >
 > ![丸山 彩](../assets/Img_aya_ohmori.png)
 >
-> > 阅读更多：丸山彩（https://zh.moegirl.org.cn/%E4%B8%B8%E5%B1%B1%E5%BD%A9）
+> > 阅读更多：[丸山彩](https://zh.moegirl.org.cn/%E4%B8%B8%E5%B1%B1%E5%BD%A9)
 > >
-> > 本文引自萌娘百科(https://zh.moegirl.org.cn)，文字内容默认使用《知识共享 署名-非商业性使用-相同方式共享 3.0》协议。
+> > 本文引自[萌娘百科](https://zh.moegirl.org.cn)，文字内容默认使用《知识共享 署名-非商业性使用-相同方式共享 3.0》协议。
 
 以上内容来自[**萌娘百科**](https://zh.moegirl.org.cn)，本人仅在基础上进行了一些排版调整。
 
@@ -77,7 +78,7 @@ tags:
 她们身上的坚强与努力给了我很大的鼓舞，每每在我开始躺平准备摆烂的时候，都能把我拉起来，重新让我鼓起勇气继续前进。
 
 ~~我好希望抽到联动卡僵尸AYA！😭😭😭可恶大家都抽到了只有我没有！~~    
-~井出来了~{data-secrecy}
+~井出来了~{{data-secrecy}}
 
 ---
 
@@ -156,14 +157,30 @@ export function test(arg1: string, arg2 = 233) {
 
 ## 6.自定义容器测试
 
-::::test
+::::tips warning
 23333
-  :::test
-  ember container
-  :::
 
-  :::test 23333
-  ......
-  :::
+:::tips success
+ember container
+:::
+
+:::tips error
+......
+:::
+
 23333
 ::::
+
+:::tips
+初めまして、あたしあ、{王|うあん}{玉|う}です。
+
+で、あなたのなまえあなに？
+:::
+
+:::image src="https://picsum.photos/seed/undefined/1920/1080" alt="test image container"
+<h4 class="!text-white">小测试</h4>
+
+---
+
+HELLO WORLD!
+:::
