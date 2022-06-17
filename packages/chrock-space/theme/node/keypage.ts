@@ -4,13 +4,21 @@ export const keypages: [string, PageFrontmatter][] = [
   [
     "/",
     {
+      title: "Home",
       layout: "HomeLayout",
+    },
+  ],
+  [
+    "/404.html",
+    {
+      title: "NotFound",
     },
   ],
   [
     "/groups/",
     {
-      layout: "SearchableLayout",
+      title: "Groups",
+      layout: "GroupLayout",
       routeMeta: {
         type: "groups",
         title: "GROUPS",
@@ -21,6 +29,7 @@ export const keypages: [string, PageFrontmatter][] = [
   [
     "/tags/",
     {
+      title: "Tags",
       layout: "SearchableLayout",
       routeMeta: {
         type: "tags",

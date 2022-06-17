@@ -8,6 +8,11 @@ export default defineUserConfig({
   description: "@JUERGENIE的个人博客。",
 
   lang: "zh-CN",
+  locales: {
+    "/": {
+      lang: "zh-CN",
+    },
+  },
 
   clientConfigFile: path.resolve(__dirname, "./docs/enhance.ts"),
 });

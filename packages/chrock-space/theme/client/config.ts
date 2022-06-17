@@ -1,5 +1,4 @@
 import { defineClientConfig } from "@vuepress/client";
-// import "vue-global-api";
 import ElementPlus from "element-plus";
 
 import "./styles/tailwindcss.css";
@@ -7,40 +6,14 @@ import "./styles/index.css";
 import "@mdi/font/css/materialdesignicons.css";
 import "element-plus/theme-chalk/index.css";
 
-import { type defineComponent, type App, watch } from "vue";
+import { type defineComponent, type App, watchEffect } from "vue";
 import { initialize as initializeRouterUtils } from "./utils/router";
+import { initialize as initializePosts } from "./composables/posts";
 import Containers from "./components/containers";
 import { RouteLocationNormalized } from "vue-router";
 
-function registerComponentObject(
-  app: App,
-  obj: Record<string, ReturnType<typeof defineComponent>>
-) {
-  Object.entries(obj).forEach(([key, component]) => {
-    app.component(key, component);
-  });
-}
-
-function wrapImg() {
-  const ellist = document.querySelectorAll<HTMLImageElement>(".content img");
-  // console.log("found ellist", ellist);
-  ellist.forEach((img) => {
-    if (!img.parentElement?.classList.contains("img-wrapper")) {
-      const target = document.createElement("div");
-      target.classList.add("img-wrapper");
-      target.append(
-        (() => {
-          const altEl = document.createElement("div");
-          altEl.classList.add("img-alt");
-          altEl.innerText = img.alt;
-          return altEl;
-        })()
-      );
-      img.replaceWith(target);
-      target.prepend(img);
-    }
-  });
-}
+import SiteHeaderBar from "./components/root/header-bar.vue";
+import SiteCopyright from "./components/root/site-copyright.vue";
 
 function scrollToAnchor(to: RouteLocationNormalized) {
   const target = document.querySelector<HTMLAnchorElement>(to.hash);
@@ -53,21 +26,39 @@ function scrollToAnchor(to: RouteLocationNormalized) {
 }
 
 export default defineClientConfig({
-  enhance: ({ app, router }) => {
+  rootComponents: [SiteHeaderBar, SiteCopyright],
+
+  enhance: async ({ app, router, siteData }) => {
     app.use(ElementPlus).use(Containers);
 
+    router.addRoute({
+      name: "HomePage",
+      path: "/",
+      component: () => import("./pages/home-layout.vue"),
+    });
+    router.addRoute({
+      name: "GroupPage",
+      path: "/groups:path(.*)?",
+      component: () => import("./pages/group-layout.vue"),
+    });
+    router.addRoute({
+      name: "TagsPage",
+      path: "/tags/",
+      component: () => import("./pages/tags-layout.vue"),
+    });
+
+    console.log("routes:", router.getRoutes());
+    watchEffect(() => console.log("current route:", router.currentRoute.value));
+
+    await initializePosts({ app, router, siteData });
     initializeRouterUtils(router);
     router.afterEach((to, from) => {
       if (from.name !== to.name && to.hash) {
         setTimeout(() => {
-          // if (!__VUEPRESS_SSR__) {
-          //   wrapImg();
-          // }
-
           if (!__VUEPRESS_SSR__) {
             scrollToAnchor(to);
           }
-        }, 100);
+        }, 500);
       }
     });
   },

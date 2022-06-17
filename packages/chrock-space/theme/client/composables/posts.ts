@@ -1,101 +1,137 @@
-import { computed, reactive, Ref, ref } from "vue";
-import { PageData, usePagesData } from "@vuepress/client";
+import { usePagesData } from "@vuepress/client";
+import { ClientConfig, PageData } from "@vuepress/client";
 import { GitPluginPageData } from "@vuepress/plugin-git";
-import dayjs from "dayjs";
+import { computed, Ref, ref } from "vue";
+import { Router } from "vue-router";
+import { GroupFrontmatter } from "../../shared/models/groups";
 
-export type Post = PageData<GitPluginPageData & ChrockPostData>;
+export type Key = PageData["key"];
+export type Post = PageData<ChrockPostData & GitPluginPageData>;
+export interface Group extends Omit<GroupFrontmatter, "group"> {
+  path: string;
+  children: Group[];
+  posts: Key[];
+}
+type PathTreeNode = {
+  name: string;
+  key?: Key;
+  children?: PathTreeNode[];
+};
 
-const metaPagesData = usePagesData();
-export const posts: Ref<Post[]> = ref([]);
-(async () => {
-  posts.value = (
-    (
-      await Promise.all(
-        Object.entries(metaPagesData.value)
-          .filter(([_, cb]) => !!cb)
-          .map(([_, cb]) => cb!())
-      )
-    ).filter((page) => !!page.title) as Post[]
-  ).sort((a, b) =>
-    (a.git.createdTime ?? 0) > (b.git.createdTime ?? 0) ? -1 : 1
+export const posts: Ref<Record<Key, Post>> = ref({});
+export const postList = computed(() =>
+  Object.entries(posts.value).map(([_, post]) => post)
+);
+
+export const tags = computed(() => {
+  const result: Record<string, Post[]> = {};
+  postList.value.forEach((post) =>
+    (post.frontmatter.tags ?? []).forEach((tag) =>
+      (result[tag] ??= []).push(post)
+    )
   );
-})();
+  return result;
+});
+export const tagList = computed(() => Object.keys(tags.value));
 
-export const tags = computed(() =>
-  posts.value.flatMap((page) => page.frontmatter.tags ?? [])
-);
-export const tagMap = computed<Record<string, Post[]>>(() =>
-  Object.fromEntries(
-    tags.value.map((tag) => [
-      tag,
-      posts.value.filter((page) => (page.frontmatter.tags ?? []).includes(tag)),
-    ])
-  )
-);
-export const groups = computed(() =>
-  posts.value
-    .map((page) => page.frontmatter.group as string)
-    .filter((group) => !!group)
-);
-export const groupMap = computed<Record<string, Post[]>>(() =>
-  Object.fromEntries(
-    groups.value.map((group) => [
-      group,
-      posts.value.filter((page) => page.frontmatter.group === group),
-    ])
-  )
-);
+export const groupTree: Group = {
+  title: "ROOT",
+  path: "/",
+  children: [],
+  posts: [],
+};
 
-export const dateMap = computed(() =>
-  posts.value.reduce((total, post) => {
-    const date = dayjs(post.git.createdTime ?? 0).format("YYYY/MM/DD");
-    (total[date] ??= []).push(post);
-    return total;
-  }, {} as Record<string, Post[]>)
-);
+export const groupNodes: Group[] = [groupTree];
 
-export function getByTag(tag: string): Post[] {
-  return tagMap.value[tag];
-}
+export const initialize = (async ({ router }) => {
+  const pagesData = Object.fromEntries(
+    await Promise.all(
+      Object.entries(usePagesData().value)
+        .filter(([_, imp]) => !!imp)
+        .map(async ([key, imp]) => [key, await imp!()])
+    )
+  ) as Record<
+    Key,
+    PageData<ChrockPostData & ChrockGroupData & GitPluginPageData>
+  >;
+  console.log(pagesData);
 
-export function getByGroup(group: string): Post[] {
-  return groupMap.value[group];
-}
+  posts.value = Object.fromEntries(
+    Object.entries(pagesData).filter(
+      ([_, page]) => !page.frontmatter.group && page.path !== "/404.html"
+    )
+  );
 
-export function getByDate(date: number): Post[] {
-  return dateMap.value[dayjs(date).format("YYYY/MM/DD")] ?? [];
-}
+  const pageTree: PathTreeNode[] = [];
 
-export function search(target: string): Post[] {
-  return posts.value.filter(({ frontmatter: { group, tags } }) => {
-    if (!target) {
-      return true;
-    } else if (group && group.includes(target)) {
-      return true;
-    } else {
-      if (!tags || !tags.length) {
-        tags = [""];
-      }
-      if (tags.includes(target)) {
-        return true;
-      }
+  (Object.entries(posts.value) as [string, Post][]).forEach(
+    ([_, page], __, pages) => {
+      const pathlist = page.path.split("/").filter((p) => !!p);
+      let currentTree = pageTree;
+      pathlist.forEach((child, index) => {
+        let node = currentTree.find((tree) => tree.name === child);
+        if (!node) {
+          currentTree.push(
+            (node = {
+              name: child,
+              children: [],
+            })
+          );
+        }
+        if (node.name.endsWith(".html")) {
+          delete node.children;
+          node.key = page.key;
+        } else {
+          currentTree = node.children!;
+        }
+      });
     }
-    return false;
+  );
+
+  await groupTreeNode({
+    router,
+    nodes: pageTree,
+    parent: groupTree,
   });
-}
 
-export function usePosts() {
-  return {
-    posts,
-    tags,
-    tagMap,
-    groups,
-    groupMap,
-    dateMap,
+  console.log("initialized", { pageTree, groups, groupTree, groupNodes });
+}) as NonNullable<ClientConfig["enhance"]>;
 
-    getByDate,
-    getByGroup,
-    getByTag,
-    search,
-  };
+async function groupTreeNode({
+  nodes,
+  parent,
+  router,
+}: {
+  router: Router;
+  nodes: PathTreeNode[];
+  parent: Group;
+}) {
+  for (const node of nodes) {
+    let targetPath = `${parent.path || "/"}${node.name}`;
+    const isPage = !!node.key && node.name.endsWith(".html");
+    if (!isPage) {
+      targetPath += "/";
+      groups[targetPath] ??= {
+        title: node.name,
+        group: true,
+      };
+
+      const currentGroup = {
+        path: targetPath,
+        children: [],
+        posts: [],
+      } as Group;
+      parent.children.push(currentGroup);
+      groupNodes.push(currentGroup);
+      if (node.children) {
+        groupTreeNode({
+          router,
+          nodes: node.children,
+          parent: currentGroup,
+        });
+      }
+    } else {
+      parent.posts.push(node.key!);
+    }
+  }
 }

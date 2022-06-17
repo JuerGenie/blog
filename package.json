@@ -6,8 +6,6 @@
   },
   "scripts": {
     "blog": "pnpm -F=chrock-space",
-    "blog:dev": "pnpm -F=chrock-space dev",
-    "theme": "pnpm -F=vuepress-theme-chrock",
-    "theme:dev": "pnpm -F=vuepress-theme-chrock dev"
+    "blog:dev": "pnpm -F=chrock-space dev"
   }
 }

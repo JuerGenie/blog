@@ -1,7 +1,7 @@
 <template>
   <div class="post-item">
     <div class="card-left">
-      <group-link v-if="!!group" class="post-group" :group="group" />
+      <group-link class="post-group" :post="post" />
       <div class="flex flex-row gap-8">
         <post-author :post="post" />
         <post-update-time :post="post" />
@@ -39,13 +39,13 @@ import PostLink from "./linker/post-link.vue";
 import PostUpdateTime from "./post/post-update-time.vue";
 import PostTags from "./post/post-tags.vue";
 import PostAuthor from "./post/post-author.vue";
+import { EMPTY_STRING } from "../utils/constants";
 
 const props = defineProps<{
   post: Post;
 }>();
 
 const subtitle = computed(() => props.post.frontmatter.subtitle);
-const group = computed(() => props.post.frontmatter.group);
 const tags = computed(() => props.post.frontmatter.tags);
 const cover = computed(() => props.post.frontmatter.cover);
 const createdTime = computed(() => {
@@ -53,7 +53,7 @@ const createdTime = computed(() => {
   if (time) {
     return dayjs(props.post.git.createdTime).format("YYYY/MM/DD");
   } else {
-    return "----";
+    return EMPTY_STRING;
   }
 });
 </script>

@@ -12,7 +12,7 @@
 
 <script lang="ts" setup>
 import { computed } from "vue";
-import { useAuthorData } from "../composables/author-data";
+import { useAuthorData } from "../../composables/author-data";
 
 const authorData = useAuthorData();
 const licenses = "CC BY-NC-SA";
@@ -36,8 +36,8 @@ function openLicensesPage() {
 .site-copyright {
   @apply py-0 pl-4;
   @apply flex flex-row gap-2 justify-center items-center;
-  @apply rounded-tl-2xl;
-  @apply fixed bottom-0 right-0 z-[9999] drop-shadow-xl;
+  @apply rounded-2xl;
+  @apply fixed bottom-2 right-2 z-[9999] drop-shadow-xl;
   @apply bg-slate-600 bg-opacity-60 backdrop-blur;
   @apply select-none;
 
@@ -47,7 +47,7 @@ function openLicensesPage() {
   & > div:nth-of-type(2) {
     @apply text-xs text-slate-300 uppercase;
     @apply pl-4 pr-2 py-1 bg-slate-800;
-    @apply rounded-l-full;
+    @apply rounded-full;
     @apply cursor-pointer;
   }
 }

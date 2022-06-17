@@ -2,7 +2,6 @@
 title: Markdown 样式测试
 subtitle: 已经绞尽脑汁啦！
 cover: https://picsum.photos/seed/2022-05-27_17:09:23/1920/1080
-group: TEST
 tags:
   - test
   - 测试

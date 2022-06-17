@@ -1,7 +1,8 @@
 <template>
   <div class="post-update-time">
     <i class="mdi mdi-calendar-blank text-lg" />
-    {{ createdTime }}
+    <span>{{ createdTime }}</span>
+    <span>(更新于 {{ updatedTime }})</span>
   </div>
 </template>
 
@@ -9,19 +10,22 @@
 import dayjs from "dayjs";
 import { computed } from "vue";
 import { Post } from "../../composables/posts";
+import { dateFormatter } from "../../utils/formatters";
+import { EMPTY_STRING } from "../../utils/constants";
 
 const props = defineProps<{
   post: Post;
 }>();
 
 const createdTime = computed(() => {
-  const time = props.post.git.updatedTime ?? props.post.git.createdTime;
-  if (time) {
-    return dayjs(props.post.git.createdTime).format("YYYY/MM/DD");
+  if (props.post.frontmatter.date) {
+    return dayjs(props.post.frontmatter.date).format("YYYY/MM/DD");
   } else {
-    return "----";
+    return dateFormatter(props.post.git.createdTime);
   }
 });
+
+const updatedTime = computed(() => dateFormatter(props.post.git.updatedTime));
 </script>
 
 <style lang="postcss" scoped>

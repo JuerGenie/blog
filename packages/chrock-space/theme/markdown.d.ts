@@ -1,18 +1,12 @@
-declare interface ChrockPostData {
-  frontmatter: {
-    subtitle?: string;
+import { GroupFrontmatter } from "./shared/models/groups";
+import { PostFrontmatter } from "./shared/models/posts";
 
-    cover?: string;
+declare global {
+  interface ChrockPostData {
+    frontmatter: PostFrontmatter;
+  }
 
-    description?: string;
-
-    group?: string;
-    tags?: string[];
-
-    hideLicenses?: boolean;
-    hideGiscus?: boolean;
-
-    nextPage?: string;
-    prePage?: string;
-  };
+  declare interface ChrockGroupData {
+    frontmatter: GroupFrontmatter;
+  }
 }

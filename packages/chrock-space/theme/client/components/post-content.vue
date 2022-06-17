@@ -9,7 +9,7 @@
         }"
       >
         <div class="group">
-          <group-link v-if="!!group" :group="group">
+          <group-link v-if="!!group" :post="currentPage">
             <el-button round color="#0004">{{ group }}</el-button>
           </group-link>
         </div>
@@ -74,20 +74,19 @@
 </template>
 
 <script lang="ts" setup>
-import { usePageData } from "@vuepress/client";
-import { GitPluginPageData } from "@vuepress/plugin-git";
 import { useEventListener, useTimeoutFn } from "@vueuse/core";
 import dayjs from "dayjs";
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { Toc } from "@vuepress/plugin-toc/lib/client";
 import GroupLink from "./linker/group-link.vue";
-import TagLink from "./linker/tag-link.vue";
 import { useAuthorData } from "../composables/author-data";
 import Giscus from "@giscus/vue";
 import MainPage from "./main-page.vue";
 import PostAuthor from "./post/post-author.vue";
 import PostUpdateTime from "./post/post-update-time.vue";
 import PostTags from "./post/post-tags.vue";
+import { posts } from "../composables/posts";
+import { useRouter } from "vue-router";
 
 const ready = ref(false);
 onMounted(() => {
@@ -95,7 +94,10 @@ onMounted(() => {
   useTimeoutFn(() => (ready.value = true), 100);
 });
 
-const currentPage = usePageData<ChrockPostData & GitPluginPageData>();
+const router = useRouter();
+const currentPage = computed(
+  () => posts.value[router.currentRoute.value.name as string]
+);
 
 const createdDate = computed(() =>
   dayjs(currentPage.value.git?.createdTime ?? "").format("YYYY/MM/DD")
