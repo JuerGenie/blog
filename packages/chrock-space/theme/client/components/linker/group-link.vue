@@ -5,7 +5,7 @@
       :key="group.to.path"
       class="group-linker-item"
     >
-      <router-link :to="group.to">
+      <router-link :to="`/groups${group.to.path}`">
         <slot v-bind="group">{{ group.label }}</slot>
       </router-link>
     </span>

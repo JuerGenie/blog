@@ -38,7 +38,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from "vue";
+import { computed, watchEffect } from "vue";
 import { useRouter } from "vue-router";
 import MainPage from "../components/main-page.vue";
 import { posts, groupTree, groupNodes } from "../composables/posts";
@@ -53,6 +53,11 @@ const cover = computed(() => "https://picsum.photos/seed/group-page/1920/1080");
 const groupPath = computed(
   () => (router.currentRoute.value.params.path as string) || "/"
 );
+watchEffect(() => {
+  if (!router.currentRoute.value.path.endsWith("/")) {
+    router.replace(`${router.currentRoute.value.path}/`);
+  }
+});
 const currentNode = computed(
   () => groupNodes.find((node) => node.path === groupPath.value) ?? groupTree
 );

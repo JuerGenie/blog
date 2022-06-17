@@ -6,7 +6,6 @@ import "./styles/index.css";
 import "@mdi/font/css/materialdesignicons.css";
 import "element-plus/theme-chalk/index.css";
 
-import { type defineComponent, type App, watchEffect } from "vue";
 import { initialize as initializeRouterUtils } from "./utils/router";
 import { initialize as initializePosts } from "./composables/posts";
 import Containers from "./components/containers";
@@ -46,9 +45,6 @@ export default defineClientConfig({
       path: "/tags/",
       component: () => import("./pages/tags-layout.vue"),
     });
-
-    console.log("routes:", router.getRoutes());
-    watchEffect(() => console.log("current route:", router.currentRoute.value));
 
     await initializePosts({ app, router, siteData });
     initializeRouterUtils(router);
