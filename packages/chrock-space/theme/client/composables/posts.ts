@@ -1,4 +1,4 @@
-import { usePagesData } from "@vuepress/client";
+import { PageFrontmatter, usePagesData } from "@vuepress/client";
 import { ClientConfig, PageData } from "@vuepress/client";
 import { GitPluginPageData } from "@vuepress/plugin-git";
 import { computed, Ref, ref } from "vue";
@@ -17,6 +17,11 @@ type PathTreeNode = {
   key?: Key;
   children?: PathTreeNode[];
 };
+
+export const groups: Record<
+  string,
+  PageFrontmatter<GroupFrontmatter>
+> = __GROUPS_DATA__;
 
 export const posts: Ref<Record<Key, Post>> = ref({});
 export const postList = computed(() =>
@@ -54,7 +59,6 @@ export const initialize = (async ({ router }) => {
     Key,
     PageData<ChrockPostData & ChrockGroupData & GitPluginPageData>
   >;
-  console.log(pagesData);
 
   posts.value = Object.fromEntries(
     Object.entries(pagesData).filter(
@@ -93,8 +97,6 @@ export const initialize = (async ({ router }) => {
     nodes: pageTree,
     parent: groupTree,
   });
-
-  console.log("initialized", { pageTree, groups, groupTree, groupNodes });
 }) as NonNullable<ClientConfig["enhance"]>;
 
 async function groupTreeNode({

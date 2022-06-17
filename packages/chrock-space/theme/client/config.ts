@@ -14,6 +14,10 @@ import { RouteLocationNormalized } from "vue-router";
 import SiteHeaderBar from "./components/root/header-bar.vue";
 import SiteCopyright from "./components/root/site-copyright.vue";
 
+import HomeLayout from "./pages/home-layout.vue";
+import GroupLayout from "./pages/group-layout.vue";
+import TagsLayout from "./pages/tags-layout.vue";
+
 function scrollToAnchor(to: RouteLocationNormalized) {
   const target = document.querySelector<HTMLAnchorElement>(to.hash);
   if (target) {
@@ -33,17 +37,17 @@ export default defineClientConfig({
     router.addRoute({
       name: "HomePage",
       path: "/",
-      component: () => import("./pages/home-layout.vue"),
+      component: HomeLayout,
     });
     router.addRoute({
       name: "GroupPage",
       path: "/groups:path(.*)?",
-      component: () => import("./pages/group-layout.vue"),
+      component: GroupLayout,
     });
     router.addRoute({
       name: "TagsPage",
       path: "/tags/",
-      component: () => import("./pages/tags-layout.vue"),
+      component: TagsLayout,
     });
 
     await initializePosts({ app, router, siteData });

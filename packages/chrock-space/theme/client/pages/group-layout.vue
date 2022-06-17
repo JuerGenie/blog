@@ -41,7 +41,7 @@
 import { computed, watchEffect } from "vue";
 import { useRouter } from "vue-router";
 import MainPage from "../components/main-page.vue";
-import { posts, groupTree, groupNodes } from "../composables/posts";
+import { posts, groupTree, groupNodes, groups } from "../composables/posts";
 import PostItem from "../components/post-item.vue";
 import GroupItem from "../components/group-item.vue";
 import SectionLabel from "../components/section-label.vue";

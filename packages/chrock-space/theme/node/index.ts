@@ -96,34 +96,7 @@ export const chrockTheme = ((app) => {
           leftDelimiter: "{{",
           rightDelimiter: "}}",
         });
-
-      // const { image } = instance.renderer.rules;
-      // instance.renderer.rules.image = (token, idx, options, env, self) => {
-      //   const target = token[idx];
-      //   // if (target.tag === "img") {
-      //   //   target.tag = "el-image";
-      //   // }
-      //   const source = `new URL(import.meta.url, ${target.attrGet("src")}).href`;
-      //   const result = image!(token, idx, options, env, self);
-      //   return (
-      //     result
-      //       .substring(0, result.length - 1)
-      //       .replace(/src="([^"]+)"/, `:src="${source}"`) + " />"
-      //   );
-      //   // console.log("result", result);
-      //   // return result;
-      // };
     },
-
-    // extendsPageOptions(page) {
-    //   if (keypagesMap[page.path!]) {
-    //     page.frontmatter = merge(
-    //       {},
-    //       page.frontmatter ?? {},
-    //       keypagesMap[page.path!]
-    //     );
-    //   }
-    // },
 
     async onInitialized(app) {
       app.pages = app.pages.filter((page) => {
@@ -139,7 +112,7 @@ export const chrockTheme = ((app) => {
     define: () => ({
       __BLOG_VERSION__:
         process.env.NODE_ENV === "development" ? "DEVELOPMENT" : nanoid(),
-      groups: Object.fromEntries(
+      __GROUPS_DATA__: Object.fromEntries(
         groupPages.map((page) => [page.path, page.frontmatter])
       ),
     }),
@@ -149,5 +122,5 @@ export const chrockTheme = ((app) => {
 declare global {
   var __BLOG_VERSION__: string;
 
-  var groups: Record<string, PageFrontmatter<GroupFrontmatter>>;
+  var __GROUPS_DATA__: Record<string, PageFrontmatter<GroupFrontmatter>>;
 }

@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Group } from "../composables/posts";
+import { Group, groups } from "../composables/posts";
 import { computed } from "vue";
 import { EMPTY_STRING } from "../utils/constants";
 import { RouterLink } from "vue-router";
