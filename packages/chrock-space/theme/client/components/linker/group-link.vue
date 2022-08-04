@@ -15,10 +15,10 @@
 <script lang="ts" setup>
 import { computed } from "vue";
 import { LocationAsPath, RouteLocationRaw, RouterLink } from "vue-router";
-import { Post } from "../../composables/posts";
+import { PostData } from "../../../shared/models/groups";
 
 const props = defineProps<{
-  post: Post;
+  post: PostData;
 }>();
 
 function getPath(to: RouteLocationRaw & LocationAsPath) {

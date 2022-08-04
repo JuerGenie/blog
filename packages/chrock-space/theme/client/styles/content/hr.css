@@ -1,4 +1,4 @@
-:--content {
+.content {
   & hr {
     @apply border border-slate-500 border-opacity-50 border-dashed;
     @apply rounded;

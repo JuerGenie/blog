@@ -1,5 +1,3 @@
-@import "./utils/index.css";
-
 @import "./anchor.css";
 @import "./blockquote.css";
 @import "./code.css";
@@ -12,15 +10,12 @@
 @import "./footnote.css";
 @import "./strikethrough.css";
 
-@import "./extensions.css";
-
 .content {
-  @apply py-12;
   @apply flex flex-col gap-2;
   @apply text-slate-600 text-base font-normal;
 
   & em,
-  strong {
+  & strong {
     @apply mx-0.5;
   }
 }

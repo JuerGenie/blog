@@ -7,6 +7,7 @@ export default defineUserConfig({
   theme: chrockTheme,
   description: "@JUERGENIE的个人博客。",
 
+  base: "/blog/",
   lang: "zh-CN",
   locales: {
     "/": {

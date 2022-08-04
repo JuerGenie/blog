@@ -16,16 +16,19 @@
 </template>
 
 <script lang="ts" setup>
-import { Group, groups } from "../composables/posts";
 import { computed } from "vue";
 import { EMPTY_STRING } from "../utils/constants";
-import { RouterLink } from "vue-router";
+import { RouterLink, RouteRecordNormalized } from "vue-router";
+import { Group } from "../../shared/models/groups";
+import { pagesData } from "../composables/posts";
 
 const props = defineProps<{
-  group: Group;
+  group: RouteRecordNormalized;
 }>();
 
-const groupData = computed(() => groups[props.group.path]);
+const groupData = computed(
+  () => pagesData[props.group.name as string]?.frontmatter
+);
 const groupName = computed(
   () =>
     props.group.path

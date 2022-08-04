@@ -1,4 +1,4 @@
-:--content {
+.content {
   & table {
     @apply relative;
 
@@ -55,7 +55,7 @@
     }
 
     & th,
-    td {
+    & td {
       @apply px-4 py-2;
       @apply bg-slate-100 hover:bg-slate-200;
     }

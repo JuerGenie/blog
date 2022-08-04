@@ -1,7 +1,10 @@
 <template>
   <div class="post-item">
     <div class="card-left">
-      <group-link class="post-group" :post="post" />
+      <div class="post-group">
+        <i class="mdi mdi-map-marker-path text-lg" />
+        <group-link :post="post" />
+      </div>
       <div class="flex flex-row gap-8">
         <post-author :post="post" />
         <post-update-time :post="post" />
@@ -31,7 +34,7 @@
 <script lang="ts" setup>
 import dayjs from "dayjs";
 import { computed } from "vue";
-import { Post } from "../composables/posts";
+// import { Post } from "../composables/posts";
 import { RouterLink } from "vue-router";
 import GroupLink from "./linker/group-link.vue";
 import TagLink from "./linker/tag-link.vue";
@@ -40,9 +43,10 @@ import PostUpdateTime from "./post/post-update-time.vue";
 import PostTags from "./post/post-tags.vue";
 import PostAuthor from "./post/post-author.vue";
 import { EMPTY_STRING } from "../utils/constants";
+import { PostData } from "../../shared/models/groups";
 
 const props = defineProps<{
-  post: Post;
+  post: PostData;
 }>();
 
 const subtitle = computed(() => props.post.frontmatter.subtitle);
@@ -82,10 +86,11 @@ const createdTime = computed(() => {
     @apply flex flex-col gap-2;
 
     & .post-group {
-      @apply absolute -top-4 left-8;
-      @apply h-8 flex justify-center items-center px-4;
-      @apply text-lg font-extralight;
-      @apply bg-white;
+      /* @apply absolute -top-4 left-8; */
+      /* @apply h-8; */
+      @apply text-sm font-extralight;
+      @apply flex flex-row gap-2 items-center;
+      /* @apply bg-white; */
     }
 
     & .post-title {

@@ -14,6 +14,8 @@ tags:
 
 一切开始于我想「搭建一个技术博客」的想法，于是前思后想，顺便尝试了许多技术组合后，最终选择了使用vuepress。
 
+<!-- more -->
+
 不过最开始其实我并没有打算直接使用vuepress，而是想使用vitepress^[[https://vitepress.vuejs.org/](https://vitepress.vuejs.org/)]。究其原因，主要是因为vuepress是使用webpack-dev-server，而我更想多接触接触vitejs。
 
 然后，我就在vitepress的文档页中看到了如下说明：

@@ -12,16 +12,16 @@
 
     <div class="conditions">
       <el-badge
-        v-for="condition in conditions.list"
-        :key="condition"
-        :value="(conditions.map[condition] ?? []).length"
+        v-for="tag in tagList"
+        :key="tag"
+        :value="(tags[tag] ?? []).length"
         type="info"
       >
         <el-check-tag
-          :checked="checkedConditions.includes(condition)"
-          @change="toggleCondition(condition)"
+          :checked="checkedConditions.includes(tag)"
+          @change="toggleCondition(tag)"
         >
-          {{ condition }}
+          {{ tag }}
         </el-check-tag>
       </el-badge>
     </div>
@@ -48,9 +48,10 @@
 <script lang="ts" setup>
 import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
+import { PostData } from "../../shared/models/groups";
 import MainPage from "../components/main-page.vue";
-import { tags, Post, tagList, postList } from "../composables/posts";
 import PostItem from "../components/post-item.vue";
+import { pagesData, tags } from "../composables/posts";
 
 const router = useRouter();
 const title = computed(() => router.currentRoute.value.meta.title || "TAGS");
@@ -60,10 +61,7 @@ const subtitle = computed(
     "Do not go gentle into that good night."
 );
 
-const conditions = {
-  list: tagList.value,
-  map: tags.value,
-};
+const tagList = Object.keys(tags);
 
 const checkedConditions = computed(() => {
   let search = router.currentRoute.value.query.search ?? [];
@@ -90,7 +88,7 @@ function toggleCondition(condition: string) {
 
 const showAll = ref(false);
 const filteredPosts = computed(() =>
-  postList.value.filter(
+  (Object.values(pagesData.value) as PostData[]).filter(
     (post) =>
       !!post.frontmatter.tags &&
       !!post.frontmatter.tags.length &&

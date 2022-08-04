@@ -1,10 +1,29 @@
 .vuepress-toc {
-  @apply sticky top-24;
-  @apply py-4;
+  @apply sticky top-0 pt-16;
   @apply text-sm;
 
   & .vuepress-toc-list {
-    @apply pl-4;
+    @apply list-none;
+
+    & .vuepress-toc-item {
+      @apply my-1 px-2;
+      @apply border-(l-16 slate-300 opacity-50) text-(slate-500 opacity-50);
+      @apply hover:(border-opacity-100 text-opacity-100)!;
+
+      &:has(.active) {
+        @apply border-primary-500 text-primary-500;
+
+        &:has(.vuepress-toc-item > .active) {
+          @apply border-opacity-50 text-opacity-50;
+        }
+      }
+    }
+  }
+  & > .vuepress-toc-list {
+    @apply border-none;
+  }
+
+  /* & .vuepress-toc-list {
     @apply list-none;
 
     & .vuepress-toc-item {
@@ -24,13 +43,13 @@
         &::before {
           content: "";
           @apply absolute -left-4 text-right;
-          @apply h-full w-6 border-l-[12px] border-slate-200;
+          @apply h-full w-6 border-l-16 border-slate-200;
         }
         &.active {
           @apply text-blue-600;
 
           &::before {
-            @apply border-blue-400;
+            @apply border-blue-500;
           }
         }
       }
@@ -45,5 +64,5 @@
         }
       }
     }
-  }
+  } */
 }

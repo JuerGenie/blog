@@ -1,4 +1,4 @@
-:--content {
+.content {
   & p {
     @apply my-2;
   }

@@ -1,12 +1,15 @@
-:--content {
-  & h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
+:root {
+  --chrock-header-offset: 0;
+}
+
+.content {
+  & :is(h1, h2, h3, h4, h5, h6) {
     @apply relative;
     @apply text-slate-800 font-medium;
+
+    &[id] {
+      @apply -top-[var(--chrock-header-offset)] pt-[var(--chrock-header-offset)] -mb-[var(--chrock-header-offset)];
+    }
 
     & .header-anchor {
       @apply absolute -left-16;
@@ -15,7 +18,7 @@
       @apply text-cyan-600;
     }
     &:hover .header-anchor,
-    .header-anchor:hover {
+    & .header-anchor:hover {
       @apply opacity-100;
     }
   }

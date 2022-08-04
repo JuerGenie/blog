@@ -2,18 +2,14 @@
 
 @import "./toc.css";
 @import "./tips.css";
-@import "./element-plus.patch.css";
 
 html,
 body,
 #app {
   @apply w-full h-full;
+  @apply scroll-smooth;
 }
 
-body {
-  & *,
-  *::before,
-  *::after {
-    @apply transition-all;
-  }
+* {
+  @apply transition-all;
 }

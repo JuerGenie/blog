@@ -56,7 +56,7 @@
         <el-divider />
         <giscus
           v-if="!currentPage.frontmatter.hideGiscus && ready"
-          repo="juergenie/juergenie.github.io"
+          repo="juergenie/blog"
           repo-id="R_kgDOG0CKgw"
           category="Announcements"
           category-id="DIC_kwDOG0CKg84CPQtU"

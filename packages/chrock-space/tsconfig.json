@@ -4,13 +4,20 @@
     "allowJs": true,
     "jsx": "preserve",
     "module": "esnext",
-    "types": ["element-plus/global", "vite/client", "@vuepress/client/types"]
+    "types": [
+      "vite/client",
+      "@vuepress/client/types",
+      "@types/w3c-css-typed-object-model-level-1"
+    ]
   },
   "include": [
+    "./uno.config.ts",
+
     "./docs/**/*.ts",
     "./docs/**/*.vue",
 
     "./theme/**/*.ts",
     "./theme/**/*.vue"
-  ]
+  ],
+  "exclude": ["./theme/node/index.ts"]
 }

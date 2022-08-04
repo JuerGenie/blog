@@ -7,6 +7,8 @@ export interface PostFrontmatter {
 
   hideLicenses?: boolean;
   hideGiscus?: boolean;
+  hideHeader?: boolean;
+  hideToc?: boolean;
 
   nextPage?: string;
   prePage?: string;

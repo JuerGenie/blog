@@ -6,11 +6,11 @@
 </template>
 
 <script lang="ts" setup>
-import { Post } from "../../composables/posts";
+import { PostData } from "../../../shared/models/groups";
 import { EMPTY_STRING } from "../../utils/constants";
 
 defineProps<{
-  post: Post;
+  post: PostData;
 }>();
 </script>
 

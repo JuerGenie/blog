@@ -1,4 +1,4 @@
-:--content {
+.content {
   & a:not([class]):not([id]) {
     @apply text-blue-500;
 

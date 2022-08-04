@@ -1,0 +1,3 @@
+[class*="chrock"].clickable {
+  @apply cursor-pointer;
+}

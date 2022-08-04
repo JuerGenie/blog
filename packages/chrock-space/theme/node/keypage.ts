@@ -5,7 +5,7 @@ export const keypages: [string, PageFrontmatter][] = [
     "/",
     {
       title: "Home",
-      layout: "HomeLayout",
+      // layout: "HomeLayout",
     },
   ],
   [
@@ -18,7 +18,6 @@ export const keypages: [string, PageFrontmatter][] = [
     "/groups/",
     {
       title: "Groups",
-      layout: "GroupLayout",
       routeMeta: {
         type: "groups",
         title: "GROUPS",
@@ -30,7 +29,6 @@ export const keypages: [string, PageFrontmatter][] = [
     "/tags/",
     {
       title: "Tags",
-      layout: "SearchableLayout",
       routeMeta: {
         type: "tags",
         title: "TAGS",

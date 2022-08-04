@@ -1,5 +1,0 @@
-:--content {
-  & [data-secrecy] {
-    @apply bg-slate-800 text-slate-800 hover:text-white;
-  }
-}

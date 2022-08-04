@@ -5,25 +5,22 @@ import { searchPlugin } from "@vuepress/plugin-search";
 import { activeHeaderLinksPlugin } from "@vuepress/plugin-active-header-links";
 
 import { merge } from "lodash";
-import path from "path";
-import { createPage, Page, PageFrontmatter, type Theme } from "vuepress";
+import path from "node:path";
+import { type Theme } from "vuepress";
 import { UserConfigExport } from "vite";
 
-// @ts-ignore
-import customSelectors from "postcss-custom-selectors";
-import tailwindcss from "tailwindcss";
-import tailwindcssNesting from "tailwindcss/nesting";
+import unocss from "unocss/vite";
+import eachVariables from "postcss-each-variables";
+import each from "postcss-each";
 import autoprefixer from "autoprefixer";
+import presetEnv from "postcss-preset-env";
 
-import { keypages, keypagesMap } from "./keypage";
-import { tipsContainerPlugin } from "./containers/tips";
-import { imageContainerPlugin } from "./containers/image";
+import { tipsContainerPlugin } from "./plugins/containers/tips";
+import { imageContainerPlugin } from "./plugins/containers/image";
 import { nanoid } from "nanoid";
-import { GroupFrontmatter } from "../shared/models/groups";
+import { groupsPlugin } from "./plugins/groups";
 
 export const chrockTheme = ((app) => {
-  let groupPages: Page[] = [];
-
   return {
     name: "vuepress-theme-chrock",
 
@@ -31,8 +28,19 @@ export const chrockTheme = ((app) => {
     templateBuild: path.resolve(__dirname, "../template.build.html"),
 
     layouts: {
-      Layout: path.resolve(__dirname, "../client/layouts/main-layout.vue"),
+      Layout: path.resolve(__dirname, "../client/layouts/default-layout.vue"),
       404: path.resolve(__dirname, "../client/layouts/404.vue"),
+    },
+
+    alias: {
+      "chrock/search-bar.vue": path.resolve(
+        __dirname,
+        "../client/components/search-bar.vue"
+      ),
+      "chrock/post-list.vue": path.resolve(
+        __dirname,
+        "../client/components/post-list.vue"
+      ),
     },
 
     plugins: [
@@ -53,18 +61,14 @@ export const chrockTheme = ((app) => {
         maxSuggestions: 10,
         getExtraFields: (page) => [
           ...((page.frontmatter.tags ?? []) as string[]),
-          ...((page.frontmatter.group
-            ? [page.frontmatter.group]
-            : []) as string[]),
           ...((page.frontmatter.subtitle
             ? [page.frontmatter.subtitle]
             : []) as string[]),
         ],
-        isSearchable: (page) =>
-          !["/", "/groups/", "/tags/"].includes(page.path),
       }),
       tipsContainerPlugin(),
       imageContainerPlugin(),
+      groupsPlugin(),
     ],
 
     clientConfigFile: path.resolve(__dirname, "../client/config.ts"),
@@ -72,12 +76,18 @@ export const chrockTheme = ((app) => {
     extendsBundlerOptions(options) {
       merge(options, {
         viteOptions: {
+          plugins: [unocss()],
+
           css: {
             postcss: {
               plugins: [
-                tailwindcssNesting(),
-                tailwindcss(),
-                customSelectors(),
+                eachVariables(),
+                each(),
+                presetEnv({
+                  features: {
+                    "nesting-rules": true,
+                  },
+                }),
                 autoprefixer(),
               ],
             },
@@ -98,29 +108,17 @@ export const chrockTheme = ((app) => {
         });
     },
 
-    async onInitialized(app) {
-      app.pages = app.pages.filter((page) => {
-        if (page.frontmatter.group) {
-          groupPages.push(page);
-          return false;
-        } else {
-          return true;
-        }
-      });
+    extendsPage(page) {
+      page.routeMeta.frontmatter = page.frontmatter;
     },
 
     define: () => ({
       __BLOG_VERSION__:
         process.env.NODE_ENV === "development" ? "DEVELOPMENT" : nanoid(),
-      __GROUPS_DATA__: Object.fromEntries(
-        groupPages.map((page) => [page.path, page.frontmatter])
-      ),
     }),
   };
 }) as Theme;
 
 declare global {
   var __BLOG_VERSION__: string;
-
-  var __GROUPS_DATA__: Record<string, PageFrontmatter<GroupFrontmatter>>;
 }

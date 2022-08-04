@@ -24,7 +24,7 @@ import { routeTarget } from "../../utils/router";
 const buttons = [
   {
     label: "HOME",
-    to: "/",
+    to: routeTarget.home,
   },
   {
     label: "GROUPS",

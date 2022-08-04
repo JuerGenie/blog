@@ -1,4 +1,4 @@
-:--content {
+.content {
   & .ext-c::before {
     content: "c";
   }

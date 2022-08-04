@@ -1,4 +1,4 @@
-:--content {
+.content {
   & ul {
     @apply list-disc;
   }
@@ -7,12 +7,10 @@
     @apply list-decimal;
   }
 
-  & ul,
-  ol {
+  & :is(ul, ol) {
     @apply my-2;
 
-    & ul,
-    ol {
+    & :is(ul, ol) {
       @apply my-0;
     }
   }

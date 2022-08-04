@@ -10,7 +10,7 @@
       </div>
     </template>
 
-    <section-label>子分组({{ currentNode.children.length }})</section-label>
+    <section-label>子分组({{ groups.length }})</section-label>
     <div class="group-list">
       <router-link v-if="!!parentNode" :to="`/groups${parentNode.path}`">
         <div class="group-item">
@@ -23,16 +23,16 @@
           </el-image>
         </div>
       </router-link>
-      <group-item
-        v-for="group in currentNode.children"
-        :key="group.path"
-        :group="group"
-      />
+      <group-item v-for="group in groups" :key="group.path" :group="group" />
     </div>
-    <section-label>分组文章({{ pages.length }})</section-label>
+    <section-label>分组文章({{ posts.length }})</section-label>
     <div class="post-list">
-      <post-item v-for="page in pages" :key="page.key" :post="page" />
-      <div v-if="!pages.length">分组下没有文章哦</div>
+      <post-item
+        v-for="page in posts"
+        :key="page.name"
+        :post="pagesData[page.name as string]"
+      />
+      <div v-if="!posts.length">分组下没有文章哦</div>
     </div>
   </main-page>
 </template>
@@ -41,31 +41,32 @@
 import { computed, watchEffect } from "vue";
 import { useRouter } from "vue-router";
 import MainPage from "../components/main-page.vue";
-import { posts, groupTree, groupNodes, groups } from "../composables/posts";
 import PostItem from "../components/post-item.vue";
 import GroupItem from "../components/group-item.vue";
 import SectionLabel from "../components/section-label.vue";
+import { usePageData } from "@vuepress/client";
+import { excludePages } from "../utils/constants";
+import { pagesData } from "../composables/posts";
 
 const router = useRouter();
+const routes = router
+  .getRoutes()
+  .filter((route) => !route.redirect && !excludePages.includes(route.path));
 
 const cover = computed(() => "https://picsum.photos/seed/group-page/1920/1080");
 
-const groupPath = computed(
-  () => (router.currentRoute.value.params.path as string) || "/"
-);
 watchEffect(() => {
   if (!router.currentRoute.value.path.endsWith("/")) {
     router.replace(`${router.currentRoute.value.path}/`);
   }
 });
-const currentNode = computed(
-  () => groupNodes.find((node) => node.path === groupPath.value) ?? groupTree
-);
-const currentData = computed(() => groups[currentNode.value.path]);
+
+const pageData = usePageData();
 
 const title = computed(
   () =>
-    groupPath.value
+    pageData.value.title ||
+    router.currentRoute.value.path
       .split("/")
       .filter((path) => !!path)
       .pop() ||
@@ -74,27 +75,21 @@ const title = computed(
 );
 const subtitle = computed(
   () =>
-    currentData.value?.description ||
+    pageData.value.frontmatter.description ||
     router.currentRoute.value.meta.subtitle ||
     "Rage, rage against the dying of the light."
 );
 
-const pages = computed(() =>
-  currentNode.value.posts.map((key) => posts.value[key])
+const subPages = computed(() =>
+  routes.filter((route) => route.meta.parentGroup === pageData.value.key)
 );
-const parentNode = computed(() => {
-  if (groupPath.value === "/") {
-    return null;
-  } else {
-    const pathList = groupPath.value.split("/").filter((path) => !!path);
-    pathList.pop();
-    pathList.push("");
-    const target = `/${pathList.join("/")}`;
-    return target === "/"
-      ? groupTree
-      : groupNodes.find((node) => node.path === target);
-  }
-});
+const posts = computed(() => subPages.value.filter((page) => !page.meta.group));
+const groups = computed(() => subPages.value.filter((page) => page.meta.group));
+const parentNode = computed(() =>
+  router
+    .getRoutes()
+    .find((route) => route.name === router.currentRoute.value.meta.parentGroup)
+);
 </script>
 
 <style lang="postcss" scoped>
