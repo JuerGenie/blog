@@ -15,14 +15,14 @@
       >
         <div class="text-2xl">特别鸣谢</div>
         <div class="mt-4 flex flex-row flex-wrap gap-2">
-          <el-tag
+          <!-- <el-tag
             v-for="name in specialThanks"
             size="large"
             type="success"
             effect="dark"
           >
             {{ name }}
-          </el-tag>
+          </el-tag> -->
         </div>
       </div>
     </div>
@@ -34,15 +34,15 @@
         fit="cover"
       />
     </parallax> -->
-    <el-image
+    <!-- <el-image
       class="chrock-background"
       :src="`https://picsum.photos/seed/${seed}/1920/1080`"
       fit="cover"
-    />
+    /> -->
   </main>
 
   <div class="picsum-summary">
-    <el-button
+    <!-- <el-button
       size="small"
       text
       type="info"
@@ -50,7 +50,7 @@
       title="REFRESH IMAGE"
     >
       <i class="mdi mdi-image text-white text-lg" />
-    </el-button>
+    </el-button> -->
     <span>
       背景随机图片皆由
       <a href="https://picsum.photos/" target="_blank">picsum.photos</a>
@@ -61,7 +61,7 @@
 
 <script lang="ts" setup>
 import AuthorCard from "../components/author-card.vue";
-import PostItem from "../components/post-item.vue";
+// import PostItem from "../components/post-item.vue";
 import { useLocalStorage } from "@vueuse/core";
 import { nanoid } from "nanoid";
 import { pagesData } from "../composables/posts";

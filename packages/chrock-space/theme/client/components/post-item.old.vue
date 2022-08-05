@@ -23,11 +23,11 @@
     </div>
     <div class="card-right"></div>
 
-    <el-image class="post-background" :src="cover" fit="cover" lazy>
+    <!-- <el-image class="post-background" :src="cover" fit="cover" lazy>
       <template #error>
         <div class="failed-slot" />
       </template>
-    </el-image>
+    </el-image> -->
   </div>
 </template>
 

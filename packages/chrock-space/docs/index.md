@@ -6,11 +6,11 @@ hideHeader: true
 hideGiscus: true
 ---
 
-<script lang="ts" setup>
+<!-- <script lang="ts" setup>
 import PostList from "chrock/post-list.vue";
-</script>
+</script> -->
 
 # CHROCK SPACE
 > 这是 CHROCK SPACE，是 @JuerGenie 的个人博客。
 
-<post-list></post-list>
+<!-- <post-list></post-list> -->

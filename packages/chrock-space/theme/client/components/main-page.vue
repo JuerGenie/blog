@@ -1,11 +1,11 @@
 <template>
   <div class="main-page">
     <header :class="{ 'no-cover': !cover }">
-      <el-image v-if="!!cover" :src="cover" fit="cover">
+      <!-- <el-image v-if="!!cover" :src="cover" fit="cover">
         <template #error>
           <div class="failed-slot" />
         </template>
-      </el-image>
+      </el-image> -->
       <slot name="header" />
     </header>
 

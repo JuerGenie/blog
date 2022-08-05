@@ -10,7 +10,7 @@
       >
         <div class="group">
           <group-link v-if="!!group" :post="currentPage">
-            <el-button round color="#0004">{{ group }}</el-button>
+            <!-- <el-button round color="#0004">{{ group }}</el-button> -->
           </group-link>
         </div>
         <div class="title">
@@ -53,7 +53,7 @@
       </div>
 
       <div class="wrapper pb-16">
-        <el-divider />
+        <!-- <el-divider /> -->
         <giscus
           v-if="!currentPage.frontmatter.hideGiscus && ready"
           repo="juergenie/blog"

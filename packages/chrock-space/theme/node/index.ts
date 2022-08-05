@@ -111,14 +111,5 @@ export const chrockTheme = ((app) => {
     extendsPage(page) {
       page.routeMeta.frontmatter = page.frontmatter;
     },
-
-    define: () => ({
-      __BLOG_VERSION__:
-        process.env.NODE_ENV === "development" ? "DEVELOPMENT" : nanoid(),
-    }),
   };
 }) as Theme;
-
-declare global {
-  var __BLOG_VERSION__: string;
-}

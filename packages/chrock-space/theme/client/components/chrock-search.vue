@@ -1,5 +1,5 @@
 <template>
-  <el-select
+  <!-- <el-select
     class="chrock-search"
     filterable
     :filter-method="onFilter"
@@ -15,7 +15,7 @@
       :label="suggestion.title"
       :value="suggestion.link"
     />
-  </el-select>
+  </el-select> -->
 </template>
 
 <script lang="ts" setup>

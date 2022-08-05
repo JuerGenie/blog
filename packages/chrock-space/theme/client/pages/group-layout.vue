@@ -16,11 +16,11 @@
         <div class="group-item">
           <i class="mdi mdi-arrow-left-circle" />
           <div>返回</div>
-          <el-image class="group-background" fit="cover" lazy>
+          <!-- <el-image class="group-background" fit="cover" lazy>
             <template #error>
               <div class="failed-slot" />
             </template>
-          </el-image>
+          </el-image> -->
         </div>
       </router-link>
       <group-item v-for="group in groups" :key="group.path" :group="group" />

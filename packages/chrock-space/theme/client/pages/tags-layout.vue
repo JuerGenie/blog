@@ -11,7 +11,7 @@
     </template>
 
     <div class="conditions">
-      <el-badge
+      <!-- <el-badge
         v-for="tag in tagList"
         :key="tag"
         :value="(tags[tag] ?? []).length"
@@ -23,7 +23,7 @@
         >
           {{ tag }}
         </el-check-tag>
-      </el-badge>
+      </el-badge> -->
     </div>
 
     <div class="post-list">
@@ -37,9 +37,9 @@
         没有相关记录哦
       </div>
       <div v-else-if="filteredPosts.length > 10" class="w-full text-center">
-        <el-button @click="showAll = !showAll">
+        <!-- <el-button @click="showAll = !showAll">
           {{ showAll ? "收起部分" : "显示全部" }}
-        </el-button>
+        </el-button> -->
       </div>
     </div>
   </main-page>
@@ -50,7 +50,7 @@ import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
 import { PostData } from "../../shared/models/groups";
 import MainPage from "../components/main-page.vue";
-import PostItem from "../components/post-item.vue";
+// import PostItem from "../components/post-item.vue";
 import { pagesData, tags } from "../composables/posts";
 
 const router = useRouter();

@@ -130,7 +130,7 @@ tags:
   搭配 `postcss-each` 插件一起使用，用于使 `@each` 指令支持遍历 `css custom properties`。
 - `postcss-each`  
   用于提供 `@each` 指令，进行循环，这样可以减少许多重复代码，比如：
-  ```postcss
+  ```css
   :root {
     --types: (
       primary, secondary, warning, error

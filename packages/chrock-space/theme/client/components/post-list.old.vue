@@ -6,14 +6,14 @@
       </div>
     </div>
     <div class="post-pagination">
-      <el-pagination
+      <!-- <el-pagination
         layout="prev, pager, next"
         :total="pagination.total"
         v-model:current-page="pagination.current"
         :default-page-size="pagination.size"
         background
         small
-      />
+      /> -->
     </div>
   </div>
 </template>

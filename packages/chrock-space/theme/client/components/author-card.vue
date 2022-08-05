@@ -6,17 +6,17 @@
         <div class="author-email">{{ authorData.email }}</div>
         <div class="author-description">{{ authorData.description }}</div>
         <div class="author-skills">
-          <el-button
+          <!-- <el-button
             v-for="skill in authorData.skills"
             round
             color="#0004"
             size="small"
           >
             {{ skill }}
-          </el-button>
+          </el-button> -->
         </div>
       </div>
-      <el-image class="author-avatar" fit="cover" :src="authorData.avatar" />
+      <!-- <el-image class="author-avatar" fit="cover" :src="authorData.avatar" /> -->
       <!-- <div class="cladding-material" /> -->
     </div>
     <div class="author-links">
@@ -28,9 +28,9 @@
         target="_blank"
       >
         <!-- <el-tooltip :content="link.name"> -->
-        <el-button color="#0004" circle size="large">
+        <!-- <el-button color="#0004" circle size="large">
           <i :class="[link.icon, 'text-2xl']" />
-        </el-button>
+        </el-button> -->
         <!-- </el-tooltip> -->
       </a>
     </div>

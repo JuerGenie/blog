@@ -6,11 +6,11 @@
         {{ groupData.description }}
       </div>
 
-      <el-image class="group-background" :src="cover" fit="cover" lazy>
+      <!-- <el-image class="group-background" :src="cover" fit="cover" lazy>
         <template #error>
           <div class="failed-slot" />
         </template>
-      </el-image>
+      </el-image> -->
     </div>
   </router-link>
 </template>

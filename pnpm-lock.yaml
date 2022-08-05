@@ -13,7 +13,7 @@ importers:
       eslint-plugin-vue: ^9.3.0
       prettier: ^2.7.1
       typescript: ^4.7.4
-      vite: ^3.0.0
+      vite: ^2.9.14
       vite-plugin-eslint: ^1.7.0
     devDependencies:
       '@changesets/cli': 2.24.1
@@ -25,8 +25,8 @@ importers:
       eslint-plugin-vue: 9.3.0_eslint@8.20.0
       prettier: 2.7.1
       typescript: 4.7.4
-      vite: 3.0.4
-      vite-plugin-eslint: 1.7.0_eslint@8.20.0+vite@3.0.4
+      vite: 2.9.14
+      vite-plugin-eslint: 1.7.0_eslint@8.20.0+vite@2.9.14
 
   packages/chrock-space:
     specifiers:
@@ -75,7 +75,7 @@ importers:
       prettier-config-vuepress: ^1.4.0
       typescript: ^4.7.4
       unocss: ^0.44.7
-      vite: ^3.0.4
+      vite: ^2.9.14
       vite-plugin-windicss: ^1.8.7
       vue: ^3.2.37
       vue-router: ^4.1.3
@@ -128,9 +128,9 @@ importers:
       prettier: 2.7.1
       prettier-config-vuepress: 1.4.0
       typescript: 4.7.4
-      unocss: 0.44.7_vite@3.0.4
-      vite: 3.0.4
-      vite-plugin-windicss: 1.8.7_vite@3.0.4
+      unocss: 0.44.7_vite@2.9.14
+      vite: 2.9.14
+      vite-plugin-windicss: 1.8.7_vite@2.9.14
       vuepress: 2.0.0-beta.45_ky4o5iv42nfwog2gkj2rnr6kla
 
   packages/chrock-ui:
@@ -150,7 +150,7 @@ importers:
       postcss-preset-env: ^7.7.2
       typescript: ^4.7.4
       unocss: ^0.44.7
-      vite: ^3.0.4
+      vite: ^2.9.14
       vue: ^3.2.37
       vue-tsc: ^0.38.9
     dependencies:
@@ -161,7 +161,7 @@ importers:
       '@unocss/preset-icons': 0.44.7
       '@unocss/preset-uno': 0.44.7
       '@unocss/reset': 0.45.1
-      '@vitejs/plugin-vue': 3.0.1_vite@3.0.4+vue@3.2.37
+      '@vitejs/plugin-vue': 3.0.1_vite@2.9.14+vue@3.2.37
       autoprefixer: 10.4.8_postcss@8.4.14
       postcss: 8.4.14
       postcss-each: 1.1.0_postcss@8.4.14
@@ -169,8 +169,8 @@ importers:
       postcss-nesting: 10.1.10_postcss@8.4.14
       postcss-preset-env: 7.7.2_postcss@8.4.14
       typescript: 4.7.4
-      unocss: 0.44.7_vite@3.0.4
-      vite: 3.0.4
+      unocss: 0.44.7_vite@2.9.14
+      vite: 2.9.14
       vue: 3.2.37
       vue-tsc: 0.38.9_typescript@4.7.4
 
@@ -1116,7 +1116,7 @@ packages:
       '@unocss/core': 0.44.7
     dev: true
 
-  /@unocss/vite/0.44.7_vite@3.0.4:
+  /@unocss/vite/0.44.7_vite@2.9.14:
     resolution: {integrity: sha512-RjOB+Yv2bg/p5NOzwXDYap0fl7m+1VmIfej8Afceisy0mDL1NniGISiA0pQjOhUewPdSaBDpRXxlpoDGnYaPjw==}
     peerDependencies:
       vite: ^2.9.0 || ^3.0.0-0
@@ -1129,7 +1129,7 @@ packages:
       '@unocss/scope': 0.44.7
       '@unocss/transformer-directives': 0.44.7
       magic-string: 0.26.2
-      vite: 3.0.4
+      vite: 2.9.14
     dev: true
 
   /@vitejs/plugin-vue/2.3.3_vite@2.9.14+vue@3.2.37:
@@ -1143,14 +1143,14 @@ packages:
       vue: 3.2.37
     dev: true
 
-  /@vitejs/plugin-vue/3.0.1_vite@3.0.4+vue@3.2.37:
+  /@vitejs/plugin-vue/3.0.1_vite@2.9.14+vue@3.2.37:
     resolution: {integrity: sha512-Ll9JgxG7ONIz/XZv3dssfoMUDu9qAnlJ+km+pBA0teYSXzwPCIzS/e1bmwNYl5dcQGs677D21amgfYAnzMl17A==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
       vite: ^3.0.0
       vue: ^3.2.25
     dependencies:
-      vite: 3.0.4
+      vite: 2.9.14
       vue: 3.2.37
     dev: true
 
@@ -5004,7 +5004,7 @@ packages:
     resolution: {integrity: sha512-hAZsKq7Yy11Zu1DE0OzWjw7nnLZmJZYTDZZyEFHZdUhV8FkH5MCfoU1XMaxXovpyW5nq5scPqq0ZDP9Zyl04oQ==}
     engines: {node: '>= 10.0.0'}
 
-  /unocss/0.44.7_vite@3.0.4:
+  /unocss/0.44.7_vite@2.9.14:
     resolution: {integrity: sha512-4XQZAZ7F5gFi30Dn4e7PdxYc2BVTBtrkXA5QzHgmBy/RqNoM5kEuQwsooEVEMl6Cp3Q+vHuQCueVffOBHUl9rQ==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -5027,7 +5027,7 @@ packages:
       '@unocss/transformer-compile-class': 0.44.7
       '@unocss/transformer-directives': 0.44.7
       '@unocss/transformer-variant-group': 0.44.7
-      '@unocss/vite': 0.44.7_vite@3.0.4
+      '@unocss/vite': 0.44.7_vite@2.9.14
     transitivePeerDependencies:
       - supports-color
       - vite
@@ -5068,7 +5068,7 @@ packages:
       spdx-expression-parse: 3.0.1
     dev: true
 
-  /vite-plugin-eslint/1.7.0_eslint@8.20.0+vite@3.0.4:
+  /vite-plugin-eslint/1.7.0_eslint@8.20.0+vite@2.9.14:
     resolution: {integrity: sha512-Kz2HwBeAArmsE0QmWSm+e7CaEQrfMkEZpFw4hngoy6JmERjw7WUH8HLbG1OkreOKX4iIUReOss9N1Mkw4wEk8g==}
     peerDependencies:
       eslint: '>=7'
@@ -5078,10 +5078,10 @@ packages:
       '@types/eslint': 8.4.5
       eslint: 8.20.0
       rollup: 2.77.2
-      vite: 3.0.4
+      vite: 2.9.14
     dev: true
 
-  /vite-plugin-windicss/1.8.7_vite@3.0.4:
+  /vite-plugin-windicss/1.8.7_vite@2.9.14:
     resolution: {integrity: sha512-/zwQ8+RV+MSkbG0IGqsEma6r2R01NzN/aNpNjJD7VVAkxAptNznqDXOObFTskkWfZ+9m6KJZCOuCPgAFtQIzEA==}
     peerDependencies:
       vite: ^2.0.1 || ^3.0.0
@@ -5089,7 +5089,7 @@ packages:
       '@windicss/plugin-utils': 1.8.7
       debug: 4.3.4
       kolorist: 1.5.1
-      vite: 3.0.4
+      vite: 2.9.14
       windicss: 3.5.6
     transitivePeerDependencies:
       - supports-color
@@ -5109,33 +5109,6 @@ packages:
       sass:
         optional: true
       stylus:
-        optional: true
-    dependencies:
-      esbuild: 0.14.51
-      postcss: 8.4.14
-      resolve: 1.22.1
-      rollup: 2.77.2
-    optionalDependencies:
-      fsevents: 2.3.2
-    dev: true
-
-  /vite/3.0.4:
-    resolution: {integrity: sha512-NU304nqnBeOx2MkQnskBQxVsa0pRAH5FphokTGmyy8M3oxbvw7qAXts2GORxs+h/2vKsD+osMhZ7An6yK6F1dA==}
-    engines: {node: ^14.18.0 || >=16.0.0}
-    hasBin: true
-    peerDependencies:
-      less: '*'
-      sass: '*'
-      stylus: '*'
-      terser: ^5.4.0
-    peerDependenciesMeta:
-      less:
-        optional: true
-      sass:
-        optional: true
-      stylus:
-        optional: true
-      terser:
         optional: true
     dependencies:
       esbuild: 0.14.51

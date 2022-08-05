@@ -1,8 +1,8 @@
 <template>
   <tag-link class="post-tag-btn" :tag="tag">
-    <el-button color="#0004" size="small" round class="tag">
+    <!-- <el-button color="#0004" size="small" round class="tag">
       {{ tag }}
-    </el-button>
+    </el-button> -->
   </tag-link>
 </template>
 

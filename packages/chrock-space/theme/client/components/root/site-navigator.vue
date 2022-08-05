@@ -2,14 +2,14 @@
   <div :class="{ 'site-navigator': true, 'show-bg': showBg }">
     <div class="buttons">
       <router-link v-for="button in buttons" :key="button.to" :to="button.to">
-        <el-button text color="#00000040">
+        <!-- <el-button text color="#00000040">
           {{ button.label }}
-        </el-button>
+        </el-button> -->
       </router-link>
       <!-- <chrock-search /> -->
-      <el-button class="!text-gray-500" text color="#dddddd00" disabled>
+      <!-- <el-button class="!text-gray-500" text color="#dddddd00" disabled>
         LINKS
-      </el-button>
+      </el-button> -->
     </div>
     <div class="bg-wrapper" />
   </div>
