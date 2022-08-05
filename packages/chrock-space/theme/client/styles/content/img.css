@@ -7,7 +7,7 @@
     }
 
     & .img-alt {
-      @apply text-sm text-slate-500;
+      @apply text-(sm slate-500);
     }
   }
 }

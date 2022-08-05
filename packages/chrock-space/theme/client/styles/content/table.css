@@ -4,15 +4,10 @@
 
     & thead {
       & th {
-        @apply border-b-2 border-slate-500 border-opacity-10;
+        @apply border-(b-2 slate-500 opacity-10);
         @apply text-left;
 
-        &:first-of-type {
-          @apply rounded-tl;
-        }
-        &:last-of-type {
-          @apply rounded-tr;
-        }
+        @apply first-of-type:rounded-tl last-of-type:rounded-tr;
       }
     }
 
@@ -26,30 +21,14 @@
         & td {
           counter-increment: table-col-count;
 
-          @apply border-t-2 border-slate-500 border-opacity-10;
+          @apply border-(t-2 slate-500 opacity-10);
           @apply bg-opacity-60;
 
-          &:first-of-type {
-            @apply border-l-0;
-          }
-          &:last-of-type {
-            @apply border-r-0;
-          }
+          @apply first-of-type:border-l-0 last-of-type:border-r-0;
         }
 
         &:last-of-type td {
-          &:first-of-type {
-            @apply rounded-bl;
-          }
-          &:last-of-type {
-            @apply rounded-br;
-
-            /* &::after 
-              content: counter(table-col-count) " x " counter(table-row-count);
-              @apply absolute -top-6 right-0;
-              @apply text-slate-500;
-            } */
-          }
+          @apply first-of-type:rounded-bl last-of-type:rounded-br;
         }
       }
     }

@@ -20,9 +20,7 @@ function scrollToAnchor(to: RouteLocationNormalized) {
 }
 
 export default defineClientConfig({
-  // rootComponents: [SiteHeaderBar, SiteCopyright],
-
-  enhance: async ({ app, router, siteData }) => {
+  enhance: async ({ app, router }) => {
     app.use(containers);
 
     initializeRouterUtils(router);

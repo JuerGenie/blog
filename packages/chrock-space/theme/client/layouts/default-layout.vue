@@ -45,7 +45,7 @@
               input-position="top"
               theme="light"
               lang="zh-CN"
-              loading="lazy"
+              loading="eager"
             />
           </div>
         </div>
@@ -61,7 +61,7 @@
 </template>
 
 <script lang="ts" setup>
-import { usePageData, Content } from "@vuepress/client";
+import { usePageData, Content, withBase } from "@vuepress/client";
 import { GitPluginPageData } from "@vuepress/plugin-git";
 import { computed, ref, watch } from "vue";
 import { Toc } from "@vuepress/plugin-toc/lib/client";
@@ -78,7 +78,11 @@ import childrenList from "../components/children-list.vue";
 const pageData = usePageData<
   GitPluginPageData & ChrockPostData & ChrockGroupData
 >();
-const cover = computed(() => `url(${pageData.value.frontmatter.cover})`);
+const cover = computed(() => pageData.value.frontmatter.cover);
+const coverSrc = computed(
+  () =>
+    `url(${cover.value?.startsWith("/") ? withBase(cover.value) : cover.value})`
+);
 const hideToc = computed(() => pageData.value.frontmatter.hideToc);
 const hideGiscus = computed(() => pageData.value.frontmatter.hideGiscus);
 
@@ -86,11 +90,13 @@ const ready = ref(false);
 const router = useRouter();
 watch(
   router.currentRoute,
-  () => {
-    ready.value = false;
-    useTimeoutFn(() => {
-      ready.value = true;
-    }, 0);
+  (nv, ov) => {
+    if (nv.path !== ov?.path) {
+      ready.value = false;
+      useTimeoutFn(() => {
+        ready.value = true;
+      }, 0);
+    }
   },
   { immediate: true }
 );
@@ -133,7 +139,7 @@ const chrockRef = ref<HTMLDivElement>();
       @apply bg-slate-200;
 
       @apply bg-cover bg-center;
-      background-image: v-bind("cover");
+      background-image: v-bind("coverSrc");
 
       &::before {
         content: "";

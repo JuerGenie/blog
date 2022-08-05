@@ -1,86 +1,187 @@
+:root {
+  --code-prefix: (
+    /* static */ abap,
+    ada,
+    c,
+    cpp,
+    cs,
+    csharp,
+    c#,
+    erlang,
+    fsharp,
+    fs,
+    f#,
+    go,
+    haskell,
+    java,
+    kotlin,
+    kt,
+    objective-c,
+    objc,
+    objective-cpp,
+    pascal,
+    rust,
+    rs,
+    swift,
+    scala,
+    wasm,
+    lisp,
+    smalltalk,
+    matlab,
+    dart,
+    clojure,
+    clj,
+    logo,
+    /* script */ actionscript-3,
+    applescript,
+    bat,
+    batch,
+    cmake,
+    make,
+    makefile,
+    coffee,
+    groovy,
+    javascript,
+    js,
+    jsx,
+    typescript,
+    ts,
+    tsx,
+    kts,
+    lua,
+    vb,
+    cmd,
+    powershell,
+    ps,
+    ps1,
+    purescript,
+    py,
+    python,
+    julia,
+    ruby,
+    rb,
+    shellscript,
+    shell,
+    bash,
+    sh,
+    zsh,
+    php,
+    viml,
+    vim,
+    vimscript,
+    wenyan,
+    文言,
+    zenscript,
+    docker,
+    turtle,
+    /* template */ html,
+    jinja-html,
+    pug,
+    markdown,
+    md,
+    mdx,
+    rst,
+    vue,
+    vue-html,
+    svelte,
+    twig,
+    /* styles */ glsl,
+    css,
+    postcss,
+    stylus,
+    styl,
+    less,
+    sass,
+    scss,
+    shaderlab,
+    shader,
+    /* data */ ini,
+    json,
+    jsonc,
+    xml,
+    xsl,
+    yaml,
+    yml,
+    nginx,
+    toml,
+    ssh-config,
+    jade,
+    graphql,
+    plsql,
+    sql,
+    sparql,
+    scheme,
+    verilog,
+    system-verilog,
+    git-commit,
+    git-rebase,
+    ql,
+    tasl,
+    vhdl,
+    tex,
+    /* todo */ apache,
+    apex,
+    apl,
+    asm,
+    astro,
+    awk,
+    ballerina,
+    berry,
+    be,
+    bibtex,
+    bicep,
+    cadence,
+    cdc,
+    clarity,
+    cobol,
+    codeql,
+    crystal,
+    cue,
+    d,
+    diff,
+    dream-maker,
+    elixir,
+    elm,
+    erb,
+    fish,
+    fsl,
+    gherkin,
+    gnuplot,
+    hack,
+    handlebars,
+    hbs,
+    hcl,
+    hlsl,
+    jsonnet,
+    jssm,
+    latex,
+    liquid,
+    marko,
+    mermaid,
+    nim,
+    nix,
+    ocaml,
+    perl,
+    prisma,
+    prolog,
+    puppet,
+    r,
+    raku,
+    perl6,
+    razor,
+    rel,
+    riscv,
+    sas,
+    solidity,
+    stata,
+    tcl
+  );
+}
+
 .content {
-  & .ext-c::before {
-    content: "c";
-  }
-  & .ext-cpp::before {
-    content: "cpp";
-  }
-  & .ext-cs::before {
-    content: "cs";
-  }
-  & .ext-css::before {
-    content: "css";
-  }
-  & .ext-dart::before {
-    content: "dart";
-  }
-  & .ext-docker::before {
-    content: "docker";
-  }
-  & .ext-fs::before {
-    content: "fs";
-  }
-  & .ext-go::before {
-    content: "go";
-  }
-  & .ext-html::before {
-    content: "html";
-  }
-  & .ext-java::before {
-    content: "java";
-  }
-  & .ext-js::before {
-    content: "js";
-  }
-  & .ext-json::before {
-    content: "json";
-  }
-  & .ext-kt::before {
-    content: "kt";
-  }
-  & .ext-less::before {
-    content: "less";
-  }
-  & .ext-makefile::before {
-    content: "makefile";
-  }
-  & .ext-md::before {
-    content: "md";
-  }
-  & .ext-php::before {
-    content: "php";
-  }
-  & .ext-py::before {
-    content: "py";
-  }
-  & .ext-rb::before {
-    content: "rb";
-  }
-  & .ext-rs::before {
-    content: "rs";
-  }
-  & .ext-sass::before {
-    content: "sass";
-  }
-  & .ext-scss::before {
-    content: "scss";
-  }
-  & .ext-sh::before {
-    content: "sh";
-  }
-  & .ext-styl::before {
-    content: "styl";
-  }
-  & .ext-ts::before {
-    content: "ts";
-  }
-  & .ext-toml::before {
-    content: "toml";
-  }
-  & .ext-vue::before {
-    content: "vue";
-  }
-  & .ext-yml::before {
-    content: "yml";
+  @each $lang in var(--code-prefix) {
+    & .ext-$(lang)::before {
+      content: "$(lang)";
+    }
   }
 }

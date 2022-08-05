@@ -25,12 +25,12 @@
 
   & h1 {
     @apply text-5xl my-4 pb-2;
-    @apply border-b-4 border-slate-500 border-opacity-50 border-double;
+    @apply border-(b-4 slate-500 opacity-50 double);
   }
 
   & h2 {
     @apply text-3xl my-4;
-    @apply border-b-2 border-slate-500 border-opacity-50;
+    @apply border-(b-2 slate-500 opacity-50);
   }
 
   & h3 {

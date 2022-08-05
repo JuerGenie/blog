@@ -3,11 +3,11 @@
 
 .content {
   & div[class*="language-"] {
-    @apply flex flex-row-reverse;
-    @apply bg-slate-800 bg-opacity-80;
+    @apply flex flex-row-reverse my-1;
+    @apply bg-(slate-800 opacity-80);
     @apply rounded-lg overflow-auto;
 
-    @apply text-white text-sm;
+    @apply text-(white sm);
     @apply relative;
 
     /* ========[ 自定义颜色 ]======== */
@@ -24,9 +24,6 @@
     --shiki-token-link: theme("colors.sky.500");
     /* ============================== */
 
-    & > .shiki {
-      /* @apply bg-slate-700 bg-opacity-80 !important; */
-    }
     &::after {
       content: "";
       @apply absolute inset-0 pointer-events-none;
@@ -38,7 +35,7 @@
     }
     &::before {
       @apply absolute top-1 right-2;
-      @apply text-sm text-white text-opacity-[var(--ext-opacity)] uppercase;
+      @apply text-(sm white opacity-[var(--ext-opacity)]) uppercase;
       @apply transition-all;
     }
 
@@ -66,12 +63,12 @@
     }
 
     & > .highlight-lines {
-      @apply absolute top-0 bottom-0 left-0 right-0;
+      @apply absolute inset-0;
       @apply whitespace-pre;
       @apply pointer-events-none;
 
       & > .highlight-line {
-        @apply bg-slate-400 bg-opacity-20;
+        @apply bg-(slate-400 opacity-20);
         @apply backdrop-saturate-150;
       }
     }
