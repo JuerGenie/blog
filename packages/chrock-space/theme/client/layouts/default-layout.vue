@@ -72,7 +72,6 @@ import LeftNav from "../components/left-nav.vue";
 import { useAuthorData } from "../composables/author-data";
 import { dateFormatter } from "../utils/formatters";
 import { groups } from "../utils/router";
-import Splitter from "../components/splitter.vue";
 import childrenList from "../components/children-list.vue";
 
 const pageData = usePageData<
@@ -108,16 +107,19 @@ const chrockRef = ref<HTMLDivElement>();
 
 <style lang="postcss" scoped>
 .chrock {
+  --left-drawer-width: 20rem;
+  --header-height: 4rem;
+
   @apply relative;
 
   & > header {
-    @apply fixed left-80 right-0 top-0 z-10;
-    @apply h-16;
+    @apply fixed left-[var(--left-drawer-width)] right-0 top-0 z-10;
+    @apply h-[var(--header-height)];
     @apply bg-white bg-opacity-80 backdrop-blur;
     @apply shadow-lg;
 
     & .information {
-      @apply w-[var(--max-width)] h-16;
+      @apply w-[var(--max-width)] h-[var(--header-height)];
       @apply flex flex-row items-center justify-between;
 
       & > .information-title {
@@ -128,18 +130,18 @@ const chrockRef = ref<HTMLDivElement>();
 
   & > main {
     @apply min-h-screen;
-    @apply ml-80;
+    @apply ml-[var(--left-drawer-width)];
 
     @apply flex flex-col;
 
     & > .page-information {
-      @apply w-full h-80 relative;
-      @apply p-16;
+      @apply w-full h-[var(--left-drawer-width)] relative;
+      @apply p-[var(--header-height)];
       @apply flex flex-col gap-4 justify-end;
-      @apply bg-slate-200;
+      @apply bg-gradient-to-t from-slate-300 to-slate-100;
 
       @apply bg-cover bg-center;
-      background-image: v-bind("coverSrc");
+      background-image: linear-gradient(var(--un-gradient)), v-bind("coverSrc");
 
       &::before {
         content: "";
@@ -187,21 +189,12 @@ const chrockRef = ref<HTMLDivElement>();
   }
 
   & > nav {
-    @apply fixed top-0 bottom-0 left-0 w-80;
+    @apply fixed inset-y-0 left-0 w-[var(--left-drawer-width)] z-20;
     @apply border-r border-slate-200;
-  }
-
-  & > .right {
-    grid-area: cr;
-    @apply p-8;
   }
 
   & > footer {
     @apply min-h-screen pt-16;
-  }
-
-  & .giscus-wrapper {
-    /* @apply mt-32; */
   }
 }
 </style>

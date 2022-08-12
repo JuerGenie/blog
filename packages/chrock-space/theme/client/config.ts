@@ -8,6 +8,8 @@ import "@mdi/font/css/materialdesignicons.css";
 import { initialize as initializeRouterUtils } from "./utils/router";
 import containers from "./components/containers";
 import { RouteLocationNormalized } from "vue-router";
+import "@animxyz/core";
+import animxyz from "@animxyz/vue3";
 
 function scrollToAnchor(to: RouteLocationNormalized) {
   const target = document.querySelector<HTMLAnchorElement>(to.hash);
@@ -21,7 +23,7 @@ function scrollToAnchor(to: RouteLocationNormalized) {
 
 export default defineClientConfig({
   enhance: async ({ app, router }) => {
-    app.use(containers);
+    app.use(containers).use(animxyz);
 
     initializeRouterUtils(router);
     router.afterEach((to, from) => {

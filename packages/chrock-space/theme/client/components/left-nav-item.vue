@@ -53,9 +53,7 @@ const active = computed(() => route.path.startsWith(props.group.route.path));
   }
 
   & > .title {
-    @apply text-base;
-    @apply cursor-pointer;
-    @apply py-1;
+    @apply text-base cursor-pointer py-1;
   }
 
   & .sub-nav {

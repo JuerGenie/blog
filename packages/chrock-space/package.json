@@ -47,6 +47,8 @@
     "vuepress": "^2.0.0-beta.45"
   },
   "dependencies": {
+    "@animxyz/core": "^0.6.6",
+    "@animxyz/vue3": "^0.6.7",
     "@giscus/vue": "^2.2.0",
     "@mdi/font": "^7.0.96",
     "@vuepress/client": "^2.0.0-beta.45",

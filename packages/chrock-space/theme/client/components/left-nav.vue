@@ -73,7 +73,7 @@ const tagList = computed(() =>
 <style lang="postcss" scoped>
 .left-nav {
   @apply flex flex-col;
-  @apply bg-slate-100;
+  @apply bg-gradient-to-b from-slate-100 via-white to-white;
 
   & > .author-information {
     @apply p-8;
@@ -90,7 +90,7 @@ const tagList = computed(() =>
   }
 
   & > .tag-list {
-    @apply flex flex-row flex-wrap justify-center gap-1 p-8;
+    @apply flex flex-(row wrap) justify-center gap-1 p-8;
 
     & > .tag {
       @apply text-xs px-2 py-1 rounded-full;
@@ -99,16 +99,16 @@ const tagList = computed(() =>
   }
 
   & > .other-link {
-    @apply flex flex-row gap-2 flex-wrap justify-center;
+    @apply flex flex-(row wrap) gap-2 justify-center;
     @apply px-8 py-2;
 
     & .link-btn {
       @apply p-2 rounded-lg;
-      @apply bg-slate-200 bg-opacity-0 hover:bg-opacity-50 active:bg-opacity-100;
+      @apply bg-(slate-200 opacity-0) hover:bg-opacity-50 active:bg-opacity-100;
 
       & > .mdi {
         @apply w-8 h-8 inline-block;
-        @apply flex justify-center items-center text-4xl text-primary-800;
+        @apply flex justify-center items-center text-(4xl primary-800);
       }
     }
   }

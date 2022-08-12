@@ -30,6 +30,8 @@ importers:
 
   packages/chrock-space:
     specifiers:
+      '@animxyz/core': ^0.6.6
+      '@animxyz/vue3': ^0.6.7
       '@giscus/vue': ^2.2.0
       '@mdi/font': ^7.0.96
       '@types/lodash': ^4.14.182
@@ -81,6 +83,8 @@ importers:
       vue-router: ^4.1.3
       vuepress: ^2.0.0-beta.45
     dependencies:
+      '@animxyz/core': 0.6.6
+      '@animxyz/vue3': 0.6.7_vue@3.2.37
       '@giscus/vue': 2.2.0_vue@3.2.37
       '@mdi/font': 7.0.96
       '@vuepress/client': 2.0.0-beta.45
@@ -186,6 +190,16 @@ packages:
 
   /@animxyz/core/0.6.6:
     resolution: {integrity: sha512-NtAA/G0Gq3hzAiL6yuE/4U8IgHMPUl3MxbWUbhO443T9UCsf9rBY94P5aK79Zd+/529FeoNdDphIOcOZLsI2sA==}
+    dev: false
+
+  /@animxyz/vue3/0.6.7_vue@3.2.37:
+    resolution: {integrity: sha512-tLx4HfFcoxR5wgIMFDrmjS2mZifFRNMiwn7skPT3as9ViuCW3QdCsBIDYY2tR37GSvSUC1NhNwkkCZ1pt0C+Hg==}
+    peerDependencies:
+      vue: '>= 3'
+    dependencies:
+      '@animxyz/core': 0.6.6
+      clsx: 1.2.1
+      vue: 3.2.37
     dev: false
 
   /@antfu/install-pkg/0.1.0:
@@ -1938,6 +1952,11 @@ packages:
   /clone/1.0.4:
     resolution: {integrity: sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==}
     engines: {node: '>=0.8'}
+
+  /clsx/1.2.1:
+    resolution: {integrity: sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==}
+    engines: {node: '>=6'}
+    dev: false
 
   /color-convert/1.9.3:
     resolution: {integrity: sha512-QfAUtd+vFdAtFQcC8CCyYt1fYWxSqAiK2cSD6zDB8N3cpsEBAvRxp9zOGg6G/SHHJYAT88/az/IuDGALsNVbGg==}

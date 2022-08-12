@@ -50,24 +50,31 @@ const emit = defineEmits<{
 
 const groupOptions = computed(() => Object.entries(groups.value));
 
-const innerGroup = ref(props.group);
-const innerSearch = ref(props.search);
-const innerTags = ref(props.tags);
-
-watch(innerGroup, (nv) => emit("update:group", nv));
-watch(innerSearch, (nv) => emit("update:search", nv));
-watch(innerTags, (nv) => emit("update:tags", nv));
+const innerGroup = computed({
+  get: () => props.group,
+  set: (val) => emit("update:group", val),
+});
+const innerSearch = computed({
+  get: () => props.search,
+  set: (val) => emit("update:search", val),
+});
+const innerTags = computed({
+  get: () => props.tags,
+  set: (val) => emit("update:tags", val),
+});
 
 function titleFormatter(group: GroupTree) {
   return (group.route.meta.frontmatter as GroupFrontmatter).title;
 }
 function toggleTag(tag: string) {
   const index = innerTags.value.indexOf(tag);
+  const newTags = [...innerTags.value];
   if (index === -1) {
-    innerTags.value.push(tag);
+    newTags.push(tag);
   } else {
-    innerTags.value.splice(index, 1);
+    newTags.splice(index, 1);
   }
+  innerTags.value = newTags;
 }
 </script>
 
