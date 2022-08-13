@@ -1,0 +1,118 @@
+---
+title: 关于「ani-saika」这个东西
+subtitle: 是个P2P聊天室，顺便摸索了一下RPC。
+tags:
+  - webrtc
+  - vue
+  - unocss
+---
+
+## WEBRTC真好玩
+
+在很早之前，我第一次接触到webrtc这个东西的时候，只知道它能拿来创建端到端的连接，后来深入了解了一下，才知道它的创建初衷是为了实现媒体传输。也就是说，它是为了在浏览器之间传输数据而出现的工具。
+
+那能拿来传输文本或者二进制数据吗？理论上来说应该是可以的，协议里也确实有相关[定义](https://developer.mozilla.org/zh-CN/docs/Web/API/RTCDataChannel)，不过那时候我查看资料的时候，只搜索到了和音视频相关的教程，而且使用原生API颇为繁琐，需要自己连接信令服务器、自己管理链接。因为实在麻烦，所以就暂时搁置，没有继续研究。
+
+一直到前不久，想自己做个支持插件扩展的在线聊天工具时，偶然回想起webrtc，在[npmjs](https://www.npmjs.com)里随意搜索了一下，发现了名叫[`peerjs`](https://www.npmjs.com/package/peerjs)的库，很好的封装了webrtc的许多操作，并且提供了一个公开的信令服务器，默认连接至这个服务器。
+
+大概的看了一下官方文档，并且写了个简单的demo使用了一下：
+
+- 服务端
+  ```html
+  <html>
+    <head>
+      <title>SERVER</title>
+    </head>
+    <body>
+      <div id="log"></div>
+
+      <script src="https://unpkg.com/peerjs@1.3.2/dist/peerjs.min.js"></script>
+      <script>
+        window.onload = () => {
+          function logMessage(from, message) {
+            window.log.innerHTML += [
+              `<div>[${from}]: ${message}</div>`
+            ].join("");
+          }
+
+          const server = new Peer();
+          const connSet = new Set();
+          server
+            .on("open", (id) => {
+	            logMessage("服务端", `信令ID：${id}`);
+            })
+            .on("connection", (conn) => {
+              logMessage("客户端", `客户端连接，ID：${conn.peer}`);
+              connSet.add(conn);
+              conn
+                .on("data", (data) => {
+                  logMessage(conn.peer, String(data));
+                  connSet.forEach((conn) => conn.send(data));
+                })
+                .on("close", () => {
+                  connSet.delete(conn);
+                });
+            });
+        }
+      </script>
+    </body>
+  </html>
+  ```
+- 客户端
+  ```html
+  <html>
+    <head>
+      <title>CLIENT</title>
+    </head>
+    <body>
+      <div id="log"></div>
+      <label style="display: flex; flex-direction: row;">
+        <input id="input" />
+        <button id="sendBtn">发送</button>
+      </label>
+
+      <script src="https://unpkg.com/peerjs@1.3.2/dist/peerjs.min.js"></script>
+      <script>
+        window.onload = () => {
+          function logMessage(from, message) {
+            window.log.innerHTML += [
+              `<div>[${from}]: ${message}</div>`
+            ].join("");
+          }
+
+          const client = new Peer();
+          let conn;
+          client.on("open", (id) => {
+	          logMessage("客户端", `信令ID：${id}`);
+            let id = "";
+            while(!id) {
+              id = window.prompt("服务端信令ID：");
+              if (!id) {
+                window.alert("请输入信令ID。");
+              }
+            }
+            conn = client.connect(id);
+            conn
+              .on("open", () => {
+                logMessage("客户端", "已连接到服务端。");
+              })
+              .on("data", (data) => {
+                logMessage("服务端", String(data));
+              });
+          });
+          
+          window.sendBtn.addEventListener("click", () => {
+            logMessage("客户端", window.input.value);
+            conn?.send(window.input.value);
+          });
+        }
+      </script>
+    </body>
+  </html>
+  ```
+
+以上代码简单的实现了一个拥有中央服务端的聊天工具，各个客户端连接到同一个服务端后，发送的消息就能同步到各个客户端之间。得益于良好的封装，使用起来十分简便，整体行为很好预测，这让开发的过程变得开心不少。
+
+> 考虑到webrtc是在主线程上执行的，连接之间的消息收发会互相挤占（服务端的）资源，所以需要控制客户端的连接数量。
+>
+> ⬆️：我没具体测试过性能影响，也许不会有我预想的那么明显，有机会的话我会做一下测试。
