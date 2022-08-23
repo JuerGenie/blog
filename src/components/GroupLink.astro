@@ -1,0 +1,32 @@
+---
+export interface Props extends astroHTML.JSX.HTMLAttributes {
+  path: string | string[];
+}
+
+const { path, ...props } = Astro.props as Props;
+const list = Array.isArray(path) ? path : path.split("/");
+---
+
+<div {...props}>
+  {
+    list.map((sub, index) => (
+      <a href={`./${list.slice(0, index + 1).join("/")}`}>{sub}</a>
+    ))
+  }
+</div>
+
+<style>
+  div {
+    @apply flex flex-row flex-nowrap gap-4;
+
+    & a {
+      @apply relative;
+
+      &:not(:last-of-type)::after {
+        content: "/";
+        @apply absolute -right-3;
+        @apply pointer-events-none;
+      }
+    }
+  }
+</style>

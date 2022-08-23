@@ -1,0 +1,60 @@
+@font-face {
+  font-family: "Sarasa Mono SC Nerd";
+  font-weight: 700;
+  font-style: normal;
+  src: url(./sarasa-mono-sc-nerd-bold.ttf);
+}
+@font-face {
+  font-family: "Sarasa Mono SC Nerd";
+  font-weight: 700;
+  font-style: italic;
+  src: url(./sarasa-mono-sc-nerd-bolditalic.ttf);
+}
+@font-face {
+  font-family: "Sarasa Mono SC Nerd";
+  font-weight: 300;
+  font-style: normal;
+  src: url(./sarasa-mono-sc-nerd-extralight.ttf);
+}
+@font-face {
+  font-family: "Sarasa Mono SC Nerd";
+  font-weight: 300;
+  font-style: italic;
+  src: url(./sarasa-mono-sc-nerd-extralightitalic.ttf);
+}
+@font-face {
+  font-family: "Sarasa Mono SC Nerd";
+  font-weight: normal;
+  font-style: italic;
+  src: url(./sarasa-mono-sc-nerd-italic.ttf);
+}
+@font-face {
+  font-family: "Sarasa Mono SC Nerd";
+  font-weight: 400;
+  font-style: normal;
+  src: url(./sarasa-mono-sc-nerd-light.ttf);
+}
+@font-face {
+  font-family: "Sarasa Mono SC Nerd";
+  font-weight: 400;
+  font-style: italic;
+  src: url(./sarasa-mono-sc-nerd-lightitalic.ttf);
+}
+@font-face {
+  font-family: "Sarasa Mono SC Nerd";
+  font-weight: normal;
+  font-style: normal;
+  src: url(./sarasa-mono-sc-nerd-regular.ttf);
+}
+@font-face {
+  font-family: "Sarasa Mono SC Nerd";
+  font-weight: 600;
+  font-style: normal;
+  src: url(./sarasa-mono-sc-nerd-semibold.ttf);
+}
+@font-face {
+  font-family: "Sarasa Mono SC Nerd";
+  font-weight: 600;
+  font-style: italic;
+  src: url(./sarasa-mono-sc-nerd-semibolditalic.ttf);
+}

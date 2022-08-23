@@ -1,0 +1,71 @@
+---
+import { SITE_TITLE, SITE_DESCRIPTION } from "@src/config";
+import BasePage from "@components/BasePage.astro";
+import ArticleList from "@components/ArticleList.astro";
+import { getTimes } from "@utils/timeline";
+
+export async function getStaticPaths() {
+  const times = getTimes(await Astro.glob("../articles/**/*.{md,mdx}"));
+
+  return [
+    {
+      params: {
+        date: "latest",
+      },
+    },
+    {
+      params: {
+        date: "all",
+      },
+    },
+    ...Object.keys(times).map((date) => ({
+      params: { date },
+    })),
+  ];
+}
+
+const { date } = Astro.params;
+let times = getTimes(
+  await Astro.glob("../articles/**/*.{md,mdx}"),
+  date === "latest" ? 20 : undefined
+);
+---
+
+<BasePage title={SITE_TITLE} description={SITE_DESCRIPTION} hideGiscus>
+  <article>
+    {
+      ["latest", "all"].includes(String(date)) ? (
+        <Fragment>
+          {Object.entries(times).map(([date, list]) => (
+            <Fragment>
+              <a href={`./timeline/${date}`}>
+                <h2>{date}</h2>
+              </a>
+              <ArticleList articles={list} />
+            </Fragment>
+          ))}
+          {date === "latest" && (
+            <a class="show-all" href="./timeline/all">
+              SHOW ALL
+            </a>
+          )}
+        </Fragment>
+      ) : (
+        <Fragment>
+          <h2>{date}</h2>
+          <ArticleList articles={times[date]} />
+        </Fragment>
+      )
+    }
+  </article>
+</BasePage>
+
+<style>
+  a.show-all {
+    @apply text-center text-white;
+    @apply bg-slate-500 bg-opacity-50 hover:bg-opacity-80;
+    @apply py-2;
+    @apply backdrop-blur;
+    @apply transition-all;
+  }
+</style>

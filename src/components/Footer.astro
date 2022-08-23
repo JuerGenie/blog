@@ -1,0 +1,23 @@
+---
+import BaseCopyright from "./BaseCopyright.astro";
+
+const today = new Date();
+---
+
+<style>
+  footer {
+    @apply text-center;
+    @apply my-4;
+
+    & > div {
+      &:first-of-type {
+        @apply text-base font-bold;
+      }
+    }
+  }
+</style>
+
+<footer>
+  <div>©{today.getFullYear()} | BY JUERGENIE</div>
+  <BaseCopyright />
+</footer>

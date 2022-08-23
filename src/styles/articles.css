@@ -1,0 +1,109 @@
+article {
+  @apply flex flex-col;
+
+  /* header */
+  & :is(h1, h2, h3, h4, h5, h6) {
+    @apply bg-slate-100;
+  }
+
+  & h1 {
+    @apply text-5xl my-4;
+    @apply border-b-4 border-slate-500 border-opacity-50 border-double;
+  }
+
+  & h2 {
+    @apply text-3xl my-4;
+    @apply border-b-2 border-slate-500 border-opacity-50;
+  }
+
+  & h3 {
+    @apply text-2xl my-3;
+  }
+
+  & h4 {
+    @apply text-xl my-3;
+  }
+
+  & h5 {
+    @apply text-lg my-2;
+  }
+
+  & h6 {
+    @apply text-base my-2;
+  }
+
+  /* list */
+  & ul {
+    @apply list-disc;
+  }
+
+  & ol {
+    @apply list-decimal;
+  }
+
+  & :is(ul, ol) {
+    @apply my-2;
+
+    & :is(ul, ol) {
+      @apply my-0;
+    }
+  }
+
+  & li {
+    @apply relative;
+    @apply ml-8 pl-2;
+  }
+
+  & pre.astro-code {
+    all: unset;
+    @apply block p-4;
+    @apply rounded-lg overflow-auto;
+    @apply bg-slate-800 bg-opacity-80 backdrop-blur !important;
+
+    /* ========[ 自定义颜色 ]======== */
+    /* --astro-code-color-text: theme("colors.slate.200");
+    --astro-code-color-background: theme("colors.slate.800");
+    --astro-code-token-constant: theme("colors.blue.300");
+    --astro-code-token-string: theme("colors.teal.500");
+    --astro-code-token-comment: theme("colors.slate.500");
+    --astro-code-token-keyword: theme("colors.blue.400");
+    --astro-code-token-parameter: #aa0000;
+    --astro-code-token-function: theme("colors.amber.200");
+    --astro-code-token-string-expression: var(--astro-code-token-string);
+    --astro-code-token-punctuation: theme("colors.slate.200");
+    --astro-code-token-link: theme("colors.sky.500"); */
+    /* ============================== */
+
+    & > code > .line {
+      @apply break-normal;
+
+      & > span {
+        @apply whitespace-pre;
+      }
+    }
+
+    /* & > code {
+      counter-reset: line-number;
+
+      & > .line {
+        @apply pr-4 pl-[6ch] whitespace-nowrap;
+        @apply select-none relative;
+
+        &::before {
+          counter-increment: line-number;
+          content: counter(line-number);
+
+          @apply text-right inline-block w-[6ch] mr-4 pr-2;
+          @apply text-slate-500 bg-slate-900;
+          @apply absolute left-0;
+        }
+        &:first-of-type::before {
+          @apply pt-2;
+        }
+        &:last-of-type::before {
+          @apply pb-2;
+        }
+      }
+    } */
+  }
+}

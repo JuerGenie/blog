@@ -1,0 +1,54 @@
+---
+import { ArticleData } from "@src/models/article-frontmatter";
+import { getArticleParentPath } from "@src/utils/url";
+import BaseImage from "./BaseImage.astro";
+import GroupLink from "./GroupLink.astro";
+
+export interface Props {
+  article: ArticleData["frontmatter"];
+}
+
+const { article } = Astro.props as Props;
+const { coverImage, title, hideParent, description, url } = article;
+
+let baseUrl = url.replace(import.meta.env.BASE_URL, "");
+if (baseUrl.startsWith("/")) {
+  baseUrl = baseUrl.slice(1);
+}
+const parentUrl = getArticleParentPath(baseUrl);
+---
+
+{
+  coverImage && (
+    <BaseImage width={600} height={300} href={coverImage} alt="cover image." />
+  )
+}
+<h1>{title}</h1>
+{
+  !hideParent &&
+  !!parentUrl?.length && (
+    <h4>
+      <i class="mdi mdi-folder" />
+      <GroupLink class="inline-flex" path={parentUrl} />
+    </h4>
+  )
+}
+{
+  description && (
+    <blockquote>
+      <p>{description}</p>
+    </blockquote>
+  )
+}
+
+<style>
+  h1 {
+    &:has(+ h4) {
+      @apply mb-0;
+    }
+
+    & + h4 {
+      @apply flex flex-row gap-2 mt-0;
+    }
+  }
+</style>

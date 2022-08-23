@@ -1,0 +1,89 @@
+---
+import { resolveFromBase } from "@src/utils/url";
+import { SITE_TITLE } from "../config";
+import HeaderLink from "./HeaderLink.astro";
+
+const siteIcon = new URL("/blog/site-icon.png", Astro.url.origin);
+// const chrockBlog = new URL("/blog/chrock-blog.png", Astro.url.origin);
+
+const links = [
+  {
+    url: resolveFromBase(Astro.url, "."),
+    label: "HOME",
+    strict: true,
+  },
+  {
+    url: resolveFromBase(Astro.url, "./timeline/latest"),
+    label: "TIMELINE",
+  },
+  {
+    url: resolveFromBase(Astro.url, "./articles"),
+    label: "ARTICLES",
+  },
+  {
+    url: resolveFromBase(Astro.url, "./tags"),
+    label: "TAGS",
+  },
+  {
+    url: resolveFromBase(Astro.url, "./about"),
+    label: "ABOUT",
+  },
+];
+---
+
+<header>
+  <div>
+    <h2>
+      <img src={siteIcon.href} />
+      {SITE_TITLE}
+    </h2>
+    <nav>
+      {
+        links.map((link) => (
+          <HeaderLink url={link.url} strict={link.strict}>
+            {link.label}
+          </HeaderLink>
+        ))
+      }
+    </nav>
+  </div>
+</header>
+
+<style>
+  header {
+    @apply mt-8 mb-4;
+    @apply flex flex-row justify-between items-center;
+
+    &::before,
+    &::after {
+      @apply text-6xl;
+    }
+
+    &::before {
+      content: "░▒▓";
+    }
+
+    &::after {
+      content: "▓▒░";
+    }
+
+    & div {
+      @apply flex-1;
+
+      & h2 {
+        @apply my-2;
+        @apply text-4xl;
+        @apply flex flex-row gap-2 justify-center;
+
+        & img {
+          image-rendering: pixelated;
+          @apply inline-block object-contain h-[1em];
+        }
+      }
+
+      & nav {
+        @apply flex flex-row gap-4 justify-center;
+      }
+    }
+  }
+</style>

@@ -1,0 +1,29 @@
+---
+import BasePage from "@components/BasePage.astro";
+import BaseTag from "@components/BaseTag.astro";
+import { getTags } from "@utils/tags";
+
+const tags = getTags(await Astro.glob("../articles/**/*.md"));
+---
+
+<BasePage title="TAGS" hideGiscus>
+  <div>
+    {
+      Object.entries(tags)
+        .sort(([lt, ll], [rt, rl]) =>
+          ll.length > rl.length
+            ? -1
+            : ll.length === rl.length
+            ? lt.localeCompare(rt)
+            : 1
+        )
+        .map(([tag, pages]) => <BaseTag name={tag} count={pages.length} />)
+    }
+  </div>
+</BasePage>
+
+<style>
+  div {
+    @apply flex flex-row flex-wrap justify-center gap-2;
+  }
+</style>

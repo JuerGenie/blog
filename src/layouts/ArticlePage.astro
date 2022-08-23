@@ -1,0 +1,33 @@
+---
+import BasePage from "@components/BasePage.astro";
+import BaseCopyright from "@src/components/BaseCopyright.astro";
+import PageHeader from "@src/components/PageHeader.astro";
+import { ArticleFrontmatter } from "@src/models/article-frontmatter";
+
+export interface Props {
+  content: ArticleFrontmatter;
+}
+
+const {
+  content: { title, description, hideGiscus, hideLicense },
+} = Astro.props as Props;
+---
+
+<BasePage {...{title, description, hideGiscus}}>
+  <article>
+    <PageHeader article={Astro.props.content} />
+    <hr />
+    <br />
+    <slot />
+    {!hideLicense && <BaseCopyright />}
+  </article>
+</BasePage>
+
+<style>
+  article {
+    & > img.article-cover {
+      @apply aspect-[2/1];
+      @apply object-cover;
+    }
+  }
+</style>

@@ -1,5 +1,0 @@
-@import "./effects/index.css";
-
-[class*="chrock"] {
-  @apply transition-all;
-}

@@ -1,6 +1,0 @@
-.content {
-  & code:not(.shiki > code) {
-    @apply bg-slate-500 bg-opacity-10 text-slate-800 text-opacity-80;
-    @apply inline-block px-2 py-0.25 my-0.5 rounded;
-  }
-}
