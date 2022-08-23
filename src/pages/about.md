@@ -2,7 +2,7 @@
 layout: "@layouts/ArticlePage.astro"
 title: "About Me"
 updatedDate: "2022/8/24 02:21:17"
-coverImage: "/assets/juergenie.jpeg"
+coverImage: "./images/juergenie.jpeg"
 hideGiscus: true
 hideLicense: true
 ---

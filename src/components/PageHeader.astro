@@ -20,7 +20,12 @@ const parentUrl = getArticleParentPath(baseUrl);
 
 {
   coverImage && (
-    <BaseImage width={600} height={300} href={coverImage} alt="cover image." />
+    <BaseImage
+      aspectRatio={2 / 1}
+      fit={"cover"}
+      href={coverImage}
+      alt="cover image."
+    />
   )
 }
 <h1>{title}</h1>

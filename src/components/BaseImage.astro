@@ -1,26 +1,41 @@
 ---
-import { Image } from "@astrojs/image/components";
+// import { Image } from "@astrojs/image/components";
 
-type ImageProps = Parameters<typeof Image>[0];
-export type Props = Partial<ImageProps> & {
+// type ImageProps = Parameters<typeof Image>[0];
+// export type Props = Omit<ImageProps, "src"> & {
+//   href: string;
+// };
+export interface Props extends astroHTML.JSX.ImgHTMLAttributes {
   href: string;
-};
+  aspectRatio?: number;
+  fit?: "contain" | "cover" | "fill";
+}
 
-const { href, ...props } = Astro.props as Props;
+const { href, width, height, aspectRatio, fit, ...props } =
+  Astro.props as Props;
 
-const assets = await Astro.glob("../assets/**/*");
-const target = href.startsWith("http")
-  ? href
-  : assets.find((asset) => {
-      if (!href) {
-        return false;
-      }
-      if (!asset.default?.src) {
-        return false;
-      }
-      const index = asset.default.src.indexOf("/assets/");
-      return asset.default.src.slice(index) === href;
-    }) ?? href;
+// const assets = await Astro.glob<{ default: ImageMetadata }>("../assets/**/*");
+// const target = href.startsWith("http")
+//   ? href
+//   : assets.find((asset) => {
+//       if (!href) {
+//         return false;
+//       }
+//       if (!asset.default?.src) {
+//         return false;
+//       }
+//       const index = asset.default.src.indexOf("/assets/");
+//       return asset.default.src.slice(index) === href;
+//     }) ?? href;
 ---
 
-<Image src={typeof target === "string" ? target : target.default} {...props} />
+<!-- <Image src={typeof target === "string" ? target : target.default as any} {...props} /> -->
+<img src={href} {...props} />
+
+<style define:vars={{ width, height, aspectRatio, fit }}>
+  img {
+    @apply w-[calc(var(--width)*1px)] h-[calc(var(--height)*1px)];
+    @apply aspect-[var(--aspectRatio)];
+    object-fit: var(--fit);
+  }
+</style>
