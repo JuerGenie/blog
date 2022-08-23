@@ -1,0 +1,35 @@
+---
+export interface Props extends astroHTML.JSX.AnchorHTMLAttributes {
+  name: string;
+  count?: number;
+}
+
+const { name, count, ...props } = Astro.props as Props;
+---
+
+<a {...props} href={`./tags/${name}`}>
+  {name}
+  {count !== undefined && <div>{count}</div>}
+</a>
+
+<style>
+  a {
+    @apply rounded-full;
+    @apply px-2 text-sm;
+    @apply bg-slate-300 text-white;
+    @apply transition-opacity;
+    @apply flex flex-row items-center;
+
+    &:hover {
+      @apply opacity-80;
+    }
+
+    & > div {
+      @apply inline-block rounded-full;
+      @apply flex justify-center items-center;
+      @apply bg-slate-400 text-white;
+      @apply h-5 w-5 text-xs;
+      @apply relative -right-2;
+    }
+  }
+</style>

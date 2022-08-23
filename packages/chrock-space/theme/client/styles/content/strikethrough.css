@@ -1,6 +1,0 @@
-.content {
-  & s {
-    @apply bg-slate-800 text-transparent hover:(text-white cursor-none);
-    @apply no-underline;
-  }
-}

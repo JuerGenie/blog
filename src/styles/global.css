@@ -1,0 +1,132 @@
+@import "./articles.css";
+
+html,
+body {
+  @apply m-0 p-0;
+}
+
+body {
+  @apply m-auto p-5 w-[60ch] sm:w-[80ch] text-left bg-white text-slate-600;
+  @apply break-words;
+  @apply leading-6;
+
+  font-family: "Sarasa Mono SC Nerd", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+    sans-serif;
+
+  & :is(h1, h2, h3, h4, h5, h6) {
+    @apply relative;
+    @apply text-slate-800  font-medium;
+  }
+
+  & a {
+    @apply text-blue-500;
+    &::visited {
+      @apply text-violet-500;
+    }
+
+    &[target]::after {
+      font: normal normal normal 24px/1 "Material Design Icons";
+      content: "\F03CC";
+
+      @apply text-xs;
+      @apply relative -top-1;
+    }
+  }
+
+  & blockquote {
+    @apply bg-slate-500 bg-opacity-10 backdrop-blur;
+    @apply pl-12 px-4 py-2 my-2;
+    @apply relative;
+    @apply rounded;
+
+    &::before {
+      content: "“";
+      @apply absolute top-2 bottom-0 left-0;
+      @apply w-12;
+      @apply flex justify-center items-start;
+      @apply text-6xl leading-[4.25rem] text-slate-500 opacity-50;
+    }
+  }
+
+  & p {
+    @apply my-2;
+  }
+
+  & table {
+    @apply relative w-full backdrop-blur;
+
+    & thead {
+      & th {
+        @apply border-b-2 border-slate-500 border-opacity-10;
+        @apply text-left;
+
+        @apply first-of-type:rounded-tl last-of-type:rounded-tr;
+      }
+    }
+
+    & tbody {
+      counter-reset: table-row-count;
+
+      & tr {
+        counter-reset: table-col-count;
+        counter-increment: table-row-count;
+
+        & td {
+          counter-increment: table-col-count;
+
+          @apply border-t-2 border-slate-500 border-opacity-10;
+          @apply bg-opacity-60;
+
+          @apply first-of-type:border-l-0 last-of-type:border-r-0;
+        }
+
+        &:last-of-type td {
+          @apply first-of-type:rounded-bl last-of-type:rounded-br;
+        }
+      }
+    }
+
+    & th,
+    & td {
+      @apply px-4 py-2;
+      @apply bg-slate-100 hover:bg-slate-200;
+    }
+  }
+
+  & img {
+    @apply max-w-full;
+  }
+
+  & hr {
+    @apply border-0 h-auto;
+    @apply text-center my-2 leading-4;
+    @apply bg-slate-100;
+
+    &::before {
+      @apply content-["--=+=-=+=-=+=-=+=-=+=-=+=-=+=-=+=--"];
+      @apply sm:content-["--=+=-=+=-=+=-=+=-=+=-=+=-=+=-=+=-=+=-=+=-=+=-=+=--"];
+      @apply md:content-["--=+=-=+=-=+=-=+=-=+=-=+=-=+=-=+=-=+=-=+=-=+=-=+=-=+=-=+=-=+=-=+=-=+=-=+=--"];
+    }
+  }
+
+  & .logo-wrapper {
+    @apply fixed bottom-0 right-0 -z-10;
+    @apply flex justify-end items-end;
+    @apply pointer-events-none;
+    @apply origin-bottom-right;
+    @apply scale-[.1] sm:scale-[.2] md:scale-[.25];
+    @apply opacity-50;
+  }
+
+  & .giscus {
+    @apply my-8;
+  }
+}
+textarea {
+  width: 100%;
+  font-size: 16px;
+}
+input {
+  font-size: 16px;
+}

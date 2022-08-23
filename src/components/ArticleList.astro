@@ -1,0 +1,34 @@
+---
+import { ArticleData } from "@src/models/article-frontmatter";
+import Article from "./Article.astro";
+
+export interface Props {
+  hideGroupPath?: boolean;
+  articles: ArticleData[];
+}
+
+const { articles, hideGroupPath } = Astro.props as Props;
+---
+
+{
+  articles.length ? (
+    <ul>
+      {articles.map((article) => (
+        <Article hideGroupPath={hideGroupPath} article={article} />
+      ))}
+    </ul>
+  ) : (
+    <div>暂时还没有相关内容哦</div>
+  )
+}
+
+<style>
+  ul {
+    @apply list-none;
+    @apply flex flex-col gap-8;
+  }
+
+  div {
+    @apply text-center text-slate-400;
+  }
+</style>

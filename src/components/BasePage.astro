@@ -1,0 +1,44 @@
+---
+import BaseHeader from '@src/components/BaseHeader.astro';
+import Header from '@src/components/Header.astro';
+import Footer from '@src/components/Footer.astro';
+import Logo from '@src/components/Logo.astro';
+
+export interface Props {
+  title: string;
+  description?: string;
+
+  hideGiscus?: true;
+}
+
+const { title, description, hideGiscus } = Astro.props as Props;
+---
+
+<html lang="zh-cn">
+
+<head>
+  <BaseHeader title={title} description={description} />
+</head>
+
+<body>
+  <Header title={title} />
+  <hr />
+  <main>
+    <slot></slot>
+    {!hideGiscus && (
+    <hr />
+    <script is:inline src="https://giscus.app/client.js" data-repo="juergenie/blog" data-repo-id="R_kgDOG0CKgw"
+      data-category="Announcements" data-category-id="DIC_kwDOG0CKg84CPQtU" data-mapping="pathname" data-strict="1"
+      data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="zh-CN"
+      data-loading="lazy" crossorigin="anonymous" async></script>)
+    }
+  </main>
+  <hr />
+  <Footer />
+</body>
+
+<div class="logo-wrapper">
+  <Logo />
+</div>
+
+</html>

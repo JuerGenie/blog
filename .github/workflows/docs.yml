@@ -33,12 +33,12 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build documentation site
-        run: pnpm blog build
+        run: pnpm build
 
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v2.2.0
         with:
           target_branch: gh-pages
-          build_dir: packages/chrock-space/docs/.vuepress/dist
+          build_dir: dist
         env:
           GH_PAT: ${{ secrets.GH_PAT }}

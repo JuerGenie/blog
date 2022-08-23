@@ -1,0 +1,102 @@
+---
+import { ArticleData } from "@src/models/article-frontmatter";
+import { formatDate } from "@src/utils/date";
+import { getArticleParentPath } from "@src/utils/url";
+import BaseTag from "./BaseTag.astro";
+import GroupLink from "./GroupLink.astro";
+
+export interface Props {
+  hideGroupPath?: boolean;
+  article: ArticleData;
+}
+
+const { hideGroupPath, article } = Astro.props as Props;
+
+const description = article.frontmatter.description;
+const date = formatDate(article.frontmatter.publishDate);
+const tags = article.frontmatter.tags ?? [];
+
+const parentPath = getArticleParentPath(article.url);
+---
+
+<li>
+  <h6>
+    {
+      article.frontmatter.layout.endsWith("ArticlePage.astro")
+        ? "Article"
+        : "Group"
+    }
+  </h6>
+  <time datetime={article.frontmatter.publishDate}>{date}</time>
+  <div>
+    <a href={article.url}>{article.frontmatter.title}</a>
+    {
+      !hideGroupPath &&
+      !!parentPath.length &&
+      !!tags.length && (
+        <div class="wrapper">
+          {!hideGroupPath && !!parentPath.length && (
+            <div class="group-path">
+              <i class="mdi mdi-folder-outline" />
+              <GroupLink path={parentPath} />
+            </div>
+          )}
+          {!!tags.length && (
+            <div class="tag-list">
+              <i class="mdi mdi-tag-outline" />
+              {tags.map((tag) => (
+                <BaseTag name={tag} />
+              ))}
+            </div>
+          )}
+        </div>
+      )
+    }
+    {!!description && <div class="description">{description}</div>}
+  </div>
+</li>
+
+<style>
+  li {
+    /* @apply flex flex-row gap-2; */
+    @apply grid grid-cols-5 grid-rows-[repeat(4,auto)] gap-x-2;
+
+    & > h6 {
+      @apply col-start-2 col-end-3;
+      @apply row-start-1 row-end-2;
+      /* @apply px-2 rounded-full; */
+      @apply text-xs text-slate-400 bg-transparent m-0;
+      /* @apply bg-slate-500; */
+    }
+
+    & > time {
+      /* @apply flex-[1] text-right text-base; */
+      @apply text-right text-base;
+      @apply col-start-1 col-end-2;
+      @apply row-start-2 row-end-3;
+    }
+
+    & > div {
+      /* @apply flex-[4]; */
+      @apply col-start-2 col-end-6;
+      @apply row-start-2 row-end-3;
+
+      & > div.wrapper {
+        @apply flex flex-col px-2;
+        @apply bg-slate-100 bg-opacity-50 backdrop-blur;
+
+        & > .group-path {
+          @apply flex flex-row gap-2 rounded-full;
+        }
+
+        & > .description {
+          @apply text-slate-500 font-light;
+        }
+
+        & > .tag-list {
+          @apply flex flex-row flex-wrap items-center gap-2 rounded-full;
+        }
+      }
+    }
+  }
+</style>

@@ -1,0 +1,69 @@
+---
+import BasePage from "@components/BasePage.astro";
+import ArticleList from "@src/components/ArticleList.astro";
+import PageHeader from "@src/components/PageHeader.astro";
+import {
+  ArticleData,
+  ArticleFrontmatter,
+} from "@src/models/article-frontmatter";
+
+export interface Props {
+  content: ArticleFrontmatter;
+}
+
+const {
+  content: { title, description, url, prune, hideGiscus },
+} = Astro.props as Props;
+
+const prefixReg = new RegExp(`${url}/([^/]+)$`);
+const pages = (await Astro.glob("../pages/articles/**/*.md")).filter(
+  (page) =>
+    (prune ? page.url.match(prefixReg) : page.url.startsWith(url)) &&
+    page.url !== url
+) as ArticleData[];
+const articles = pages.filter((page) =>
+  page.frontmatter.layout.includes("ArticlePage.astro")
+);
+const groups = pages.filter((page) =>
+  page.frontmatter.layout.includes("GroupPage.astro")
+);
+---
+
+<BasePage {...{title, description, hideGiscus}}>
+  <article>
+    <PageHeader article={Astro.props.content} />
+    <hr />
+    <slot />
+    <hr />
+    {
+      (groups.length || !articles.length) && (
+        <Fragment>
+          <h4>
+            <i class="mdi mdi-folder-multiple" />
+            SUB GROUPS ({String(groups.length)})
+          </h4>
+          <ArticleList hideGroupPath={prune} articles={groups} />
+        </Fragment>
+      )
+    }
+    {
+      (articles.length || !groups.length) && (
+        <Fragment>
+          <h4>
+            <i class="mdi mdi-text-box-multiple" />
+            SUB ARTICLES ({String(articles.length)})
+          </h4>
+          <ArticleList hideGroupPath={prune} articles={articles} />
+        </Fragment>
+      )
+    }
+  </article>
+</BasePage>
+
+<style>
+  article {
+    &:not(:has(> p)) > hr:first-of-type {
+      @apply hidden;
+    }
+  }
+</style>

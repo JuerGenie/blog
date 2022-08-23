@@ -1,0 +1,22 @@
+---
+import { SITE_TITLE, SITE_DESCRIPTION } from "@src/config";
+import BasePage from "@components/BasePage.astro";
+---
+
+<BasePage title={SITE_TITLE} description={SITE_DESCRIPTION}>
+  <article>
+    <h2>你好，朋友。</h2>
+    <p>欢迎来到CHROCK-BLOG，这是CHROCK-SPACE下的子应用，是我的个人博客。</p>
+    <p>
+      我会尝试在这里分享各种技术笔记、个人生活，也可能会写一些随笔故事或图画分享。总之，我很乐意与你分享这些。
+    </p>
+    <p>
+      你可以在
+      <a href="./timeline/latest">Timeline</a>
+      页面看到所有已经发布的内容。
+    </p>
+    <p>
+      这个站点基于Astro构建，使用tailwindcss进行样式管理，使用markdown作为内容撰写工具。
+    </p>
+  </article>
+</BasePage>

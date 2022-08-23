@@ -1,7 +1,0 @@
-.content {
-  & hr {
-    @apply border border-(slate-500 opacity-50 dashed);
-    @apply rounded;
-    @apply my-4;
-  }
-}
