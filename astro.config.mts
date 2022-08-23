@@ -29,7 +29,7 @@ export default defineConfig({
   ],
   base: process.env.BASE_URL,
   site:
-    process.env.NODE_ENV === "production"
+    process.env.BUILD_MODE === "production"
       ? "https://juergenie.github.io"
       : undefined,
   vite: {
