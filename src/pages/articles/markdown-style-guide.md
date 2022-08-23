@@ -3,7 +3,7 @@ layout: "@layouts/ArticlePage.astro"
 title: "Markdown样式引导"
 description: "一个用于展示Markdown各语法对应样式的文章。"
 publishDate: "2022/8/23 22:50:33"
-coverImage: "/assets/placeholder-hero.jpg"
+coverImage: "./images/placeholder-hero.jpg"
 tags:
   - "markdown"
   - "style"
