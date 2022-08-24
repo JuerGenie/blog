@@ -6,6 +6,7 @@ import {
   ArticleData,
   ArticleFrontmatter,
 } from "@src/models/article-frontmatter";
+import { safeFilter } from "@src/utils/article";
 
 export interface Props {
   content: ArticleFrontmatter;
@@ -16,7 +17,7 @@ const {
 } = Astro.props as Props;
 
 const prefixReg = new RegExp(`${url}/([^/]+)$`);
-const pages = (await Astro.glob("../pages/articles/**/*.md")).filter(
+const pages = safeFilter(await Astro.glob("../pages/articles/**/*.md")).filter(
   (page) =>
     (prune ? page.url.match(prefixReg) : page.url.startsWith(url)) &&
     page.url !== url

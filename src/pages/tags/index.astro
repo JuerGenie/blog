@@ -1,9 +1,10 @@
 ---
 import BasePage from "@components/BasePage.astro";
 import BaseTag from "@components/BaseTag.astro";
+import { safeFilter } from "@src/utils/article";
 import { getTags } from "@utils/tags";
 
-const tags = getTags(await Astro.glob("../articles/**/*.md"));
+const tags = getTags(safeFilter(await Astro.glob("../articles/**/*.md")));
 ---
 
 <BasePage title="TAGS" hideGiscus>

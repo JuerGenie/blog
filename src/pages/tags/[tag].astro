@@ -3,16 +3,17 @@ import { getTags } from "@utils/tags";
 import BasePage from "@components/BasePage.astro";
 import ArticleList from "@components/ArticleList.astro";
 import { ArticleData } from "@src/models/article-frontmatter";
+import { safeFilter } from "@src/utils/article";
 
 export async function getStaticPaths() {
-  const tags = getTags(await Astro.glob("../articles/**/*.md"));
+  const tags = getTags(safeFilter(await Astro.glob("../articles/**/*.md")));
 
   return Object.keys(tags).map((tag) => ({
     params: { tag },
   }));
 }
 
-const tags = getTags(await Astro.glob("../articles/**/*.md"));
+const tags = getTags(safeFilter(await Astro.glob("../articles/**/*.md")));
 
 const { tag } = Astro.params;
 const articles = tags[tag].sort(

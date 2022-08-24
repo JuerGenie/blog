@@ -1,6 +1,6 @@
 import { MarkdownInstance } from "astro";
 
-export interface ArticleFrontmatter {
+export interface ArticleFrontmatter extends Record<string, any> {
   layout: string;
   prune?: boolean;
 
@@ -10,6 +10,7 @@ export interface ArticleFrontmatter {
   updatedDate?: string;
   coverImage?: string;
   tags?: string[];
+  draft?: boolean;
 
   hideGiscus?: true;
   hideParent?: true;
