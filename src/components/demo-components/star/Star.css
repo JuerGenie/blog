@@ -1,0 +1,19 @@
+div.astro-star {
+  @apply flex flex-row text-2xl;
+
+  & > svg[astro-icon] {
+    @apply text-slate-200;
+    @apply transition-colors;
+
+    &:hover,
+    &:has(~ svg[astro-icon]:hover) {
+      @apply text-slate-500;
+    }
+  }
+
+  &:not(:has(svg[astro-icon]:hover)) {
+    & > svg[astro-icon]:has(~ svg[astro-icon][data-checked]) {
+      @apply text-slate-500;
+    }
+  }
+}

@@ -19,6 +19,7 @@ const { name, count, ...props } = Astro.props as Props;
     @apply bg-slate-300 text-white;
     @apply transition-opacity;
     @apply flex flex-row items-center;
+    @apply no-underline !important;
 
     &:hover {
       @apply opacity-80;
