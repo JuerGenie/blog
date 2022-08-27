@@ -1,0 +1,12 @@
+---
+---
+
+<svg>
+  <filter id="pixelate" x="0" y="0">
+    <feFlood x="4" y="4" height="2" width="2"></feFlood>
+    <feComposite width="8" height="8"></feComposite>
+    <feTile result="a"></feTile>
+    <feComposite in="SourceGraphic" in2="a" operator="in"></feComposite>
+    <feMorphology operator="dilate" radius="5"></feMorphology>
+  </filter>
+</svg>

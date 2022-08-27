@@ -7,6 +7,7 @@ import {
   ArticleFrontmatter,
 } from "@src/models/article-frontmatter";
 import { safeFilter } from "@src/utils/article";
+import { Icon } from "astro-icon";
 
 export interface Props {
   content: ArticleFrontmatter;
@@ -17,7 +18,9 @@ const {
 } = Astro.props as Props;
 
 const prefixReg = new RegExp(`${url}/([^/]+)$`);
-const pages = safeFilter(await Astro.glob("../pages/articles/**/*.md")).filter(
+const pages = safeFilter(
+  await Astro.glob("../pages/articles/**/*.{md,mdx}")
+).filter(
   (page) =>
     (prune ? page.url.match(prefixReg) : page.url.startsWith(url)) &&
     page.url !== url
@@ -40,7 +43,7 @@ const groups = pages.filter((page) =>
       (groups.length || !articles.length) && (
         <Fragment>
           <h4>
-            <i class="mdi mdi-folder-multiple" />
+            <Icon name="mdi:folder-multiple" />
             SUB GROUPS ({String(groups.length)})
           </h4>
           <ArticleList hideGroupPath={prune} articles={groups} />
@@ -51,7 +54,7 @@ const groups = pages.filter((page) =>
       (articles.length || !groups.length) && (
         <Fragment>
           <h4>
-            <i class="mdi mdi-text-box-multiple" />
+            <Icon name="mdi:text-box-multiple" />
             SUB ARTICLES ({String(articles.length)})
           </h4>
           <ArticleList hideGroupPath={prune} articles={articles} />
@@ -65,6 +68,13 @@ const groups = pages.filter((page) =>
   article {
     &:not(:has(> p)) > hr:first-of-type {
       @apply hidden;
+    }
+    & h4 {
+      @apply flex flex-row items-center;
+
+      & > svg[astro-icon] {
+        @apply mr-[0.5em];
+      }
     }
   }
 </style>

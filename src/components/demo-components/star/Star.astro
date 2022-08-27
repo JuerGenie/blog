@@ -1,0 +1,39 @@
+---
+import { Icon } from "astro-icon";
+
+export interface Props {
+  count?: number;
+}
+
+const { count = 0 } = Astro.props as Props;
+---
+
+<div class="astro-star">
+  {
+    new Array(5)
+      .fill(0)
+      .map((_, i) => <Icon data-checked={count === i} name="mdi:star" />)
+  }
+</div>
+
+<style>
+  div.astro-star {
+    @apply flex flex-row text-2xl;
+
+    & > svg[astro-icon] {
+      @apply text-slate-200;
+      @apply transition-colors;
+
+      &:hover,
+      &:has(~ svg[astro-icon]:hover) {
+        @apply text-slate-500;
+      }
+    }
+
+    &:not(:has(svg[astro-icon]:hover)) {
+      & > svg[astro-icon]:has(~ svg[astro-icon][data-checked]) {
+        @apply text-slate-500;
+      }
+    }
+  }
+</style>

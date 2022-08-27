@@ -6,14 +6,16 @@ import { ArticleData } from "@src/models/article-frontmatter";
 import { safeFilter } from "@src/utils/article";
 
 export async function getStaticPaths() {
-  const tags = getTags(safeFilter(await Astro.glob("../articles/**/*.md")));
+  const tags = getTags(
+    safeFilter(await Astro.glob("../articles/**/*.{md,mdx}"))
+  );
 
   return Object.keys(tags).map((tag) => ({
     params: { tag },
   }));
 }
 
-const tags = getTags(safeFilter(await Astro.glob("../articles/**/*.md")));
+const tags = getTags(safeFilter(await Astro.glob("../articles/**/*.{md,mdx}")));
 
 const { tag } = Astro.params;
 const articles = tags[tag].sort(

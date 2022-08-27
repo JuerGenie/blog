@@ -1,18 +1,28 @@
 ---
+import { safeFilter } from "@src/utils/article";
+
 export interface Props extends astroHTML.JSX.HTMLAttributes {
   path: string | string[];
 }
 
 const { path, ...props } = Astro.props as Props;
-const list = Array.isArray(path) ? path : path.split("/");
+const groups = safeFilter(await Astro.glob("../pages/**/*.{md,mdx}")).filter(
+  (page) => page.frontmatter.layout.endsWith("GroupPage.astro")
+);
+const list = (Array.isArray(path) ? path : path.split("/")).map(
+  (sub, index, arr) => {
+    const url = import.meta.env.BASE_URL + arr.slice(0, index + 1).join("/");
+    return {
+      label:
+        groups.find((group) => group.url === url)?.frontmatter.title ?? sub,
+      url,
+    };
+  }
+);
 ---
 
 <div {...props}>
-  {
-    list.map((sub, index) => (
-      <a href={`./${list.slice(0, index + 1).join("/")}`}>{sub}</a>
-    ))
-  }
+  {list.map((sub) => <a href={sub.url}>{sub.label}</a>)}
 </div>
 
 <style>

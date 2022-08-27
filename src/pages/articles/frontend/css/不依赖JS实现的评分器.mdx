@@ -1,0 +1,215 @@
+---
+layout: "@layouts/ArticlePage.astro"
+title: "基于:has伪类实现不依赖JS的评分器的响应样式"
+description: ':has(~ .star):before { content: "dokidoki!" }'
+publishDate: "2022/8/25 12:36:39"
+coverImage: ""
+tags:
+  - CSS
+  - CSS3
+  - :has
+  - 前端
+---
+
+import Star from "@components/demo-components/star/Star.astro";
+import "./不依赖JS实现的评分器.mdx.css";
+import "@mdi/font/css/materialdesignicons.css";
+
+## 结果预览
+
+> 将鼠标移至星标上以查看效果。
+
+- `<Star />`:
+  <Star />
+- `<Star count={3} />`
+  <Star count={3} />
+
+---
+
+## 什么是`:has`伪类？
+
+简单来说，`:has`伪类被称为`relational pseudo-class`，即关联选择器，从命名上来看，很明显，这是一个「基于逻辑的选择器」。
+
+从使用上来说也是如此，`:has`伪类能够实现诸如「父选择器」、「向前选择器」等效果，以往选择器只能够向后、向内选择（比如`+`、`~`、`>`等，本质上都是流式解析的，随着文档加载逐个节点进行匹配，因此其只能匹配之后的元素，而无法匹配之前已锚定的元素），而`:has`则是等待到「与关联选择器相匹配的元素锚定」后，匹配对应元素。
+
+同时，`:has`伪类能够进行匹配的不止有元素，伪元素和伪类也在其匹配范围之内，因为其关联选择器能够容纳任何**相对于当前元素**的合法选择器。
+
+> 也就是说，`:has(+ .next-el)`、`:has(~ .next-el:focus)`、 `:has(:before)` 都是合法且有效的。
+
+需要注意的是，`:has`伪类无法嵌套，诸如`:has(:has(div))`之类的写法是无效的。
+
+> 相关链接
+>
+> - [:has() - CSS: Cascading Style Sheets | MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/:has)
+> - [Selectors Level 4](https://drafts.csswg.org/selectors/#relational)
+
+## 基于`:has`伪类，使用纯 CSS 逐步实现评分器的响应样式
+
+### Step.1
+
+首先，我们先把一个评分器的基本样式排出来：
+
+```html
+<div class="star" data-step="1">
+  <i class="mdi mdi-star"></i>
+  <i class="mdi mdi-star"></i>
+  <i class="mdi mdi-star" data-checked></i>
+  <i class="mdi mdi-star"></i>
+  <i class="mdi mdi-star"></i>
+</div>
+
+<style>
+  div.star {
+    @apply flex flex-row text-2xl;
+
+    &[data-step="1"] {
+      & i.mdi {
+        @apply text-slate-200;
+
+        &:hover {
+          @apply text-slate-500;
+        }
+      }
+    }
+  }
+</style>
+```
+
+它长这样：
+
+<div class="star" data-step="1">
+  <i class="mdi mdi-star"></i>
+  <i class="mdi mdi-star"></i>
+  <i class="mdi mdi-star" data-checked></i>
+  <i class="mdi mdi-star"></i>
+  <i class="mdi mdi-star"></i>
+</div>
+
+一共五颗星，排成一排，显示为浅色，鼠标悬停的星显示为暗色。
+
+### Step.2
+
+接下来，我们将「当前鼠标悬停的星」的悬停状态与其之前的星的样式做一下关联。此时就需要用到`:has`了。我们通过关联选择「在这个星之后存在鼠标悬停的星」的目标元素，并为其附加变色：
+
+```html {8}
+<style>
+  div.star {
+    @apply flex flex-row text-2xl;
+
+    &[data-step="2"] {
+      & i.mdi {
+        @apply text-slate-200;
+
+        &:has(~ i.mdi:hover),
+        &:hover {
+          @apply text-slate-500;
+        }
+      }
+    }
+  }
+</style>
+```
+
+此时它是这样的效果：
+
+<div class="star" data-step="2">
+  <i class="mdi mdi-star"></i>
+  <i class="mdi mdi-star"></i>
+  <i class="mdi mdi-star" data-checked></i>
+  <i class="mdi mdi-star"></i>
+  <i class="mdi mdi-star"></i>
+</div>
+
+当鼠标悬停在其中一个星上时，其之前的星通过`~ i.mdi:hover`关联选择器匹配到，于是相应的字体颜色样式也被应用。
+
+### Step.3
+
+最后一步，来实现「鼠标不悬停时，到被选中为止的星都为暗色；鼠标悬停时，按之前逻辑进行展示」。
+
+因为之前已经通过`:has`实现了「在某个指定状态的星之前的所有星应用某些样式」的逻辑，此处只需要稍加修改其匹配的「状态」即可：
+
+```html {13-16}
+<style>
+  div.star {
+    @apply flex flex-row text-2xl;
+
+    &[data-step="3"] {
+      & i.mdi {
+        @apply text-slate-200;
+
+        &:has(~ i.mdi:hover),
+        &:hover {
+          @apply text-slate-500;
+        }
+
+        &:has(~ i.mdi[data-checked]),
+        &[data-checked] {
+          @apply text-slate-500;
+        }
+      }
+    }
+  }
+</style>
+```
+
+此时可以看到效果如下，到有`data-checked`属性为止的所有星都显示为暗色：
+
+<div class="star" data-step="3">
+  <i class="mdi mdi-star"></i>
+  <i class="mdi mdi-star"></i>
+  <i class="mdi mdi-star" data-checked></i>
+  <i class="mdi mdi-star"></i>
+  <i class="mdi mdi-star"></i>
+</div>
+
+使用鼠标测试之后，有没有发现什么异常？
+
+没错，因为样式产生了冲突，此时，后添加的关于`data-checked`的样式优先级高于之前添加的关于鼠标悬停的样式，因此此时鼠标悬停的样式无效了。
+
+为了解决这个问题，我们使用`:not`伪类来实现排除逻辑：
+
+```html {13-18}
+<style>
+  div.star {
+    @apply flex flex-row text-2xl;
+
+    &[data-step="4"] {
+      & i.mdi {
+        @apply text-slate-200;
+
+        &:has(~ i.mdi:hover),
+        &:hover {
+          @apply text-slate-500;
+        }
+      }
+      &:not(:hover) i.mdi {
+        &:has(~ i.mdi[data-checked]),
+        &[data-checked] {
+          @apply text-slate-500;
+        }
+      }
+    }
+  }
+</style>
+```
+
+此时它长这样：
+
+<div class="star" data-step="4">
+  <i class="mdi mdi-star"></i>
+  <i class="mdi mdi-star"></i>
+  <i class="mdi mdi-star" data-checked></i>
+  <i class="mdi mdi-star"></i>
+  <i class="mdi mdi-star"></i>
+</div>
+
+至此，我们就实现了一个「使用纯 CSS 样式实现的评分器」的样式控制部分，JS 脚本只需要关注`onclick`事件并修改`data-checked`的绑定即可。
+
+---
+
+> Q: 明明这个[组件](https://element-plus.org/zh-CN/component/rate.html)、这个[组件](https://quasar.dev/vue-components/rating)都能实现，那么为什么还要这么干？使用纯 CSS 实现有什么必要吗？
+>
+> A: 这些组件都是通过 JS 监听各种事件，并控制相应元素的样式类来实现这些效果的。使用纯 CSS 既能实现等价效果的话，组件的逻辑就**只需要**关注「打分」这一操作，而不需要再关注「鼠标当前悬停在哪个分数上」之类的额外逻辑。  
+> _上面说的都是次要的，主要是好玩，我想玩 🐶。_
+
+以上。

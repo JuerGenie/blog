@@ -10,14 +10,23 @@ const today = new Date();
     @apply my-4;
 
     & > div {
-      &:first-of-type {
+      &:nth-of-type(1) {
         @apply text-base font-bold;
+      }
+      &:nth-of-type(2) {
+        @apply text-sm text-slate-500;
+        @apply underline underline-offset-4 decoration-dashed decoration-slate-400;
       }
     }
   }
 </style>
 
 <footer>
-  <div>©{today.getFullYear()} | BY JUERGENIE</div>
+  <div>
+    ©{today.getFullYear()} | BY JUERGENIE
+  </div>
+  <div>
+    站点使用了较多新特性，使用较新的浏览器(chrome:105+|safari:15.4+)能获得完整的体验
+  </div>
   <BaseCopyright />
 </footer>

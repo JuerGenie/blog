@@ -6,7 +6,7 @@ body {
 }
 
 body {
-  @apply m-auto p-5 w-[60ch] sm:w-[80ch] text-left bg-white text-slate-600;
+  @apply m-auto py-48 w-[60ch] sm:w-[80ch] text-left bg-slate-50 text-slate-600;
   @apply break-words;
   @apply leading-6;
 
@@ -21,6 +21,8 @@ body {
 
   & a {
     @apply text-blue-500;
+    @apply underline underline-offset-2 decoration-dashed;
+
     &::visited {
       @apply text-violet-500;
     }
@@ -32,25 +34,6 @@ body {
       @apply text-xs;
       @apply relative -top-1;
     }
-  }
-
-  & blockquote {
-    @apply bg-slate-500 bg-opacity-10 backdrop-blur;
-    @apply pl-12 px-4 py-2 my-2;
-    @apply relative;
-    @apply rounded;
-
-    &::before {
-      content: "“";
-      @apply absolute top-2 bottom-0 left-0;
-      @apply w-12;
-      @apply flex justify-center items-start;
-      @apply text-6xl leading-[4.25rem] text-slate-500 opacity-50;
-    }
-  }
-
-  & p {
-    @apply my-2;
   }
 
   & table {
@@ -79,6 +62,14 @@ body {
           @apply bg-opacity-60;
 
           @apply first-of-type:border-l-0 last-of-type:border-r-0;
+
+          @apply relative;
+          &::after {
+            content: "(" counter(table-col-count) "," counter(table-row-count)
+              ")";
+            @apply absolute bottom-0 right-0;
+            @apply text-xs text-slate-500 opacity-50;
+          }
         }
 
         &:last-of-type td {
@@ -99,9 +90,9 @@ body {
   }
 
   & hr {
-    @apply border-0 h-auto;
-    @apply text-center my-2 leading-4;
-    @apply bg-slate-100;
+    @apply border-0 h-auto my-4;
+    @apply text-center w-full leading-4;
+    @apply bg-slate-100 text-slate-500;
 
     &::before {
       @apply content-["--=+=-=+=-=+=-=+=-=+=-=+=-=+=-=+=--"];
@@ -122,11 +113,59 @@ body {
   & .giscus {
     @apply my-8;
   }
-}
-textarea {
-  width: 100%;
-  font-size: 16px;
-}
-input {
-  font-size: 16px;
+
+  & svg[astro-icon] {
+    @apply inline-block w-[1em];
+  }
+
+  & .filter-wrapper {
+    @apply fixed -inset-8;
+    @apply pointer-events-none;
+    @apply backdrop-blur opacity-100;
+    @apply bg-gradient-to-br from-sky-500 to-rose-500;
+    @apply mix-blend-hard-light;
+
+    /* background-image: repeating-linear-gradient(
+        180deg,
+        transparent,
+        transparent 0.2rem,
+        rgb(0 0 0 / 0.2) 0.2rem,
+        rgb(0 0 0 / 0.2) 0.25rem
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 0.3rem,
+        rgb(0 0 0 / 0.2) 0.3rem,
+        rgb(0 0 0 / 0.2) 0.35rem
+      ); */
+
+    /* mask-image: radial-gradient(
+      transparent,
+      transparent,
+      rgb(0 0 0 / 0.1),
+      rgb(0 0 0)
+    ); */
+    mask-image: linear-gradient(
+      to bottom,
+      rgb(0 0 0),
+      rgb(0 0 0 / 0.4) 10%,
+      rgb(0 0 0 / 0.2) 20%,
+      transparent 50%,
+      rgb(0 0 0 / 0.2) 80%,
+      rgb(0 0 0 / 0.4) 90%,
+      rgb(0 0 0)
+    );
+
+    &::after {
+      content: "";
+      @apply w-full h-full;
+      background-image: repeating-linear-gradient(
+        180deg,
+        transparent,
+        transparent 7%,
+        rgb(0 0 0 / 0.6) 10%
+      );
+    }
+  }
 }

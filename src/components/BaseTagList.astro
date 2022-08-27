@@ -1,0 +1,30 @@
+---
+import { ArticleData } from "@src/models/article-frontmatter";
+import BaseTag from "./BaseTag.astro";
+
+export interface Props extends astroHTML.JSX.HTMLAttributes {
+  tags: Record<string, ArticleData[]>;
+}
+
+const { tags, ...props } = Astro.props as Props;
+---
+
+<div {...props}>
+  {
+    Object.entries(tags)
+      .sort(([lt, ll], [rt, rl]) =>
+        ll.length > rl.length
+          ? -1
+          : ll.length === rl.length
+          ? lt.localeCompare(rt)
+          : 1
+      )
+      .map(([tag, pages]) => <BaseTag name={tag} count={pages.length} />)
+  }
+</div>
+
+<style>
+  div {
+    @apply flex flex-row flex-wrap gap-2;
+  }
+</style>

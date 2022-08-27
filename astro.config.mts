@@ -34,6 +34,9 @@ export default defineConfig({
       : undefined,
   vite: {
     base: process.env.BASE_URL,
+    ssr: {
+      external: ["svgo"],
+    },
   },
   markdown: {
     shikiConfig: {
@@ -41,6 +44,8 @@ export default defineConfig({
       wrap: true,
     },
     remarkPlugins: [
+      "remark-gfm",
+      "remark-smartypants",
       remarkDirective,
       () => (root) => {
         visit(root, (node) => {

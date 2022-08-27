@@ -1,35 +1,38 @@
 article {
-  @apply flex flex-col;
+  @apply flex flex-col items-start;
+  /* @apply font-light; */
 
   /* header */
   & :is(h1, h2, h3, h4, h5, h6) {
     @apply bg-slate-100;
+    @apply my-[0.25em] py-[0.25em];
+    @apply w-full;
   }
 
   & h1 {
-    @apply text-5xl my-4;
+    @apply text-5xl;
     @apply border-b-4 border-slate-500 border-opacity-50 border-double;
   }
 
   & h2 {
-    @apply text-3xl my-4;
+    @apply text-3xl;
     @apply border-b-2 border-slate-500 border-opacity-50;
   }
 
   & h3 {
-    @apply text-2xl my-3;
+    @apply text-2xl;
   }
 
   & h4 {
-    @apply text-xl my-3;
+    @apply text-xl;
   }
 
   & h5 {
-    @apply text-lg my-2;
+    @apply text-lg;
   }
 
   & h6 {
-    @apply text-base my-2;
+    @apply text-base;
   }
 
   /* list */
@@ -54,11 +57,19 @@ article {
     @apply ml-8 pl-2;
   }
 
+  & code {
+    @apply bg-slate-500 bg-opacity-80 backdrop-blur;
+    @apply px-[0.25em] my-[0.25em] rounded-[0.25em];
+    @apply text-white;
+    @apply whitespace-pre;
+  }
+
+  /* astro 的 markdown 代码块 */
   & pre.astro-code {
     all: unset;
     @apply block p-4;
     @apply rounded-lg overflow-auto;
-    @apply bg-slate-800 bg-opacity-80 backdrop-blur !important;
+    @apply bg-slate-900 bg-opacity-80 backdrop-blur !important;
 
     /* ========[ 自定义颜色 ]======== */
     /* --astro-code-color-text: theme("colors.slate.200");
@@ -74,11 +85,15 @@ article {
     --astro-code-token-link: theme("colors.sky.500"); */
     /* ============================== */
 
-    & > code > .line {
-      @apply break-normal;
+    & > code {
+      all: unset;
 
-      & > span {
-        @apply whitespace-pre;
+      & > .line {
+        @apply break-normal;
+
+        & > span {
+          @apply whitespace-pre;
+        }
       }
     }
 
@@ -105,5 +120,88 @@ article {
         }
       }
     } */
+  }
+
+  /* astro 的 mdx 代码块 */
+  & pre.shiki {
+    all: unset;
+    @apply block w-full;
+    @apply rounded-lg overflow-auto;
+    @apply bg-slate-900 bg-opacity-80 backdrop-blur !important;
+    @apply relative;
+
+    & .language-id {
+      @apply absolute top-2 right-2 z-10;
+      @apply text-sm text-slate-200;
+      @apply bg-slate-400 bg-opacity-50 backdrop-blur;
+      @apply px-2 py-1 rounded-full;
+      @apply opacity-0 transition-opacity;
+    }
+    &:hover .language-id {
+      @apply opacity-100;
+    }
+
+    & .code-container {
+      @apply overflow-auto;
+
+      & code {
+        all: unset;
+        @apply block w-auto py-4;
+        @apply flex flex-col items-start;
+
+        & > div.line {
+          /* all: unset; */
+          @apply whitespace-pre;
+          @apply px-4 h-6;
+          @apply relative;
+
+          &.highlight {
+            &::before {
+              @apply content-[""] block;
+              @apply bg-slate-800 bg-opacity-80;
+              @apply h-6;
+              @apply fixed inset-x-2 -z-10;
+              @apply pointer-events-none;
+
+              @apply rounded-xl;
+            }
+            & + .highlight::before {
+              @apply rounded-t-none;
+            }
+            &:has(+ .highlight)::before {
+              @apply rounded-b-none;
+            }
+          }
+        }
+      }
+    }
+
+    &::before {
+      content: "";
+      @apply absolute inset-0;
+      @apply pointer-events-none;
+      @apply backdrop-blur-[2px];
+      @apply opacity-20;
+    }
+  }
+
+  & blockquote {
+    @apply bg-slate-100 bg-opacity-80 backdrop-blur;
+    @apply pl-12 px-4 py-2 my-2;
+    @apply relative;
+    @apply rounded;
+    @apply w-full;
+
+    &::before {
+      content: "“";
+      @apply absolute top-2 bottom-0 left-0;
+      @apply w-12;
+      @apply flex justify-center items-start;
+      @apply text-6xl leading-[4.25rem] text-slate-500 opacity-50;
+    }
+  }
+
+  & p {
+    @apply my-2;
   }
 }

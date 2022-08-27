@@ -3,13 +3,25 @@ import { ArticleData } from "@src/models/article-frontmatter";
 import { getArticleParentPath } from "@src/utils/url";
 import BaseImage from "./BaseImage.astro";
 import GroupLink from "./GroupLink.astro";
+import { Icon } from "astro-icon";
+import { formatDate } from "@src/utils/date";
 
 export interface Props {
   article: ArticleData["frontmatter"];
+
+  hideDate?: boolean;
 }
 
-const { article } = Astro.props as Props;
-const { coverImage, title, hideParent, description, url } = article;
+const { article, hideDate } = Astro.props as Props;
+const {
+  coverImage,
+  title,
+  hideParent,
+  description,
+  url,
+  publishDate,
+  updatedDate,
+} = article;
 
 let baseUrl = url.replace(import.meta.env.BASE_URL, "");
 if (baseUrl.startsWith("/")) {
@@ -32,10 +44,20 @@ const parentUrl = getArticleParentPath(baseUrl);
 {
   !hideParent &&
   !!parentUrl?.length && (
-    <h4>
-      <i class="mdi mdi-folder" />
+    <h6>
+      <Icon name="mdi:folder" />
       <GroupLink class="inline-flex" path={parentUrl} />
-    </h4>
+    </h6>
+  )
+}
+{
+  !hideDate && (
+    <h6>
+      <Icon name="mdi:calendar-check" />
+      <a href={`./timeline/${formatDate(updatedDate ?? publishDate)}`}>
+        {formatDate(updatedDate ?? publishDate)}
+      </a>
+    </h6>
   )
 }
 {
@@ -48,12 +70,19 @@ const parentUrl = getArticleParentPath(baseUrl);
 
 <style>
   h1 {
-    &:has(+ h4) {
+    &:has(+ h6) {
       @apply mb-0;
     }
 
-    & + h4 {
-      @apply flex flex-row gap-2 mt-0;
+    & + h6 {
+      &,
+      & + h6 {
+        @apply flex flex-row gap-2 mt-0 px-2;
+      }
+
+      &:has(+ h6) {
+        @apply mb-0;
+      }
     }
   }
 </style>

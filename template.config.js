@@ -21,9 +21,13 @@ module.exports = {
         changeCase.paramCase(templateName)
       )
       .replace(/__createDate__/g, new Date().getTime())
+      .replace(/__createDate\.localeString__/g, new Date().toLocaleDateString())
+      .replace(/__createTime__/g, new Date().getTime())
+      .replace(/__createTime\.localeString__/g, new Date().toLocaleTimeString())
+      .replace(/__createDateTime__/g, new Date().valueOf())
       .replace(
-        /__createDate\.localeString__/g,
-        new Date().toLocaleDateString()
+        /__createDateTime\.localeString__/g,
+        new Date().toLocaleString()
       );
   },
   renameFileFn: (fileName, templateName, utils) => {

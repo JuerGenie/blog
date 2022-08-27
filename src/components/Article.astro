@@ -4,6 +4,7 @@ import { formatDate } from "@src/utils/date";
 import { getArticleParentPath } from "@src/utils/url";
 import BaseTag from "./BaseTag.astro";
 import GroupLink from "./GroupLink.astro";
+import { Icon } from "astro-icon";
 
 export interface Props {
   hideGroupPath?: boolean;
@@ -31,19 +32,17 @@ const parentPath = getArticleParentPath(article.url);
   <div>
     <a href={article.url}>{article.frontmatter.title}</a>
     {
-      !hideGroupPath &&
-      !!parentPath.length &&
-      !!tags.length && (
+      ((!hideGroupPath && !!parentPath.length) || !!tags.length) && (
         <div class="wrapper">
           {!hideGroupPath && !!parentPath.length && (
             <div class="group-path">
-              <i class="mdi mdi-folder-outline" />
+              <Icon name="mdi:folder-outline" />
               <GroupLink path={parentPath} />
             </div>
           )}
           {!!tags.length && (
             <div class="tag-list">
-              <i class="mdi mdi-tag-outline" />
+              <Icon name="mdi:tag-outline" />
               {tags.map((tag) => (
                 <BaseTag name={tag} />
               ))}
@@ -82,20 +81,20 @@ const parentPath = getArticleParentPath(article.url);
       @apply row-start-2 row-end-3;
 
       & > div.wrapper {
-        @apply flex flex-col px-2;
+        @apply flex flex-col px-2 py-1;
         @apply bg-slate-100 bg-opacity-50 backdrop-blur;
 
         & > .group-path {
           @apply flex flex-row gap-2 rounded-full;
         }
 
-        & > .description {
-          @apply text-slate-500 font-light;
-        }
-
         & > .tag-list {
           @apply flex flex-row flex-wrap items-center gap-2 rounded-full;
         }
+      }
+
+      & > .description {
+        @apply text-slate-400;
       }
     }
   }

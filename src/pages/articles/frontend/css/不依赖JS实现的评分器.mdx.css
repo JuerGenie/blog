@@ -1,0 +1,52 @@
+div.star {
+  @apply inline-flex flex-row text-2xl;
+
+  &[data-step="1"] {
+    & i.mdi {
+      @apply text-slate-200;
+
+      &:hover {
+        @apply text-slate-500;
+      }
+    }
+  }
+
+  &[data-step="2"] {
+    & i.mdi {
+      @apply text-slate-200;
+
+      &:has(~ i.mdi:hover),
+      &:hover {
+        @apply text-slate-500;
+      }
+    }
+  }
+
+  &[data-step="3"] {
+    & i.mdi {
+      @apply text-slate-200;
+
+      &[data-checked],
+      &:has(~ i.mdi[data-checked]) {
+        @apply text-slate-500;
+      }
+    }
+  }
+
+  &[data-step="4"] {
+    & i.mdi {
+      @apply text-slate-200;
+
+      &:has(~ i.mdi:hover),
+      &:hover {
+        @apply text-slate-500;
+      }
+    }
+    &:not(:hover) i.mdi {
+      &:has(~ i.mdi[data-checked]),
+      &[data-checked] {
+        @apply text-slate-500;
+      }
+    }
+  }
+}

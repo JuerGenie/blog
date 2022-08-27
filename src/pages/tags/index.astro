@@ -1,30 +1,12 @@
 ---
 import BasePage from "@components/BasePage.astro";
-import BaseTag from "@components/BaseTag.astro";
+import BaseTagList from "@src/components/BaseTagList.astro";
 import { safeFilter } from "@src/utils/article";
 import { getTags } from "@utils/tags";
 
-const tags = getTags(safeFilter(await Astro.glob("../articles/**/*.md")));
+const tags = getTags(safeFilter(await Astro.glob("../articles/**/*.{md,mdx}")));
 ---
 
 <BasePage title="TAGS" hideGiscus>
-  <div>
-    {
-      Object.entries(tags)
-        .sort(([lt, ll], [rt, rl]) =>
-          ll.length > rl.length
-            ? -1
-            : ll.length === rl.length
-            ? lt.localeCompare(rt)
-            : 1
-        )
-        .map(([tag, pages]) => <BaseTag name={tag} count={pages.length} />)
-    }
-  </div>
+  <BaseTagList class="justify-center w-full" tags={tags} />
 </BasePage>
-
-<style>
-  div {
-    @apply flex flex-row flex-wrap justify-center gap-2;
-  }
-</style>

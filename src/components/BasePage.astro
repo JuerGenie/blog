@@ -3,6 +3,7 @@ import BaseHeader from '@src/components/BaseHeader.astro';
 import Header from '@src/components/Header.astro';
 import Footer from '@src/components/Footer.astro';
 import Logo from '@src/components/Logo.astro';
+import BaseFilter from './BaseFilter.astro';
 
 export interface Props {
   title: string;
@@ -40,5 +41,8 @@ const { title, description, hideGiscus } = Astro.props as Props;
 <div class="logo-wrapper">
   <Logo />
 </div>
+
+<!-- <div class="filter-wrapper"></div> -->
+<BaseFilter />
 
 </html>
